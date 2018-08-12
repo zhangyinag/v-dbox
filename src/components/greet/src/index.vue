@@ -14,9 +14,3 @@ export default class Greet extends Vue {
 
 }
 </script>
-
-<style lang="scss">
-    .dbox-greet{
-        color: red;
-    }
-</style>

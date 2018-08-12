@@ -1,5 +1,6 @@
 import {Vue} from 'vue/types/vue'
 import {InstallationOptions} from '@/components/config'
+import '@/styles/index.scss'
 
 const insts: Array<(vue: typeof Vue, opt: any) => void> = []
 
