@@ -45,10 +45,6 @@ export default class Demos extends Vue {
 </script>
 
 <style lang="scss">
-  body {
-    margin: 0;
-    padding: 0;
-  }
 
   $--aside-width: 240px;
 

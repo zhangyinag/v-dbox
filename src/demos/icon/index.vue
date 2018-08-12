@@ -3,13 +3,16 @@
     <h3>基本用法</h3>
     <v-icon type="link"></v-icon>
     <br/>
+    <br/>
 
     <h3>旋转</h3>
     <v-icon type="link" spin></v-icon>
     <br/>
+    <br/>
 
     <h3>自定义样式</h3>
     <v-icon type="link" style="font-size: 24px; color: red;"></v-icon>
+    <br/>
     <br/>
 
     <h3>列表</h3>
