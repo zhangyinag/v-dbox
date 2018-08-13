@@ -1,0 +1,76 @@
+$hue-step : 2;
+$saturation-step : 16;
+$saturation-step2 : 5;
+$brightness-step1 : 5;
+$brightness-step2 : 15;
+$light-color-count : 5;
+$dark-color-count : 4;
+
+@function getHue($color, $i, $is-light){
+  $hue : 0;
+  $h : hue($color);
+  @if($h >= 60 and $h <= 240) {
+    @if($is-light){
+      $hue : $h - $hue-step * $i;
+    } @else {
+      $hue : $h + $hue-step * $i;
+    }
+  } @else {
+    @if($is-light){
+      $hue : $h + $hue-step * i;
+    } @else {
+      $hue : $h - $hue-step *i;
+    }
+  }
+  @if($hue < 0) {
+    $hue : $hue + 360;
+  } @else if($hue >= 360) {
+    $hue : $hue - 360;
+  }
+  @return round($hue)
+}
+
+@function getSaturation($color, $i, $is-light){
+  $sat : 0;
+  $s : saturation($color);
+  @if($is-light){
+    $sat: round($s) - $saturation-step * $i;
+  } @else if($i == $dark-color-count){
+    $sat : round($s) + $saturation-step;
+  } @else{
+    $sat : round($s) + $saturation-step2 * $i;
+  }
+  @if($sat > 100){
+    $sat : 100;
+  }
+  @if($is-light and $i == $light-color-count and $sat > 10) {
+    $sat : 10;
+  }
+  @if($sat < 6){
+    $sat : 6;
+  }
+  @return round($sat)
+}
+
+@function getLightness($color, $i, $is-light){
+  $l: lightness($color);
+  @if($is-light){
+    @return round($l) + $brightness-step1 * $i;
+  }
+  @return round($l) - $brightness-step2 * $i;
+}
+
+@function colorPalette($color, $index){
+  $is-light: $index <= 6;
+  $i : $index - $light-color-count - 1;
+  @if($is-light) {
+    $i : $light-color-count + 1 - $index;
+  }
+
+  $h : getHue($color, $i, $is-light);
+  $s : getSaturation($color, $i, $is-light);
+  $l : getLightness($color, $i, $is-light);
+
+  @return hsl($h, $s, $l)
+}
+
