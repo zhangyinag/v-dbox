@@ -1,0 +1,27 @@
+@import "common";
+@mixin swing-motion($class-name, $keyframe-name) {
+  .#{$class-name}-enter-active {
+    @include motion-common();
+    animation-name: #{$keyframe-name}In;
+  }
+}
+
+@include swing-motion(swing, antSwing);
+
+@keyframes antSwingIn {
+  0%, 100% {
+    transform: translateX(0px);
+  }
+  20% {
+    transform: translateX(-10px);
+  }
+  40% {
+    transform: translateX(10px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+}

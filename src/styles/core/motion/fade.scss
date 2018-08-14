@@ -1,0 +1,35 @@
+@import "common";
+
+@mixin fade-motion($class-name, $keyframe-name) {
+  @include make-motion($class-name, $keyframe-name);
+  .#{$class-name}-enter {
+    opacity: 0;
+  }
+  .#{$class-name}-leave-to {
+    opacity: 0;
+  }
+  .#{$class-name}-enter-active, .#{$class-name}-leave-active{
+    animation-timing-function: linear;
+  }
+}
+
+@include fade-motion(fade, antFade);
+//@include fade-motion(ant-modal-fade, antFade);
+
+@keyframes antFadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes antFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
