@@ -46,6 +46,9 @@ $namespace: $--ant-prefix;
   @return containsModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
 }
 
+@function nsb ($block){
+  @return $namespace+'-'+$block;
+}
 
 @mixin b($block) {
   $B: $namespace+'-'+$block !global;

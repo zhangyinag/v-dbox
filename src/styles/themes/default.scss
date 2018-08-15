@@ -190,9 +190,9 @@ $--btn-danger-color       : $--error-color !default;
 $--btn-danger-bg          : $--background-color-base !default;
 $--btn-danger-border      : $--border-color-base !default;
 
-$--btn-ghost-color        : $--text-color;
-$--btn-ghost-bg           : transparent;
-$--btn-ghost-border       : $--border-color-base;
+$--btn-ghost-color        : #fff !default;
+$--btn-ghost-bg           : transparent !default;
+$--btn-ghost-border       : #fff !default;
 
 $--btn-disable-color      : $--disabled-color !default;
 $--btn-disable-bg         : $--disabled-bg !default;

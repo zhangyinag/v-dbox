@@ -16,6 +16,40 @@
    <v-button type="dashed">虚线(dashed)</v-button> &nbsp;
    <v-button type="danger">危险(danger)</v-button> &nbsp;
 
+   <br>
+   <br>
+
+   <p>图标按钮</p>
+   <v-button icon="search"></v-button> &nbsp;
+   <v-button type="primary" icon="search"></v-button> &nbsp;
+   <v-button type="dashed" icon="search"></v-button> &nbsp;
+   <v-button type="danger" icon="search"></v-button> &nbsp;
+   &nbsp; &nbsp;
+   <v-button type="dashed"><v-icon type="search"></v-icon> Search</v-button> &nbsp;
+   <v-button type="danger"><v-icon type="search"></v-icon> Search</v-button> &nbsp;
+   <v-button type="primary"><v-icon type="search"></v-icon> Search</v-button> &nbsp;
+   <v-button><v-icon type="search"></v-icon> Search</v-button> &nbsp;
+   &nbsp;
+   <br>
+   <br>
+
+   <p>圆形按钮</p>
+   <v-button shape="circle" icon="search"></v-button> &nbsp;
+   <v-button type="primary" shape="circle" icon="search"></v-button> &nbsp;
+   <v-button type="dashed" shape="circle" icon="search"></v-button> &nbsp;
+   <v-button type="danger" shape="circle" icon="search"></v-button> &nbsp;
+
+   <br>
+   <br>
+
+   <p>幽灵按钮</p>
+   <div style="background: rgb(190, 200, 200); padding: 10px 20px;">
+      <v-button ghost>Default</v-button> &nbsp;
+      <v-button type="primary" ghost>Primary</v-button> &nbsp;
+      <v-button type="dashed" ghost>Dashed</v-button> &nbsp;
+      <v-button type="danger" ghost>Danger</v-button> &nbsp;
+   </div>
+
 </div>
 </template>
 

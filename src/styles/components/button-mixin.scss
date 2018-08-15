@@ -1,5 +1,6 @@
 @import "../themes/default";
 @import "../mixins/colorPalette";
+@import "../mixins/size";
 // mixins for button
 // ------------------------
 @mixin button-size($height, $padding, $font-size, $border-radius) {
@@ -180,8 +181,14 @@
 }
 
 // ghost button style
-@mixin btn-ghost() {
+@mixin btn-ghost($block) {
   @include button-variant-other($--btn-ghost-color, $--btn-ghost-bg, $--btn-ghost-border);
+  &.#{$block}--primary {
+    @include button-variant-ghost($--btn-primary-bg);
+  }
+  &.#{$block}--danger {
+    @include button-variant-ghost($--btn-danger-color);
+  }
 }
 
 // dashed button style
@@ -193,4 +200,20 @@
 // danger button style
 @mixin btn-danger() {
   @include button-variant-danger($--btn-danger-color, $--btn-danger-bg, $--btn-danger-border);
+}
+
+// circle button: the content only contains icon
+@mixin btn-circle($block) {
+  @include square($--btn-circle-size);
+  @include button-size($--btn-circle-size, 0,  $--font-size-base + 2px, 50%);
+
+  &.#{$block}--lg {
+    @include square($--btn-circle-size-lg);
+    @include button-size($--btn-circle-size-lg, 0, $--btn-font-size-lg + 2px, 50%);
+  }
+
+  &.#{$block}--sm {
+    @include square($--btn-circle-size-sm);
+    @include button-size($--btn-circle-size-sm, 0, $--font-size-base, 50%);
+  }
 }
