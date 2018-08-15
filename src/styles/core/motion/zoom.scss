@@ -1,24 +1,22 @@
-.zoom-motion(@className, @keyframeName) {
-  .make-motion(@className, @keyframeName);
-  .@{className}-enter, .@{className}-appear {
+@import "common";
+@import "../../themes/default";
+
+@mixin zoom-motion($class-name, $keyframe-name) {
+  @include make-motion($class-name, $keyframe-name);
+  .#{$class-name}-enter{
     opacity: 0;
-    animation-duration: 0.3s;
-    animation-fill-mode: both;
-    // transform: scale(0); // need this by yiminghe
-    animation-timing-function: @ease-out-circ;
-    animation-play-state: paused;
   }
-  .@{className}-leave {
-    animation-timing-function: @ease-in-out-circ;
+  .#{$class-name}-enter-active,.#{$class-name}-leave-active {
+    animation-timing-function: $--ease-in-out-circ;
   }
 }
 
-.zoom-motion(zoom, antZoom);
-.zoom-motion(zoom-big, antZoomBig);
-.zoom-motion(zoom-up, antZoomUp);
-.zoom-motion(zoom-down, antZoomDown);
-.zoom-motion(zoom-left, antZoomLeft);
-.zoom-motion(zoom-right, antZoomRight);
+@include zoom-motion(zoom, antZoom);
+@include zoom-motion(zoom-big, antZoomBig);
+@include zoom-motion(zoom-up, antZoomUp);
+@include zoom-motion(zoom-down, antZoomDown);
+@include zoom-motion(zoom-left, antZoomLeft);
+@include zoom-motion(zoom-right, antZoomRight);
 
 @keyframes antZoomIn {
   0% {
