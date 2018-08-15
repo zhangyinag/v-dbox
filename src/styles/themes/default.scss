@@ -22,12 +22,12 @@ $--component-background   : #fff !default;
 $--font-family  : "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
 "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
 $--code-family            : "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace !default;
-$--heading-color          : fade(#000, 85%) !default;
-$--text-color             : fade(#000, 65%) !default;
-$--text-color-secondary   : fade(#000, 45%) !default;
-$--heading-color-dark     : fade(#fff, 100%) !default;
-$--text-color-dark        : fade(#fff, 85%) !default;
-$--text-color-secondary-dark: fade(#fff, 65%) !default;
+$--heading-color          : rgba(#000, .85) !default;
+$--text-color             : rgba(#000, .65) !default;
+$--text-color-secondary   : rgba(#000, .45) !default;
+$--heading-color-dark     : rgba(#fff, 1) !default;
+$--text-color-dark        : rgba(#fff, .85) !default;
+$--text-color-secondary-dark: rgba(#fff, .65) !default;
 $--font-size-base         : 14px !default;
 $--font-size-lg           : $--font-size-base + 2px !default;
 $--font-size-sm           : $--font-size-base - 2px !default;
@@ -92,12 +92,12 @@ $--component-background   : #fff !default;
 $--font-family  : "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
 "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
 $--code-family            : "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace !default;
-$--heading-color          : rgba(#000, 85%) !default;
-$--text-color             : rgba(#000, 65%) !default;
-$--text-color-secondary   : rgba(#000, 45%) !default;
-$--heading-color-dark     : rgba(#fff, 100%) !default;
-$--text-color-dark        : rgba(#fff, 85%) !default;
-$--text-color-secondary-dark: rgba(#fff, 65%) !default;
+$--heading-color          : rgba(#000, .85) !default;
+$--text-color             : rgba(#000, .65) !default;
+$--text-color-secondary   : rgba(#000, .45) !default;
+$--heading-color-dark     : rgba(#fff, 1) !default;
+$--text-color-dark        : rgba(#fff, .85) !default;
+$--text-color-secondary-dark: rgba(#fff, .65) !default;
 $--font-size-base         : 14px !default;
 $--font-size-lg           : $--font-size-base + 2px !default;
 $--font-size-sm           : $--font-size-base - 2px !default;
@@ -146,10 +146,11 @@ $--ease-in-quint       : cubic-bezier(0.755, 0.05, 0.855, 0.06) !default;
 $--ease-in-out-quint   : cubic-bezier(0.86, 0, 0.07, 1) !default;
 
 // Border color
-$---border-color-base      : hsl(0, 0, 85%) !default;  // base border outline a component
+$--border-color-base      : hsl(0, 0, 85%) !default;  // base border outline a component
 $--border-color-split     : hsl(0, 0, 91%) !default;  // split border inside a component
 $--border-width-base      : 1px !default;            // width of the border for a component
 $--border-style-base      : solid !default;          // style of a components border
+$--border-base : $--border-width-base $--border-color-base $--border-style-base !default;
 
 // Outline
 $--outline-blur-size      : 0 !default;
@@ -162,7 +163,7 @@ $--background-color-base  : hsl(0, 0, 96%) !default;  // Default grey background
 // Disabled states
 $--disabled-color         : rgba(#fff, 0.25) !default;
 $--disabled-bg            : $--background-color-base !default;
-$--disabled-color-dark    : rgba(#fff, 35%) !default;
+$--disabled-color-dark    : rgba(#fff, .35) !default;
 
 // Shadow
 $--shadow-color           : rgba(0, 0, 0, .15) !default;
@@ -172,3 +173,45 @@ $--shadow-1-left          : -2px 0 8px $--shadow-color !default;
 $--shadow-1-right         : 2px 0 8px $--shadow-color !default;
 $--shadow-2               : 0 4px 12px $--shadow-color !default;
 $--box-shadow-base        : $--shadow-1-down !default;
+
+// Buttons
+$--btn-font-weight        : 400 !default;
+$--btn-border-radius-base : $--border-radius-base !default;
+$--btn-border-radius-sm   : $--border-radius-base !default;
+
+$--btn-primary-color      : #fff !default;
+$--btn-primary-bg         : $--primary-color !default;
+
+$--btn-default-color      : $--text-color !default;
+$--btn-default-bg         : #fff !default;
+$--btn-default-border     : $--border-color-base !default;
+
+$--btn-danger-color       : $--error-color !default;
+$--btn-danger-bg          : $--background-color-base !default;
+$--btn-danger-border      : $--border-color-base !default;
+
+$--btn-ghost-color        : $--text-color;
+$--btn-ghost-bg           : transparent;
+$--btn-ghost-border       : $--border-color-base;
+
+$--btn-disable-color      : $--disabled-color !default;
+$--btn-disable-bg         : $--disabled-bg !default;
+$--btn-disable-border     : $--border-color-base !default;
+
+$--btn-padding-base       : 0 $--padding-md - 1px !default;
+$--btn-font-size-lg       : $--font-size-lg !default;
+$--btn-font-size-sm       : $--font-size-base !default;
+$--btn-padding-lg         : $--btn-padding-base !default;
+$--btn-padding-sm         : 0 $--padding-xs - 1px !default;
+
+$--btn-height-base        : 32px !default;
+$--btn-height-lg          : 40px !default;
+$--btn-height-sm          : 24px !default;
+
+$--btn-circle-size        : $--btn-height-base !default;
+$--btn-circle-size-lg     : $--btn-height-lg !default;
+$--btn-circle-size-sm     : $--btn-height-sm !default;
+
+$--btn-animation-width    : 6px;
+
+$--btn-group-border       : $--primary-5 !default;

@@ -1,6 +1,6 @@
 export interface InstallationOptions {
-  lang?: Lang,
-  cssPrefix?: string,
+  lang?: Lang
+  cssPrefix?: string
   compPrefix?: string
 }
 
@@ -25,4 +25,3 @@ export function resolveClassName (name: string) {
   if (!prefix.css) return name
   return prefix.css + '-' + name
 }
-

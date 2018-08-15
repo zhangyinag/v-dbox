@@ -1,0 +1,28 @@
+@import "../mixins/bem";
+@import "../themes/default";
+@import "./button-mixin";
+
+// Button styles
+// -----------------------------
+
+@include b(button){
+  line-height: $--line-height-base;
+  @include btn();
+  @include btn-default();
+  > i,
+  > span {
+    pointer-events: none;
+  }
+
+  @include m(primary) {
+    @include btn-primary();
+  }
+
+  @include m(dashed) {
+    @include btn-dashed();
+  }
+
+  @include m(danger) {
+    @include btn-danger();
+  }
+}

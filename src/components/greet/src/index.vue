@@ -1,15 +1,15 @@
 <template>
-<div :class="[c('greet')]">{{t('greet.description')}}</div>
+<div :class="[b('greet')]">{{t('greet.description')}}</div>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
 import {Locale} from '@/components/locale'
-import {CssPrefix} from '@/components/css-prefix'
+import {Bem} from '@/components/bem'
 
 @Component({
   components: {},
-  mixins: [Locale, CssPrefix],
+  mixins: [Locale, Bem],
   })
 export default class Greet extends Vue {
 

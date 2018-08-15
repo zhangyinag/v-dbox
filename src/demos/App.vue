@@ -6,7 +6,7 @@
             :class="[{'is-active': demoName === currentDemoName}]"
             v-for="demoName in demoNames"
             :key="demoName"
-            @click="currentDemoName = demoName"> {{demoName}} </li>
+            @click="currentDemoName = demoName"> {{demoName.substring(2)}} </li>
       </ul>
     </div>
     <div class="main">
@@ -23,7 +23,7 @@ const pages: any = {}
 const req = (require as any).context('', true, /index\.vue/)
 const requireAll = (requireContext: any) => requireContext.keys().map((key: string) => {
   if (key.split('/').length !== 3) return
-  let name = key.split('/')[1]
+  let name = 'd-' + key.split('/')[1]
   const component = requireContext(key).default as Vue
   pages[name] = component
 })
@@ -38,7 +38,6 @@ export default class Demos extends Vue {
     public currentDemoName: string = '';
 
     public mounted () {
-      console.log(pages)
       this.demoNames = Object.keys(pages).map(key => key)
     }
 }

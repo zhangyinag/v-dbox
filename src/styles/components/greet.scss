@@ -3,5 +3,5 @@
 
 @include b(greet){
   color: $--primary-color;
-  border: $--border-width-base $--border-style-base $---border-color-base;
+  border: $--border-width-base $--border-style-base $--border-color-base;
 }
