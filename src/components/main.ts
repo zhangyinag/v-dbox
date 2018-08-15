@@ -1,5 +1,5 @@
 import {Vue} from 'vue/types/vue'
-import {InstallationOptions} from '@/components/config'
+import {InstallationOptions, prefix} from '@/components/config'
 import '@/styles/index.scss'
 
 const insts: Array<(vue: typeof Vue, opt: any) => void> = []
@@ -13,11 +13,13 @@ const requireAll = (requireContext: any) => requireContext.keys().map((key: stri
 requireAll(req)
 
 export default function install (vue: typeof Vue, opt: InstallationOptions = {}): void {
+  if (opt.cssPrefix) prefix.css = opt.cssPrefix
+  if (opt.compPrefix) prefix.comp = opt.compPrefix
   insts.forEach((inst) => inst(vue, opt))
 }
 
-declare const window: Window & { Vue: typeof Vue}
-
-if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue, {})
-}
+// declare const window: Window & { Vue: typeof Vue}
+//
+// if (typeof window !== 'undefined' && window.Vue) {
+//   install(window.Vue, {})
+// }

@@ -1,0 +1,7 @@
+@import "../mixins/bem";
+@import "../themes/default";
+
+@include b(greet){
+  color: $--primary-color;
+  border: $--border-width-base $--border-style-base $---border-color-base;
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-dbox 命名空间</title>
+    <link rel="stylesheet" href="../../dist/dbox.css">
+</head>
+<body>
+<div id="app">
+    <h3>自定义 css与组件前缀</h3>
+    <db-greet></db-greet>
+</div>
+</body>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script src="../../dist/dbox.umd.js"></script>
+<script>
+  Vue.use(dbox.default, {compPrefix: 'db', cssPrefix: 'he'})
+  new Vue({
+    el: '#app'
+  })
+</script>
+</html>
