@@ -74,6 +74,15 @@
       <v-button ghost>Default</v-button> &nbsp;  <v-button disabled ghost>Default</v-button> &nbsp;
    </div>
 
+   <br>
+   <br>
+
+   <p>加载状态 (loading) <input type="checkbox" v-model="loading"></p>
+   <v-button :loading="loading">默认 (default)</v-button> &nbsp;
+   <v-button :loading="loading" type="primary">主要 (default)</v-button> &nbsp;
+   <v-button :loading="loading" icon="search">Search</v-button> &nbsp;
+   <v-button  :loading="loading" icon="search" shape="circle"></v-button> &nbsp;
+
 </div>
 </template>
 
@@ -83,6 +92,7 @@ import {Component, Vue} from 'vue-property-decorator'
   components: {},
   })
 export default class ButtonDemo extends Vue {
+  loading: boolean = false
 }
 </script>
 

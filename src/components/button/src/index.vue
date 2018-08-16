@@ -2,7 +2,7 @@
     <button :class="[b(), sizeCls, typeCls, shapeCls, ghostCls, disabledCls]"
             :disabled="disabled"
             @click="onClick">
-        <icon-font :type="icon" v-if="icon"></icon-font>
+        <icon-font :type="iconName" :spin="loading" v-if="iconName"></icon-font>
         <span v-if="$slots.default"><slot></slot></span>
     </button>
 </template>
@@ -30,6 +30,8 @@ export default class Button extends Vue {
 
     @Prop(Boolean) disabled: boolean;
 
+    @Prop(Boolean) loading: boolean;
+
     bemBlock: string = 'button'
 
     get sizeCls (): string {
@@ -54,6 +56,11 @@ export default class Button extends Vue {
 
     get disabledCls (): string {
       return this.disabled ? 'disabled' : ''
+    }
+
+    get iconName (): string {
+      if (this.loading) return 'loading'
+      return this.icon || ''
     }
 
     onClick () {
