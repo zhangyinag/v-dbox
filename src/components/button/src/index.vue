@@ -1,5 +1,5 @@
 <template>
-    <button :class="[b(), sizeCls, typeCls, shapeCls, ghostCls, disabledCls]"
+    <button :class="[b(), sizeCls, typeCls, shapeCls, ghostCls, disabledCls, loadingCls, iconCls]"
             :disabled="disabled"
             @click="onClick">
         <icon-font :type="iconName" :spin="loading" v-if="iconName"></icon-font>
@@ -55,7 +55,15 @@ export default class Button extends Vue {
     }
 
     get disabledCls (): string {
-      return this.disabled ? 'disabled' : ''
+      return this.disabled ? (this as Bem).s('disabled') : ''
+    }
+
+    get loadingCls (): string {
+      return this.loading ? (this as Bem).s('loading') : ''
+    }
+
+    get iconCls (): string {
+      return this.icon ? (this as Bem).s('icon') : ''
     }
 
     get iconName (): string {

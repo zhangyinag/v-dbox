@@ -2,6 +2,8 @@
 import {Component, Vue} from 'vue-property-decorator'
 import {resolveClassName} from '../../config'
 
+const statePrefix = ''
+
 @Component({
   components: {},
   })
@@ -19,6 +21,11 @@ export default class Bem extends Vue {
   m (modifier: string, ele?: string, block?: string): string {
     if (ele) return this.e(ele, block) + '--' + modifier
     return this.b(block) + '--' + modifier
+  }
+
+  s (state: string): string {
+    if (!statePrefix) return state
+    return statePrefix + '-' + state
   }
 }
 </script>

@@ -83,6 +83,23 @@
    <v-button :loading="loading" icon="search">Search</v-button> &nbsp;
    <v-button  :loading="loading" icon="search" shape="circle"></v-button> &nbsp;
 
+   <br>
+   <br>
+
+   <v-button size="sm" :loading="loading">默认 (default)</v-button> &nbsp;
+   <v-button size="sm" :loading="loading" type="primary">主要 (default)</v-button> &nbsp;
+   <v-button size="sm" :loading="loading" icon="search">Search</v-button> &nbsp;
+   <v-button size="sm"  :loading="loading" icon="search" shape="circle"></v-button> &nbsp;
+
+   <br>
+   <br>
+
+   <v-button size="lg" :loading="loading">默认 (default)</v-button> &nbsp;
+   <v-button size="lg" :loading="loading" type="primary">主要 (default)</v-button> &nbsp;
+   <v-button size="lg" :loading="loading" icon="search">Search</v-button> &nbsp;
+   <v-button size="lg"  :loading="loading" icon="search" shape="circle"></v-button> &nbsp;
+
+
 </div>
 </template>
 
