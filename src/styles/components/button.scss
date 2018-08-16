@@ -26,6 +26,10 @@ $block : button;
     @include btn-danger();
   }
 
+  @include m(text) {
+    @include btn-text();
+  }
+
   @include m(ghost) {
     @include btn-ghost(nsb($block));
   }
@@ -36,6 +40,10 @@ $block : button;
 
   @include m(round) {
     @include btn-round(nsb($block));
+  }
+
+  @include m(block) {
+    width: 100%;
   }
 
   & > .#{$--iconfont-css-prefix} {

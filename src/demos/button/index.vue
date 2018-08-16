@@ -9,13 +9,16 @@
 
    <br>
    <br>
+   <br>
 
    <p>类型</p>
    <v-button>默认 (default)</v-button> &nbsp;
    <v-button type="primary">主要 (primary)</v-button> &nbsp;
    <v-button type="dashed">虚线(dashed)</v-button> &nbsp;
    <v-button type="danger">危险(danger)</v-button> &nbsp;
+   <v-button type="text">文字(text)</v-button> &nbsp;
 
+   <br>
    <br>
    <br>
 
@@ -24,12 +27,15 @@
    <v-button type="primary" icon="search"></v-button> &nbsp;
    <v-button type="dashed" icon="search"></v-button> &nbsp;
    <v-button type="danger" icon="search"></v-button> &nbsp;
+   <v-button type="text" icon="search"></v-button> &nbsp;
    &nbsp; &nbsp;
    <v-button type="dashed"><v-icon type="search"></v-icon> Search</v-button> &nbsp;
    <v-button type="danger"><v-icon type="search"></v-icon> Search</v-button> &nbsp;
    <v-button type="primary"><v-icon type="search"></v-icon> Search</v-button> &nbsp;
+   <v-button type="text"><v-icon type="search"></v-icon> Search</v-button> &nbsp;
    <v-button><v-icon type="search"></v-icon> Search</v-button> &nbsp;
    &nbsp;
+   <br>
    <br>
    <br>
 
@@ -49,6 +55,7 @@
 
    <br>
    <br>
+   <br>
 
    <p>幽灵按钮</p>
    <div style="background: rgb(190, 200, 200); padding: 10px 20px;">
@@ -60,6 +67,7 @@
 
    <br>
    <br>
+   <br>
 
    <p>禁用状态</p>
    <v-button>默认 (default)</v-button> &nbsp;<v-button disabled>默认 (default)</v-button> &nbsp;
@@ -68,12 +76,15 @@
    <br>
    <v-button type="dashed">虚线(dashed)</v-button> &nbsp; <v-button type="dashed" disabled>虚线(dashed)</v-button> &nbsp;
    <v-button type="danger">危险(danger)</v-button> &nbsp; <v-button type="danger" disabled>危险(danger)</v-button> &nbsp;
+   <v-button type="text">文字(text)</v-button> &nbsp; <v-button type="text" disabled>文字(text)</v-button> &nbsp;
    <br>
    <br>
    <div style="background: rgb(190, 200, 200); padding: 10px 20px;">
       <v-button ghost>Default</v-button> &nbsp;  <v-button disabled ghost>Default</v-button> &nbsp;
+      <v-button type="primary" ghost>Primary</v-button> &nbsp;  <v-button type="primary" disabled ghost>Primary</v-button> &nbsp;
    </div>
 
+   <br>
    <br>
    <br>
 
@@ -99,6 +110,7 @@
    <v-button size="lg" :loading="loading" icon="search">Search</v-button> &nbsp;
    <v-button size="lg"  :loading="loading" icon="search" shape="circle"></v-button> &nbsp;
 
+   <br>
    <br>
    <br>
 
@@ -163,6 +175,30 @@
       <v-button type="dashed">3</v-button>
       <v-button type="dashed" icon="right">下一页</v-button>
    </v-button-group>
+
+   <br>
+   <br>
+   <br>
+
+   <p>块级按钮</p>
+   <div style="width: 320px;">
+      <v-button block>默认 (default)</v-button> &nbsp;
+      <br><br>
+      <v-button block type="primary">主要 (primary)</v-button> &nbsp;
+      <br><br>
+      <v-button block type="dashed">虚线(dashed)</v-button> &nbsp;
+      <br><br>
+      <v-button block type="danger">危险(danger)</v-button> &nbsp;
+   </div>
+
+   <br>
+   <br>
+   <br>
+
+   <p>点击事件</p>
+   <input type="range" v-model="range"> &nbsp; {{range  / 10 }} s <br>
+   <v-button @click="onClick" :delay="range * 100">自定义延时</v-button> &nbsp;
+   <v-button @click="onClick">默认不延时</v-button> &nbsp;
 </div>
 </template>
 
@@ -173,6 +209,12 @@ import {Component, Vue} from 'vue-property-decorator'
   })
 export default class ButtonDemo extends Vue {
   loading: boolean = false
+
+  range: number = 0
+
+  onClick () {
+    console.count('click')
+  }
 }
 </script>
 

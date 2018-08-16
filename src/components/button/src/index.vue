@@ -1,5 +1,5 @@
 <template>
-    <button :class="[b(), sizeCls, typeCls, shapeCls, ghostCls, disabledCls, loadingCls, iconCls]"
+    <button :class="[b(), sizeCls, typeCls, shapeCls, ghostCls, disabledCls, loadingCls, iconCls, blockCls]"
             :disabled="disabled"
             @click="onClick">
         <icon-font :type="iconName" :spin="loading" v-if="iconName"></icon-font>
@@ -8,9 +8,9 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Vue} from 'vue-property-decorator'
+import {Component, Emit, Prop, Vue} from 'vue-property-decorator'
 import {Bem} from '@/components/bem'
-import {animate} from '../../../utils'
+import {animate, debounce} from '../../../utils'
 import {IconFont} from '../../iconfont'
 
 @Component({
@@ -20,7 +20,7 @@ import {IconFont} from '../../iconfont'
 export default class Button extends Vue {
     @Prop(String) size: 'sm' | 'lg';
 
-    @Prop(String) type: 'primary' | 'dashed' | 'danger';
+    @Prop(String) type: 'primary' | 'dashed' | 'danger' | 'text';
 
     @Prop(String) icon: string;
 
@@ -31,6 +31,10 @@ export default class Button extends Vue {
     @Prop(Boolean) disabled: boolean;
 
     @Prop(Boolean) loading: boolean;
+
+    @Prop(Boolean) block: boolean;
+
+    @Prop({type: Number, default: -1}) delay: number;
 
     bemBlock: string = 'button'
 
@@ -66,12 +70,27 @@ export default class Button extends Vue {
       return this.icon ? (this as Bem).s('icon') : ''
     }
 
+    get blockCls (): string {
+      return this.block ? (this as Bem).m('block') : ''
+    }
+
     get iconName (): string {
       if (this.loading) return 'loading'
       return this.icon || ''
     }
 
+    get delayClick () {
+      return debounce(this.click, this.delay, this)
+    }
+
+    @Emit('click') click () {}
+
     onClick () {
+      if (this.delay === -1) {
+        this.click()
+      } else {
+        this.delayClick()
+      }
       animate(this.$el, (this as Bem).m('click-animating'), 'buttonEffect')
     }
 }

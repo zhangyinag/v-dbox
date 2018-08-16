@@ -30,7 +30,7 @@
   }
 }
 
-@mixin button-disabled() {
+@mixin button-disabled($color: $--btn-disable-color, $bg: $--btn-disable-bg, $border: $--btn-disable-border) {
   &.disabled,
   &[disabled] {
     &,
@@ -38,7 +38,7 @@
     &:focus,
     &:active,
     &.active {
-      @include button-color($--btn-disable-color, $--btn-disable-bg, $--btn-disable-border);
+      @include button-color($color, $bg, $border);
     }
   }
 }
@@ -94,6 +94,25 @@
   @include button-disabled();
 }
 
+@mixin button-variant-text() {
+  @include button-color($--btn-text-color, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+
+  &:hover {
+    @include button-color(colorPalette($--btn-text-color, 5), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  }
+
+  &:focus {
+    @include button-color(colorPalette($--btn-text-color, 5), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  }
+
+  &:active,
+  &.active {
+    @include button-color(colorPalette($--btn-text-color, 7), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  }
+
+  @include button-disabled($--btn-disable-color, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+}
+
 @mixin button-variant-ghost($color) {
   @include button-color($color, transparent, $color);
 
@@ -107,7 +126,7 @@
     @include button-color(colorPalette($color, 7), transparent, colorPalette($color, 7));
   }
 
-  @include button-disabled();
+  @include button-disabled($--btn-disable-color, rgba(255, 255, 255, 0), $--btn-disable-border);
 }
 
 
@@ -189,6 +208,7 @@
   &.#{$block}--danger {
     @include button-variant-ghost($--btn-danger-color);
   }
+  @include button-disabled($--btn-disable-color, rgba(255, 255, 255, 0), $--btn-disable-border);
 }
 
 // dashed button style
@@ -200,6 +220,11 @@
 // danger button style
 @mixin btn-danger() {
   @include button-variant-danger($--btn-danger-color, $--btn-danger-bg, $--btn-danger-border);
+}
+
+//text button style
+@mixin btn-text() {
+  @include button-variant-text();
 }
 
 // circle button: the content only contains icon

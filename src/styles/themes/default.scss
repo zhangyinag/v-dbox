@@ -133,6 +133,10 @@ $--btn-danger-color       : $--error-color !default;
 $--btn-danger-bg          : $--background-color-base !default;
 $--btn-danger-border      : $--border-color-base !default;
 
+$--btn-text-color         : $--primary-color !default;
+$--btn-text-bg            : rgba(255, 255, 255, 0) !default;
+$--btn-text-border        : rgba(255, 255, 255, 0) !default;
+
 $--btn-ghost-color        : #fff !default;
 $--btn-ghost-bg           : transparent !default;
 $--btn-ghost-border       : #fff !default;
