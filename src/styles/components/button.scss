@@ -101,3 +101,36 @@ $block : button;
   }
 }
 
+@include b(button-group){
+  display: inline-block;
+  & .#{nsb(button)}{
+    &:first-child:not(:last-child){
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    &:last-child:not(:first-child){
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    &:not(:last-child){
+      &:not(:first-child){
+        border-radius: 0;
+      }
+      &.#{nsb(button--primary)}{
+        border-right-color: rgba(#fff, .4);
+      }
+    }
+    &:not(:first-child){
+      &:not(.#{nsb(button--primary)}){
+        margin-left: -1px;
+      }
+    }
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      z-index: 2;
+    }
+  }
+}
+

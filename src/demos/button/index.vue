@@ -99,7 +99,70 @@
    <v-button size="lg" :loading="loading" icon="search">Search</v-button> &nbsp;
    <v-button size="lg"  :loading="loading" icon="search" shape="circle"></v-button> &nbsp;
 
+   <br>
+   <br>
 
+   <p>按钮组</p>
+   <v-button-group>
+      <v-button type="primary" icon="left">上一页</v-button>
+      <v-button type="primary" icon="right">下一页</v-button>
+   </v-button-group>
+   &nbsp;&nbsp;
+   <v-button-group>
+      <v-button type="primary" icon="left">上一页</v-button>
+      <v-button type="primary">1</v-button>
+      <v-button type="primary">2</v-button>
+      <v-button type="primary">3</v-button>
+      <v-button type="primary" icon="right">下一页</v-button>
+   </v-button-group>
+
+   <br>
+   <br>
+
+   <v-button-group>
+      <v-button icon="left">上一页</v-button>
+      <v-button icon="right">下一页</v-button>
+   </v-button-group>
+   &nbsp;&nbsp;
+   <v-button-group>
+      <v-button icon="left">上一页</v-button>
+      <v-button>1</v-button>
+      <v-button>2</v-button>
+      <v-button>3</v-button>
+      <v-button icon="right">下一页</v-button>
+   </v-button-group>
+
+   <br>
+   <br>
+
+   <v-button-group>
+      <v-button type="danger" icon="left">上一页</v-button>
+      <v-button type="danger" icon="right">下一页</v-button>
+   </v-button-group>
+   &nbsp;&nbsp;
+   <v-button-group>
+      <v-button type="danger" icon="left">上一页</v-button>
+      <v-button type="danger">1</v-button>
+      <v-button type="danger">2</v-button>
+      <v-button type="danger">3</v-button>
+      <v-button type="danger" icon="right">下一页</v-button>
+   </v-button-group>
+
+   <br>
+   <br>
+
+   <v-button-group>
+      <v-button type="dashed" icon="left">上一页</v-button>
+      <v-button type="dashed" icon="right">下一页</v-button>
+   </v-button-group>
+   &nbsp;&nbsp;
+   <v-button-group>
+      <v-button type="dashed" icon="left">上一页</v-button>
+      <v-button type="dashed">1</v-button>
+      <v-button type="dashed">2</v-button>
+      <v-button type="dashed">3</v-button>
+      <v-button type="dashed" icon="right">下一页</v-button>
+   </v-button-group>
 </div>
 </template>
 
