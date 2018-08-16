@@ -30,10 +30,21 @@ $block : button;
     @include btn-ghost(nsb($block));
   }
 
-
-
   @include m(circle circle-outline) {
     @include btn-circle(nsb($block));
+  }
+
+  @include m(round) {
+    @include btn-round(nsb($block));
+  }
+
+  > .#{$--iconfont-css-prefix} {
+    transition: margin-left .3s $--ease-in-out;
+  }
+
+  // To ensure that a space will be placed between character and `Icon`.
+  & > .#{$--iconfont-css-prefix} + span, & > span + .#{$--iconfont-css-prefix} {
+    margin-left: 8px;
   }
 
   @include m(click-animating){

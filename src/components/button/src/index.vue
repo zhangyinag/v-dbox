@@ -1,8 +1,9 @@
 <template>
-    <button :class="[b(), sizeCls, typeCls, shapeCls, ghostCls]"
+    <button :class="[b(), sizeCls, typeCls, shapeCls, ghostCls, disabledCls]"
+            :disabled="disabled"
             @click="onClick">
         <icon-font :type="icon" v-if="icon"></icon-font>
-        <slot></slot>
+        <span v-if="$slots.default"><slot></slot></span>
     </button>
 </template>
 
@@ -23,9 +24,11 @@ export default class Button extends Vue {
 
     @Prop(String) icon: string;
 
-    @Prop(String) shape: 'circle';
+    @Prop(String) shape: 'circle' | 'round';
 
     @Prop(Boolean) ghost: boolean;
+
+    @Prop(Boolean) disabled: boolean;
 
     bemBlock: string = 'button'
 
@@ -49,8 +52,11 @@ export default class Button extends Vue {
       return (this as Bem).m('ghost')
     }
 
+    get disabledCls (): string {
+      return this.disabled ? 'disabled' : ''
+    }
+
     onClick () {
-      console.log(this.$el)
       animate(this.$el, (this as Bem).m('click-animating'), 'buttonEffect')
     }
 }

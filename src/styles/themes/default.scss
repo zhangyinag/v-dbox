@@ -12,63 +12,6 @@ $--highlight-color        : $--red-6 !default;
 $--warning-color          : $--gold-6 !default;
 $--normal-color           : #d9d9d9 !default;
 
-
-// Base Scaffolding Variables
-// ---
-// Background color for `<body>`
-$--body-background        : #fff !default;
-// Base background color for most components
-$--component-background   : #fff !default;
-$--font-family  : "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif,
-"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
-$--code-family            : "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace !default;
-$--heading-color          : rgba(#000, .85) !default;
-$--text-color             : rgba(#000, .65) !default;
-$--text-color-secondary   : rgba(#000, .45) !default;
-$--heading-color-dark     : rgba(#fff, 1) !default;
-$--text-color-dark        : rgba(#fff, .85) !default;
-$--text-color-secondary-dark: rgba(#fff, .65) !default;
-$--font-size-base         : 14px !default;
-$--font-size-lg           : $--font-size-base + 2px !default;
-$--font-size-sm           : $--font-size-base - 2px !default;
-$--line-height-base       : 1.5 !default;
-$--border-radius-base     : 4px !default;
-$--border-radius-sm       : 2px !default;
-
-
-// ICONFONT
-$--iconfont-css-prefix    : anticon !default;
-$--icon-url               : "https://at.alicdn.com/t/font_148784_v4ggb6wrjmkotj4i" !default;
-
-
-// LINK
-$--link-color             : $--primary-color !default;
-$--link-hover-color       : colorPalette($--link-color, 5) !default;
-$--link-active-color      : colorPalette($--link-color, 7) !default;
-$--link-decoration        : none;
-$--link-hover-decoration  : none;
-
-// Background
-$--background-color-light : hsl(0, 0, 98%) !default;  // background of header and selected item
-$--background-color-base  : hsl(0, 0, 96%) !default;  // Default grey background color
-
-// Disabled states
-$--disabled-color         : lighten(#000, 25%) !default;
-$--disabled-bg            : $--background-color-base !default;
-$--disabled-color-dark    : darken(#fff, 35%) !default;
-
-
-
-// -------- Colors -----------
-$--primary-color          : $--blue-6 !default;
-$--info-color             : $--blue-6 !default;
-$--success-color          : $--green-6 !default;
-$--processing-color       : $--blue-6 !default;
-$--error-color            : $--red-6 !default;
-$--highlight-color        : $--red-6 !default;
-$--warning-color          : $--gold-6 !default;
-$--normal-color           : #d9d9d9 !default;
-
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
 $--primary-1: colorPalette($--primary-color, 1) !default;  // replace tint(@primary-color, 90%)
@@ -161,7 +104,7 @@ $--background-color-light : hsl(0, 0, 98%) !default;  // background of header an
 $--background-color-base  : hsl(0, 0, 96%) !default;  // Default grey background color
 
 // Disabled states
-$--disabled-color         : rgba(#fff, 0.25) !default;
+$--disabled-color         : rgba(#000, .25) !default;
 $--disabled-bg            : $--background-color-base !default;
 $--disabled-color-dark    : rgba(#fff, .35) !default;
 

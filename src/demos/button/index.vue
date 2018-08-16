@@ -33,11 +33,19 @@
    <br>
    <br>
 
-   <p>圆形按钮</p>
+   <p>形状(圆形， 圆角)</p>
    <v-button shape="circle" icon="search"></v-button> &nbsp;
    <v-button type="primary" shape="circle" icon="search"></v-button> &nbsp;
    <v-button type="dashed" shape="circle" icon="search"></v-button> &nbsp;
    <v-button type="danger" shape="circle" icon="search"></v-button> &nbsp;
+
+   <br>
+   <br>
+
+   <v-button shape="round" icon="search">Default</v-button> &nbsp;
+   <v-button type="primary" shape="round" icon="search">Primary</v-button> &nbsp;
+   <v-button type="dashed" shape="round" icon="search">Dashed</v-button> &nbsp;
+   <v-button type="danger" shape="round" icon="search">Danger</v-button> &nbsp;
 
    <br>
    <br>
@@ -48,6 +56,22 @@
       <v-button type="primary" ghost>Primary</v-button> &nbsp;
       <v-button type="dashed" ghost>Dashed</v-button> &nbsp;
       <v-button type="danger" ghost>Danger</v-button> &nbsp;
+   </div>
+
+   <br>
+   <br>
+
+   <p>禁用状态</p>
+   <v-button>默认 (default)</v-button> &nbsp;<v-button disabled>默认 (default)</v-button> &nbsp;
+   <v-button type="primary">主要 (primary)</v-button> &nbsp; <v-button type="primary" disabled>主要 (primary)</v-button> &nbsp;
+   <br>
+   <br>
+   <v-button type="dashed">虚线(dashed)</v-button> &nbsp; <v-button type="dashed" disabled>虚线(dashed)</v-button> &nbsp;
+   <v-button type="danger">危险(danger)</v-button> &nbsp; <v-button type="danger" disabled>危险(danger)</v-button> &nbsp;
+   <br>
+   <br>
+   <div style="background: rgb(190, 200, 200); padding: 10px 20px;">
+      <v-button ghost>Default</v-button> &nbsp;  <v-button disabled ghost>Default</v-button> &nbsp;
    </div>
 
 </div>

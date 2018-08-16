@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator'
+  import {Component, Vue, Watch} from 'vue-property-decorator'
 
 const pages: any = {}
 
@@ -37,8 +37,23 @@ export default class Demos extends Vue {
 
     public currentDemoName: string = '';
 
+    loadDemoByUrl () {
+      const hash = window.location.hash || ''
+      let name = hash.substr(2)
+      if (!name) return
+      this.currentDemoName = name
+    }
+
     public mounted () {
       this.demoNames = Object.keys(pages).map(key => key)
+      this.loadDemoByUrl()
+      window.addEventListener('hashchange', () => {
+        this.loadDemoByUrl()
+      })
+    }
+
+    @Watch('currentDemoName') currentDemoNameChange (currentDemoName: string) {
+      window.location.hash = '/' + currentDemoName
     }
 }
 </script>

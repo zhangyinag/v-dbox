@@ -10,19 +10,6 @@
   height: $height;
 }
 
-@mixin button-disabled() {
-  &.disabled,
-  &[disabled] {
-    &,
-    &:hover,
-    &:focus,
-    &:active,
-    &.active {
-      @include button-color($--btn-disable-color, $--btn-disable-bg, $--btn-disable-border);
-    }
-  }
-}
-
 @mixin button-color($color, $background, $border) {
   color: $color;
   background-color: $background;
@@ -39,6 +26,19 @@
       bottom: 0;
       right: 0;
       background: transparent;
+    }
+  }
+}
+
+@mixin button-disabled() {
+  &.disabled,
+  &[disabled] {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      @include button-color($--btn-disable-color, $--btn-disable-bg, $--btn-disable-border);
     }
   }
 }
@@ -215,5 +215,18 @@
   &.#{$block}--sm {
     @include square($--btn-circle-size-sm);
     @include button-size($--btn-circle-size-sm, 0, $--font-size-base, 50%);
+  }
+}
+
+// round button
+@mixin btn-round($block) {
+  border-radius: $--btn-height-base;
+
+  &.#{$block}--lg {
+    border-radius: $--btn-height-lg;
+  }
+
+  &.#{$block}--sm {
+    border-radius: $--btn-height-sm;
   }
 }
