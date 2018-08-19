@@ -1,9 +1,15 @@
 import {Vue} from 'vue-property-decorator'
-import {InstallationOptions} from '@/components/config'
 import IconFont from './src/index.vue'
+import {InstallationOptions} from '@/core'
+import config from '@/core/config'
+import {PluginObject} from 'vue/types/plugin'
 
 export {IconFont}
 
-export default function install (vue: typeof Vue, opt: InstallationOptions = {}): void {
-  vue.component('v-icon', IconFont)
+const plugin: PluginObject<InstallationOptions> = {
+  install: function (vue: typeof Vue, opt: InstallationOptions = {}): void {
+    vue.component(config.compPrefix + '-icon', IconFont)
+  }
 }
+
+export default plugin

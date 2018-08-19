@@ -10,6 +10,9 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "strictPropertyInitialization": false,
+    "declaration": true,
+    "declarationDir": "types",
     "baseUrl": ".",
     "types": [
       "node",

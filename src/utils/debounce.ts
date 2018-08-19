@@ -1,4 +1,4 @@
-export function debounce(fn: Function, delta: number, context?: any) {
+export function debounce (fn: Function, delta: number, context?: any) {
   let timerId: any
   return function () {
     clearTimeout(timerId)

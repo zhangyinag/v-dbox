@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
+import '../styles/index.scss'
 
-import lang from '@/components/locale/lang/en_US'
-import VDbox from '@/components/main'
+import dbox from '@/components/index'
 
 Vue.config.productionTip = false
 
-Vue.use(VDbox, {lang})
+Vue.use(dbox, {})
 
 new Vue({
   render: h => h(App)

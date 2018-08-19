@@ -5,14 +5,13 @@
 </template>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator'
-import {Bem} from '@/components/bem'
+import {Component} from 'vue-property-decorator'
+import BaseComponent from '../../../core/BaseComponent'
 
 @Component({
   components: {},
-  mixins: [Bem],
   })
-export default class ButtonGroup extends Vue {
+export default class ButtonGroup extends BaseComponent {
   bemBlock: string = 'button-group'
 }
 </script>

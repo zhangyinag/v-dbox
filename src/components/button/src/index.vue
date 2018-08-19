@@ -8,16 +8,15 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Prop, Vue} from 'vue-property-decorator'
-import {Bem} from '@/components/bem'
+import {Component, Emit, Prop} from 'vue-property-decorator'
 import {animate, debounce} from '../../../utils'
 import {IconFont} from '../../iconfont'
+import BaseComponent from '../../../core/BaseComponent'
 
 @Component({
   components: {IconFont},
-  mixins: [Bem],
   })
-export default class Button extends Vue {
+export default class Button extends BaseComponent {
     @Prop(String) size: 'sm' | 'lg';
 
     @Prop(String) type: 'primary' | 'dashed' | 'danger' | 'text';
@@ -40,38 +39,38 @@ export default class Button extends Vue {
 
     get sizeCls (): string {
       if (!this.size) return ''
-      return (this as Bem).m(this.size)
+      return this.m(this.size)
     }
 
     get typeCls (): string {
       if (!this.type) return ''
-      return (this as Bem).m(this.type)
+      return this.m(this.type)
     }
 
     get shapeCls (): string {
       if (!this.shape) return ''
-      return (this as Bem).m(this.shape)
+      return this.m(this.shape)
     }
 
     get ghostCls (): string {
       if (!this.ghost) return ''
-      return (this as Bem).m('ghost')
+      return this.m('ghost')
     }
 
     get disabledCls (): string {
-      return this.disabled ? (this as Bem).s('disabled') : ''
+      return this.disabled ? this.s('disabled') : ''
     }
 
     get loadingCls (): string {
-      return this.loading ? (this as Bem).s('loading') : ''
+      return this.loading ? this.s('loading') : ''
     }
 
     get iconCls (): string {
-      return this.icon ? (this as Bem).s('icon') : ''
+      return this.icon ? this.s('icon') : ''
     }
 
     get blockCls (): string {
-      return this.block ? (this as Bem).m('block') : ''
+      return this.block ? this.m('block') : ''
     }
 
     get iconName (): string {
@@ -91,7 +90,7 @@ export default class Button extends Vue {
       } else {
         this.delayClick()
       }
-      animate(this.$el, (this as Bem).m('click-animating'), 'buttonEffect')
+      animate(this.$el, this.m('click-animating'), 'buttonEffect')
     }
 }
 </script>
