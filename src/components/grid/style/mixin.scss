@@ -1,0 +1,12 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/themes/default";
+
+$col : nsb(col);
+
+@mixin make-grid($size : xs) {
+  @for $i from 0 through $--grid-columns {
+    .#{$col}--#{$size}-#{$i}{
+      width: 100% / $--grid-columns * $i;
+    }
+  }
+}

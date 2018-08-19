@@ -1,0 +1,61 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(row){
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+
+  @include m(align-top){
+    align-items: flex-start;
+  }
+  @include m(align-middle){
+    align-items: center;
+  }
+  @include m(align-bottom){
+    align-items: flex-end;
+  }
+
+  @include m(justify-start){
+    justify-content: flex-start;
+  }
+  @include m(justify-end){
+    justify-content: flex-end;
+  }
+  @include m(justify-space-around){
+    justify-content: space-around;
+  }
+  @include m(justify-space-between){
+    justify-content: space-between;
+  }
+}
+
+@include b(col){
+  box-sizing: border-box;
+  position: relative;
+  padding-left: $--grid-gutter-width / 2;
+  padding-right: $--grid-gutter-width / 2;
+}
+
+@include make-grid(xs);
+
+@media (min-width: $--screen-sm-min) {
+  @include make-grid(sm);
+}
+
+@media (min-width: $--screen-md-min) {
+  @include make-grid(md);
+}
+
+@media (min-width: $--screen-lg-min) {
+  @include make-grid(lg);
+}
+
+@media (min-width: $--screen-xl-min) {
+  @include make-grid(xl);
+}
+
+@media (min-width: $--screen-xxl-min) {
+  @include make-grid(xxl);
+}

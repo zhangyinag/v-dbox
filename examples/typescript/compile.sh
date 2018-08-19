@@ -1,0 +1,1 @@
+npm run vue-cli-service build examples/typescript/main.ts

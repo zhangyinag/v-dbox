@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Theme Default</title>
+    <link rel="stylesheet" href="../../dist/dbox.css">
+</head>
+<body>
+    <div id="app">
+        <h3>按钮</h3>
+
+        <v-button>默认 (default)</v-button> &nbsp;
+        <v-button type="primary">主要 (primary)</v-button> &nbsp;
+        <v-button type="dashed">虚线(dashed)</v-button> &nbsp;
+        <v-button type="danger">危险(danger)</v-button> &nbsp;
+        <v-button type="text">文字(text)</v-button> &nbsp;
+    </div>
+</body>
+<script src="../../node_modules/vue/dist/vue.js"></script>
+<script src="../../dist/dbox.umd.js"></script>
+<script>
+  Vue.use(dbox.default)
+  new Vue({
+    el: '#app'
+  })
+</script>
+</html>
