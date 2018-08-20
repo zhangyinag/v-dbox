@@ -14,6 +14,7 @@ import BaseComponent from '../../../core/BaseComponent'
 export default class Row extends BaseComponent {
   @Prop({type: String, default: 'top'}) align: 'top' | 'middle' | 'bottom'
 
+  // not support reactivity, if needed, extend then
   @Prop() gutter: number // | {[key: string]: any}
 
   @Prop({type: String, default: 'start'}) justify: 'start' | 'end' | 'center' | 'space-around' | 'space-between'
@@ -21,6 +22,7 @@ export default class Row extends BaseComponent {
   bemBlock: string = 'row'
 
   get alignCls () {
+    if (!this.align) return ''
     return this.m('align-' + this.align)
   }
 
@@ -29,10 +31,11 @@ export default class Row extends BaseComponent {
   }
 
   get justifyCls () {
-    return this.m('align-' + this.align)
+    if (!this.justify) return ''
+    return this.m('justify-' + this.justify)
   }
 
-  @Provide() get gutterStyle () {
+  @Provide() gutterStyle () {
     return {
       paddingLeft: (this.gutter || 0)/2 + 'px',
       paddingRight: (this.gutter || 0)/2 + 'px'

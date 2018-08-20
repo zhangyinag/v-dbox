@@ -3,10 +3,66 @@
 
 $col : nsb(col);
 
+$row : nsb(row);
+
 @mixin make-grid($size : xs) {
   @for $i from 0 through $--grid-columns {
     .#{$col}--#{$size}-#{$i}{
       width: 100% / $--grid-columns * $i;
     }
+  }
+}
+
+@mixin make-offset(){
+  @for $i from 0 through $--grid-columns {
+    .#{$col}--offset-#{$i}{
+      margin-left: 100% / $--grid-columns * $i;
+    }
+  }
+}
+
+@mixin make-pull(){
+  @for $i from 0 through $--grid-columns {
+    .#{$col}--pull-#{$i}{
+      right: 100% / $--grid-columns * $i;
+    }
+  }
+}
+
+@mixin make-push(){
+  @for $i from 0 through $--grid-columns {
+    .#{$col}--push-#{$i}{
+      left: 100% / $--grid-columns * $i;
+    }
+  }
+}
+
+@mixin make-justify () {
+  .#{$row}--justify-start{
+    justify-content: flex-start;
+  }
+  .#{$row}--justify-end{
+    justify-content: flex-end;
+  }
+  .#{$row}--justify-center{
+    justify-content: center;
+  }
+  .#{$row}--justify-space-between{
+    justify-content: space-between;
+  }
+  .#{$row}--justify-space-around{
+    justify-content: space-around;
+  }
+}
+
+@mixin make-align () {
+  .#{$row}--align-top{
+    align-items: flex-start;
+  }
+  .#{$row}--align-middle{
+    align-items: center;
+  }
+  .#{$row}--align-bottom{
+    align-items: flex-end;
   }
 }

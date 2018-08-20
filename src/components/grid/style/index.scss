@@ -59,3 +59,13 @@
 @media (min-width: $--screen-xxl-min) {
   @include make-grid(xxl);
 }
+
+@include make-offset();
+
+@include make-pull();
+
+@include make-push();
+
+@include make-justify();
+
+@include make-align();
