@@ -172,7 +172,7 @@
       </div>
 
       <a slot="reference">
-         right-end
+         right-start
       </a>
    </v-popper>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -219,7 +219,7 @@
       </div>
 
       <a slot="reference">
-         left-end
+         left-start
       </a>
    </v-popper>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -260,16 +260,34 @@
       对于transform之类的过渡或动画， 需要关闭gpuAcceleration
    </small>
    <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <v-popper trigger="click"
-             transition="slide-up"
-             enter-active-class="slide-up-enter-active"
-             leave-active-class="slide-up-leave-active"
+             :enter-active-class="{
+               'top': 'slide-down-enter-active',
+               'bottom': 'slide-up-enter-active',
+               'left': 'slide-right-enter-active',
+               'right': 'slide-left-enter-active',
+             }"
+             :leave-active-class="{
+               'top': 'slide-down-leave-active',
+               'bottom': 'slide-up-leave-active',
+               'left': 'slide-right-leave-active',
+               'right': 'slide-left-leave-active',
+             }"
+             :transition="{
+               'top': 'slide-down',
+               'bottom': 'slide-up',
+               'left': 'slide-right',
+               'right': 'slide-left',
+             }"
              :options="{placement: 'bottom',modifiers: {
           computeStyle: {
             gpuAcceleration: false
           }
         }}">
-      <div class="popper" id="test">
+      <div class="popper">
          <ul>
             <li>苹果</li>
             <li>梨</li>
@@ -279,7 +297,124 @@
       </div>
 
       <a slot="reference">
-         dropdown
+         dropdown (bottom)
+      </a>
+   </v-popper>
+
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <v-popper trigger="click"
+             :enter-active-class="{
+               'top': 'slide-down-enter-active',
+               'bottom': 'slide-up-enter-active',
+               'left': 'slide-right-enter-active',
+               'right': 'slide-left-enter-active',
+             }"
+             :leave-active-class="{
+               'top': 'slide-down-leave-active',
+               'bottom': 'slide-up-leave-active',
+               'left': 'slide-right-leave-active',
+               'right': 'slide-left-leave-active',
+             }"
+             :transition="{
+               'top': 'slide-down',
+               'bottom': 'slide-up',
+               'left': 'slide-right',
+               'right': 'slide-left',
+             }"
+             :options="{placement: 'top',modifiers: {
+          computeStyle: {
+            gpuAcceleration: false
+          }
+        }}">
+      <div class="popper">
+         <ul>
+            <li>苹果</li>
+            <li>梨</li>
+            <li>西瓜</li>
+            <li>橘子</li>
+         </ul>
+      </div>
+
+      <a slot="reference">
+         dropdown (top)
+      </a>
+   </v-popper>
+
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <v-popper trigger="click"
+             :enter-active-class="{
+               'top': 'slide-down-enter-active',
+               'bottom': 'slide-up-enter-active',
+               'left': 'slide-right-enter-active',
+               'right': 'slide-left-enter-active',
+             }"
+             :leave-active-class="{
+               'top': 'slide-down-leave-active',
+               'bottom': 'slide-up-leave-active',
+               'left': 'slide-right-leave-active',
+               'right': 'slide-left-leave-active',
+             }"
+             :transition="{
+               'top': 'slide-down',
+               'bottom': 'slide-up',
+               'left': 'slide-right',
+               'right': 'slide-left',
+             }"
+             :options="{placement: 'left',modifiers: {
+          computeStyle: {
+            gpuAcceleration: false
+          }
+        }}">
+      <div class="popper">
+         <ul>
+            <li>苹果</li>
+            <li>梨</li>
+            <li>西瓜</li>
+            <li>橘子</li>
+         </ul>
+      </div>
+
+      <a slot="reference">
+         dropdown (left)
+      </a>
+   </v-popper>
+
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <v-popper trigger="click"
+             :enter-active-class="{
+               'top': 'slide-down-enter-active',
+               'bottom': 'slide-up-enter-active',
+               'left': 'slide-right-enter-active',
+               'right': 'slide-left-enter-active',
+             }"
+             :leave-active-class="{
+               'top': 'slide-down-leave-active',
+               'bottom': 'slide-up-leave-active',
+               'left': 'slide-right-leave-active',
+               'right': 'slide-left-leave-active',
+             }"
+             :transition="{
+               'top': 'slide-down',
+               'bottom': 'slide-up',
+               'left': 'slide-right',
+               'right': 'slide-left',
+             }"
+             :options="{placement: 'right',modifiers: {
+          computeStyle: {
+            gpuAcceleration: false
+          }
+        }}">
+      <div class="popper">
+         <ul>
+            <li>苹果</li>
+            <li>梨</li>
+            <li>西瓜</li>
+            <li>橘子</li>
+         </ul>
+      </div>
+
+      <a slot="reference">
+         dropdown (right)
       </a>
    </v-popper>
 

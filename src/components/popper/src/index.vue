@@ -1,6 +1,6 @@
 <template>
   <span>
-    <transition :name="transition" @after-leave="doDestroy">
+    <transition :name="orientedTransition" @after-leave="doDestroy">
       <span
               ref="popper"
               v-show="!disabled && showPopper">
@@ -46,8 +46,8 @@ export default {
       default: false
     },
     content: String,
-    enterActiveClass: String,
-    leaveActiveClass: String,
+    enterActiveClass: String | Object,
+    leaveActiveClass: String | Object,
     boundariesSelector: String,
     reference: {},
     forceShow: {
@@ -63,7 +63,7 @@ export default {
       default: true
     },
     transition: {
-      type: String,
+      type: [String, Object],
       default: ''
     },
     options: {
@@ -86,21 +86,53 @@ export default {
       }
     }
   },
-
+  computed: {
+    orientedTransition () {
+      if (!this.transition) return ''
+      if (Object.prototype.toString.call(this.transition) === '[object String]') {
+        return this.transition
+      } else if (this.transition[this.currentPlacement]) {
+        return this.transition[this.currentPlacement]
+      }
+    }
+  },
   watch: {
     showPopper (value) {
       if (value) {
-        // add handle enter/leave transition
-        if (this.popper && this.enterActiveClass) {
-          if (this.leaveActiveClass) this.popper.classList.remove(this.leaveActiveClass)
-          this.popper.classList.add(this.enterActiveClass)
-        }
         this.$emit('show')
         this.updatePopper()
+        // add handle enter transition
+        this.$nextTick().then(() => {
+          // console.log(this.currentPlacement)
+          if (this.popper && this.enterActiveClass) {
+            if (this.leaveActiveClass) {
+              if (Object.prototype.toString.call(this.leaveActiveClass) === '[object String]') {
+                this.popper.classList.remove(this.leaveActiveClass)
+              } else {
+                this.popper.classList.remove(...Object.values(this.leaveActiveClass))
+              }
+            }
+            if (Object.prototype.toString.call(this.leaveActiveClass) === '[object String]') {
+              this.popper.classList.add(this.enterActiveClass)
+            } else if (this.enterActiveClass[this.currentPlacement]) {
+              this.popper.classList.add(this.enterActiveClass[this.currentPlacement])
+            }
+          }
+        })
       } else {
         if (this.popper && this.leaveActiveClass) {
-          if (this.enterActiveClass) this.popper.classList.remove(this.enterActiveClass)
-          this.popper.classList.add(this.leaveActiveClass)
+          if (this.enterActiveClass) {
+            if (Object.prototype.toString.call(this.enterActiveClass) === '[object String]') {
+              this.popper.classList.remove(this.enterActiveClass)
+            } else {
+              this.popper.classList.remove(...Object.values(this.enterActiveClass))
+            }
+          }
+          if (Object.prototype.toString.call(this.leaveActiveClass) === '[object String]') {
+            this.popper.classList.add(this.leaveActiveClass)
+          } else if (this.leaveActiveClass[this.currentPlacement]) {
+            this.popper.classList.add(this.leaveActiveClass[this.currentPlacement])
+          }
         }
         this.$emit('hide')
       }
@@ -206,6 +238,7 @@ export default {
 
         this.popperOptions.onCreate = () => {
           this.$emit('created', this)
+          this.currentPlacement = this.popperJS.popper.getAttribute('x-placement').split('-')[0] // add by me
           this.$nextTick(this.updatePopper)
         }
 
