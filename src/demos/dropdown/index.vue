@@ -100,6 +100,32 @@
       </v-dropdown-menu>
    </v-dropdown>
 
+   <br>
+   <br>
+
+   <p>级联</p>
+
+   <v-dropdown>
+      <v-button-group>
+         <v-button type="primary" x-not-popper-trigger>下拉菜单</v-button>
+         <v-button type="primary" icon="ellipsis"></v-button>
+      </v-button-group>
+      <v-dropdown-menu slot="dropdown">
+         <v-dropdown-item disabled>数学</v-dropdown-item>
+         <v-dropdown-item>
+            <v-dropdown placement="right">
+               <a>计算机</a>
+               <v-dropdown-menu slot="dropdown">
+                  <v-dropdown-item disabled>Java</v-dropdown-item>
+                  <v-dropdown-item>Python</v-dropdown-item>
+                  <v-dropdown-item>Ruby</v-dropdown-item>
+               </v-dropdown-menu>
+            </v-dropdown>
+         </v-dropdown-item>
+         <v-dropdown-item>哲学</v-dropdown-item>
+      </v-dropdown-menu>
+   </v-dropdown>
+
 </div>
 </template>
 

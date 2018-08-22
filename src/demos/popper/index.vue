@@ -264,29 +264,10 @@
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <v-popper trigger="click"
-             :enter-active-class="{
-               'top': 'slide-down-enter-active',
-               'bottom': 'slide-up-enter-active',
-               'left': 'slide-right-enter-active',
-               'right': 'slide-left-enter-active',
-             }"
-             :leave-active-class="{
-               'top': 'slide-down-leave-active',
-               'bottom': 'slide-up-leave-active',
-               'left': 'slide-right-leave-active',
-               'right': 'slide-left-leave-active',
-             }"
-             :transition="{
-               'top': 'slide-down',
-               'bottom': 'slide-up',
-               'left': 'slide-right',
-               'right': 'slide-left',
-             }"
-             :options="{placement: 'bottom',modifiers: {
-          computeStyle: {
-            gpuAcceleration: false
-          }
-        }}">
+             :enter-active-class="enterActiveClass"
+             :leave-active-class="leaveActiveClass"
+             :transition="transition"
+             :options="options('bottom')">
       <div class="popper">
          <ul>
             <li>苹果</li>
@@ -303,29 +284,10 @@
 
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <v-popper trigger="click"
-             :enter-active-class="{
-               'top': 'slide-down-enter-active',
-               'bottom': 'slide-up-enter-active',
-               'left': 'slide-right-enter-active',
-               'right': 'slide-left-enter-active',
-             }"
-             :leave-active-class="{
-               'top': 'slide-down-leave-active',
-               'bottom': 'slide-up-leave-active',
-               'left': 'slide-right-leave-active',
-               'right': 'slide-left-leave-active',
-             }"
-             :transition="{
-               'top': 'slide-down',
-               'bottom': 'slide-up',
-               'left': 'slide-right',
-               'right': 'slide-left',
-             }"
-             :options="{placement: 'top',modifiers: {
-          computeStyle: {
-            gpuAcceleration: false
-          }
-        }}">
+             :enter-active-class="enterActiveClass"
+             :leave-active-class="leaveActiveClass"
+             :transition="transition"
+             :options="options('top')">
       <div class="popper">
          <ul>
             <li>苹果</li>
@@ -342,29 +304,10 @@
 
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <v-popper trigger="click"
-             :enter-active-class="{
-               'top': 'slide-down-enter-active',
-               'bottom': 'slide-up-enter-active',
-               'left': 'slide-right-enter-active',
-               'right': 'slide-left-enter-active',
-             }"
-             :leave-active-class="{
-               'top': 'slide-down-leave-active',
-               'bottom': 'slide-up-leave-active',
-               'left': 'slide-right-leave-active',
-               'right': 'slide-left-leave-active',
-             }"
-             :transition="{
-               'top': 'slide-down',
-               'bottom': 'slide-up',
-               'left': 'slide-right',
-               'right': 'slide-left',
-             }"
-             :options="{placement: 'left',modifiers: {
-          computeStyle: {
-            gpuAcceleration: false
-          }
-        }}">
+             :enter-active-class="enterActiveClass"
+             :leave-active-class="leaveActiveClass"
+             :transition="transition"
+             :options="options('left')">
       <div class="popper">
          <ul>
             <li>苹果</li>
@@ -381,29 +324,10 @@
 
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
    <v-popper trigger="click"
-             :enter-active-class="{
-               'top': 'slide-down-enter-active',
-               'bottom': 'slide-up-enter-active',
-               'left': 'slide-right-enter-active',
-               'right': 'slide-left-enter-active',
-             }"
-             :leave-active-class="{
-               'top': 'slide-down-leave-active',
-               'bottom': 'slide-up-leave-active',
-               'left': 'slide-right-leave-active',
-               'right': 'slide-left-leave-active',
-             }"
-             :transition="{
-               'top': 'slide-down',
-               'bottom': 'slide-up',
-               'left': 'slide-right',
-               'right': 'slide-left',
-             }"
-             :options="{placement: 'right',modifiers: {
-          computeStyle: {
-            gpuAcceleration: false
-          }
-        }}">
+             :enter-active-class="enterActiveClass"
+             :leave-active-class="leaveActiveClass"
+             :transition="transition"
+             :options="options('bottom')">
       <div class="popper">
          <ul>
             <li>苹果</li>
@@ -415,6 +339,45 @@
 
       <a slot="reference">
          dropdown (right)
+      </a>
+   </v-popper>
+
+   <br>
+   <br>
+
+   <p>级联下拉</p>
+   <v-popper trigger="click"
+             :enter-active-class="enterActiveClass"
+             :leave-active-class="leaveActiveClass"
+             :transition="transition"
+             :options="options('bottom')">
+      <div class="popper">
+         <ul>
+            <li>数学</li>
+            <li>
+               <v-popper trigger="click"
+                         :enter-active-class="enterActiveClass"
+                         :leave-active-class="leaveActiveClass"
+                         :transition="transition"
+                         :options="options('left')">
+                  <div class="popper">
+                     <ul>
+                        <li>Java</li>
+                        <li>Python</li>
+                        <li>Ruby</li>
+                     </ul>
+                  </div>
+                  <div slot="reference">
+                     <a>计算机</a>
+                  </div>
+               </v-popper>
+            </li>
+            <li>语言</li>
+         </ul>
+      </div>
+
+      <a slot="reference">
+         cascade dropdown
       </a>
    </v-popper>
 
@@ -434,6 +397,44 @@ export default class PopperDemo extends Vue {
   delayOnMouseOut: number = 10
 
   disabled: boolean = false
+
+  get enterActiveClass () {
+    return {
+      'top': 'slide-down-enter-active',
+      'bottom': 'slide-up-enter-active',
+      'left': 'slide-right-enter-active',
+      'right': 'slide-left-enter-active'
+    }
+  }
+
+  get leaveActiveClass () {
+    return {
+      'top': 'slide-down-leave-active',
+      'bottom': 'slide-up-leave-active',
+      'left': 'slide-right-leave-active',
+      'right': 'slide-left-leave-active'
+    }
+  }
+
+  get transition () {
+    return {
+      'top': 'slide-down',
+      'bottom': 'slide-up',
+      'left': 'slide-right',
+      'right': 'slide-left'
+    }
+  }
+
+  options (placement: string) {
+    return {
+      placement: placement,
+      modifiers: {
+        computeStyle: {
+          gpuAcceleration: false
+        }
+      }
+    }
+  }
 }
 </script>
 

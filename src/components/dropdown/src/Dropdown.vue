@@ -16,11 +16,9 @@
 import {Component, Prop} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import {Popper} from '../../popper/index'
-import {ButtonGroup, Button as VButton} from '../../button/index'
-import {IconFont} from '../../iconfont/index'
 
 @Component({
-  components: {Popper, VButton, ButtonGroup, IconFont},
+  components: {Popper},
   })
 export default class Dropdown extends BaseComponent {
   @Prop({type: [String], default: 'hover'}) trigger: 'hover' | 'click'
@@ -46,7 +44,7 @@ export default class Dropdown extends BaseComponent {
       'top': 'slide-down-enter-active',
       'bottom': 'slide-up-enter-active',
       'left': 'slide-right-enter-active',
-      'right': 'slide-left-enter-active',
+      'right': 'slide-left-enter-active'
     }
   }
 
@@ -55,7 +53,7 @@ export default class Dropdown extends BaseComponent {
       'top': 'slide-down-leave-active',
       'bottom': 'slide-up-leave-active',
       'left': 'slide-right-leave-active',
-      'right': 'slide-left-leave-active',
+      'right': 'slide-left-leave-active'
     }
   }
 
@@ -64,7 +62,7 @@ export default class Dropdown extends BaseComponent {
       'top': 'slide-down',
       'bottom': 'slide-up',
       'left': 'slide-right',
-      'right': 'slide-left',
+      'right': 'slide-left'
     }
   }
 }
