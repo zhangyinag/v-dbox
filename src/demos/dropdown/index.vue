@@ -51,8 +51,45 @@
 
    <p>按钮</p>
 
-   <v-dropdown split-button>
+   <v-dropdown>
       <v-button type="primary">下拉菜单 <v-icon type="down"></v-icon></v-button>
+      <v-dropdown-menu slot="dropdown">
+         <v-dropdown-item>黄金糕 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item disabled>狮子头 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item>螺蛳粉 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item divider></v-dropdown-item>
+         <v-dropdown-item>双皮奶 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item>蚵仔煎 (25元/斤)</v-dropdown-item>
+      </v-dropdown-menu>
+   </v-dropdown>
+
+   <br>
+   <br>
+
+   <p>禁用</p>
+
+   <v-dropdown>
+      <v-button type="primary" disabled>下拉菜单 <v-icon type="down"></v-icon></v-button>
+      <v-dropdown-menu slot="dropdown">
+         <v-dropdown-item>黄金糕 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item disabled>狮子头 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item>螺蛳粉 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item divider></v-dropdown-item>
+         <v-dropdown-item>双皮奶 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item>蚵仔煎 (25元/斤)</v-dropdown-item>
+      </v-dropdown-menu>
+   </v-dropdown>
+
+   <br>
+   <br>
+
+   <p>分割按钮下拉</p>
+
+   <v-dropdown>
+      <v-button-group>
+         <v-button type="primary" x-not-popper-trigger>下拉菜单</v-button>
+         <v-button type="primary" icon="ellipsis"></v-button>
+      </v-button-group>
       <v-dropdown-menu slot="dropdown">
          <v-dropdown-item>黄金糕 (25元/斤)</v-dropdown-item>
          <v-dropdown-item disabled>狮子头 (25元/斤)</v-dropdown-item>

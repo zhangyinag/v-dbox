@@ -28,8 +28,6 @@ export default class Dropdown extends BaseComponent {
   @Prop({type: [String], default: 'bottom'}) placement: 'top'| 'top-start'| 'top-end'|
     'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'| 'right'| 'right-start'| 'right-end'
 
-  @Prop(Boolean) splitButton: boolean
-
   bemBlock: string = 'dropdown'
 
   get options () {

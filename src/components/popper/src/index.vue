@@ -181,7 +181,8 @@ export default {
   },
 
   methods: {
-    doToggle () {
+    doToggle (e) {
+      if (e.target.attributes['x-not-popper-trigger']) return // to support split button for dropdown
       if (!this.forceShow) {
         this.showPopper = !this.showPopper
       }
@@ -277,7 +278,8 @@ export default {
       this.popperJS ? this.popperJS.scheduleUpdate() : this.createPopper()
     },
 
-    onMouseOver () {
+    onMouseOver (e) {
+      if (e.target.attributes['x-not-popper-trigger']) return // to support split button for dropdown
       clearTimeout(this._timer)
       this._timer = setTimeout(() => {
         this.showPopper = true
