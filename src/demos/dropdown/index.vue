@@ -37,12 +37,29 @@
    <v-dropdown>
       <a>导航</a>
       <v-dropdown-menu slot="dropdown">
-         <v-dropdown-item>黄金糕</v-dropdown-item>
-         <v-dropdown-item disabled>狮子头</v-dropdown-item>
-         <v-dropdown-item>螺蛳粉</v-dropdown-item>
+         <v-dropdown-item>黄金糕 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item disabled>狮子头 (50元/斤)</v-dropdown-item>
+         <v-dropdown-item>螺蛳粉 (80元/斤)</v-dropdown-item>
          <v-dropdown-item divider></v-dropdown-item>
-         <v-dropdown-item>双皮奶</v-dropdown-item>
-         <v-dropdown-item>蚵仔煎</v-dropdown-item>
+         <v-dropdown-item>双皮奶 (10元/斤)</v-dropdown-item>
+         <v-dropdown-item>蚵仔煎 (15元/斤)</v-dropdown-item>
+      </v-dropdown-menu>
+   </v-dropdown>
+
+   <br>
+   <br>
+
+   <p>按钮</p>
+
+   <v-dropdown split-button>
+      <v-button type="primary">下拉菜单 <v-icon type="down"></v-icon></v-button>
+      <v-dropdown-menu slot="dropdown">
+         <v-dropdown-item>黄金糕 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item disabled>狮子头 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item>螺蛳粉 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item divider></v-dropdown-item>
+         <v-dropdown-item>双皮奶 (25元/斤)</v-dropdown-item>
+         <v-dropdown-item>蚵仔煎 (25元/斤)</v-dropdown-item>
       </v-dropdown-menu>
    </v-dropdown>
 

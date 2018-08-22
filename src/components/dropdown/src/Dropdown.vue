@@ -9,24 +9,26 @@
             :options="options">
        <div class="popper" :class="[e('popper')]"><slot name="dropdown"></slot></div>
 
-        <a slot="reference">
-            <slot></slot>
-        </a>
+        <slot slot="reference"></slot>
     </popper>
 </template>
 <script lang="ts">
 import {Component, Prop} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import {Popper} from '../../popper/index'
+import {ButtonGroup, Button as VButton} from '../../button/index'
+import {IconFont} from '../../iconfont/index'
 
 @Component({
-  components: {Popper},
+  components: {Popper, VButton, ButtonGroup, IconFont},
   })
 export default class Dropdown extends BaseComponent {
   @Prop({type: [String], default: 'hover'}) trigger: 'hover' | 'click'
 
   @Prop({type: [String], default: 'bottom'}) placement: 'top'| 'top-start'| 'top-end'|
     'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'| 'right'| 'right-start'| 'right-end'
+
+  @Prop(Boolean) splitButton: boolean
 
   bemBlock: string = 'dropdown'
 
