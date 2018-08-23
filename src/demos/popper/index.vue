@@ -327,7 +327,7 @@
              :enter-active-class="enterActiveClass"
              :leave-active-class="leaveActiveClass"
              :transition="transition"
-             :options="options('bottom')">
+             :options="options('right')">
       <div class="popper">
          <ul>
             <li>苹果</li>

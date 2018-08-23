@@ -51,7 +51,7 @@
 
    <p>按钮</p>
 
-   <v-dropdown>
+   <v-dropdown trigger="click">
       <v-button type="primary">下拉菜单 <v-icon type="down"></v-icon></v-button>
       <v-dropdown-menu slot="dropdown">
          <v-dropdown-item>黄金糕 (25元/斤)</v-dropdown-item>
@@ -131,9 +131,8 @@
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
-import Dropdown from '../../components/dropdown/src/Dropdown'
 @Component({
-  components: {Dropdown},
+  components: {},
   })
 export default class PopperDemo extends Vue {
   delayOnMouseOver: number = 10
