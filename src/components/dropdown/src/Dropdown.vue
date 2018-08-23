@@ -2,14 +2,14 @@
     <popper :trigger="trigger" :class="[b()]"
             :enter-active-class="enterActiveClass"
             :leave-active-class="leaveActiveClass"
-            :transition="transition"
             :visible-arrow="false"
             :delay-on-mouse-over="200"
             :delay-on-mouse-out="200"
+            :disabled="disabled"
             :options="options">
-       <div class="popper" :class="[e('popper')]"><slot name="dropdown"></slot></div>
+       <span class="popper" :class="[e('popper')]"><slot name="dropdown"></slot></span>
 
-        <slot slot="reference"></slot>
+        <span slot="reference" :class="[e('reference')]"><slot></slot></span>
     </popper>
 </template>
 <script lang="ts">
@@ -25,6 +25,8 @@ export default class Dropdown extends BaseComponent {
 
   @Prop({type: [String], default: 'bottom'}) placement: 'top'| 'top-start'| 'top-end'|
     'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'| 'right'| 'right-start'| 'right-end'
+
+  @Prop(Boolean) disabled: boolean
 
   bemBlock: string = 'dropdown'
 

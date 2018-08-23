@@ -105,24 +105,26 @@
 
    <p>级联</p>
 
-   <v-dropdown>
+   <v-dropdown trigger="click">
       <v-button-group>
          <v-button type="primary" x-not-popper-trigger>下拉菜单</v-button>
          <v-button type="primary" icon="ellipsis"></v-button>
       </v-button-group>
       <v-dropdown-menu slot="dropdown">
          <v-dropdown-item disabled>数学</v-dropdown-item>
-         <v-dropdown-item>
+         <v-dropdown-item has-sub>
             <v-dropdown placement="right">
-               <a>计算机</a>
+               <!--<div>计算机设计语言</div>-->
+               <a>计算机设计语言 &nbsp;</a>
+               <!--<v-button type="text">计算机设计语言</v-button>-->
                <v-dropdown-menu slot="dropdown">
-                  <v-dropdown-item disabled>Java</v-dropdown-item>
-                  <v-dropdown-item>Python</v-dropdown-item>
-                  <v-dropdown-item>Ruby</v-dropdown-item>
+                  <v-dropdown-item disabled>Java Language</v-dropdown-item>
+                  <v-dropdown-item>Python Language</v-dropdown-item>
+                  <v-dropdown-item>Ruby Language</v-dropdown-item>
                </v-dropdown-menu>
             </v-dropdown>
          </v-dropdown-item>
-         <v-dropdown-item>哲学</v-dropdown-item>
+         <v-dropdown-item>马克思主义精选</v-dropdown-item>
       </v-dropdown-menu>
    </v-dropdown>
 

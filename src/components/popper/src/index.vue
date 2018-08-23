@@ -1,6 +1,6 @@
 <template>
   <span>
-    <transition :name="orientedTransition" @after-leave="doDestroy">
+    <transition :enter-active-class="orientedEnterActiveClass" :leave-active-class="orientedLeaveActiveClass" @after-leave="doDestroy">
       <span
               ref="popper"
               v-show="!disabled && showPopper">
@@ -93,6 +93,24 @@ export default {
         return this.transition
       } else if (this.transition[this.currentPlacement]) {
         return this.transition[this.currentPlacement]
+      }
+    },
+    orientedLeaveActiveClass () {
+      if (this.orientedTransition) return this.orientedTransition + '-leave-active'
+      if (!this.leaveActiveClass) return ''
+      if (Object.prototype.toString.call(this.leaveActiveClass) === '[object String]') {
+        return this.leaveActiveClass
+      } else if (this.leaveActiveClass[this.currentPlacement]) {
+        return this.leaveActiveClass[this.currentPlacement]
+      }
+    },
+    orientedEnterActiveClass () {
+      if (this.orientedTransition) return this.orientedTransition + '-enter-active'
+      if (!this.enterActiveClass) return ''
+      if (Object.prototype.toString.call(this.enterActiveClass) === '[object String]') {
+        return this.enterActiveClass
+      } else if (this.enterActiveClass[this.enterActiveClass]) {
+        return this.enterActiveClass[this.enterActiveClass]
       }
     }
   },

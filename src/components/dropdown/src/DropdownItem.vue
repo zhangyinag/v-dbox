@@ -1,5 +1,5 @@
 <template>
-<div :class="[b(), disabledCls, dividerCls]">
+<div :class="[b(), disabledCls, dividerCls, hasSubCls]">
 <slot></slot>
 </div>
 </template>
@@ -16,6 +16,8 @@ export default class DropdownItem extends BaseComponent {
 
   @Prop(Boolean) divider: boolean
 
+  @Prop(Boolean) hasSub: boolean
+
   bemBlock: string = 'dropdown-item'
 
   get disabledCls () {
@@ -24,6 +26,10 @@ export default class DropdownItem extends BaseComponent {
 
   get dividerCls () {
     return this.divider ? this.m('divider') : ''
+  }
+
+  get hasSubCls () {
+    return this.hasSub ? this.m('has-sub') : ''
   }
 }
 </script>
