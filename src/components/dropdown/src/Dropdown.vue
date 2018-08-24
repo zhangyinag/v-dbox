@@ -1,5 +1,5 @@
 <template>
-    <popper :trigger="trigger" :class="[b()]"
+    <popper :trigger="trigger" :class="[b(), isSubCls]"
             :enter-active-class="enterActiveClass"
             :leave-active-class="leaveActiveClass"
             :visible-arrow="false"
@@ -29,6 +29,8 @@ export default class Dropdown extends BaseComponent {
   @Prop(Boolean) disabled: boolean
 
   bemBlock: string = 'dropdown'
+
+  isSub: boolean = false
 
   get options () {
     return {
@@ -66,6 +68,14 @@ export default class Dropdown extends BaseComponent {
       'left': 'slide-right',
       'right': 'slide-left'
     }
+  }
+
+  get isSubCls () {
+    return this.isSub ? this.m('is-sub') : ''
+  }
+
+  mounted () {
+    this.isSub = this.$parent && (this.$parent as any).bemBlock === 'dropdown-item'
   }
 }
 </script>
