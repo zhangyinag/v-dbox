@@ -9,7 +9,7 @@
             :disabled="disabled"
             ref="popper"
             :options="options">
-        <span class="popper"><slot></slot></span>
+        <ul class="popper"><slot></slot></ul>
 
         <div slot="reference" :class="[e('title'), isSubCls, activeCls]"><slot name="title"></slot></div>
     </popper>
@@ -41,7 +41,7 @@ export default class SubMenu extends BaseComponent {
   latestSelectedIndex: string| number = ''
 
   get isActive () {
-    return this.getSelectedIndex() === this.latestSelectedIndex
+    return this.latestSelectedIndex && this.getSelectedIndex() === this.latestSelectedIndex
   }
 
   get modeCls () {

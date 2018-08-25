@@ -96,3 +96,28 @@
     @include menu-item-disabled()
   }
 }
+
+@include b(menu-item-group){
+  @include clearfix();
+  margin: 0;
+  padding: 0;
+  .#{nsb('menu-item')}{
+    padding: 0 16px 0 28px;
+  }
+
+
+  > ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  @include e(title){
+    color: $--menu-item-group-title-color;
+    font-size: $--font-size-base;
+    line-height: $--line-height-base;
+    padding: 8px 16px;
+    transition: all .3s;
+  }
+}
+
