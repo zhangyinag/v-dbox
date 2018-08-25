@@ -216,3 +216,22 @@ $--layout-sider-background        : $--layout-header-background !default;
 //$--layout-sider-background-light  : #fff !default;
 //$--layout-trigger-background-light: #fff !default;
 //$--layout-trigger-color-light     : $--text-color !default;
+
+
+// Menu
+// ---
+$--menu-inline-toplevel-item-height: 40px !default;
+$--menu-item-height: 40px !default;
+$--menu-collapsed-width: 80px !default;
+$--menu-bg: $--component-background !default;
+$--menu-item-color: $--text-color !default;
+$--menu-highlight-color: $--primary-color !default;
+$--menu-item-active-bg: $--item-active-bg !default;
+$--menu-item-group-title-color: $--text-color-secondary !default;
+// dark theme
+$--menu-dark-color: $--text-color-secondary-dark !default;
+$--menu-dark-bg: $--layout-header-background !default;
+$--menu-dark-arrow-color: #fff !default;
+$--menu-dark-submenu-bg: #000c17 !default;
+$--menu-dark-highlight-color: #fff !default;
+$--menu-dark-item-active-bg: $--primary-color !default;

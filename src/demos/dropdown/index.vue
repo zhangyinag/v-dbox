@@ -113,7 +113,7 @@
       <v-dropdown-menu slot="dropdown">
          <v-dropdown-item disabled>数学</v-dropdown-item>
          <v-dropdown-item>
-            <v-dropdown placement="right">
+            <v-dropdown>
                <!--<div>计算机设计语言</div>-->
                <a>计算机设计语言 &nbsp;</a>
                <!--<v-button type="text">计算机设计语言</v-button>-->

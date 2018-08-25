@@ -1,0 +1,56 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/themes/default";
+
+@mixin menu-common-item() {
+  cursor: pointer;
+  margin: 0;
+  padding: 0 20px;
+  position: relative;
+  display: block;
+  white-space: nowrap;
+  transition: color .3s $--ease-in-out, border-color .3s $--ease-in-out, background .3s $--ease-in-out, padding .15s $--ease-in-out;
+  .#{$--iconfont-css-prefix} {
+    min-width: 14px;
+    margin-right: 10px;
+    transition: font-size .15s $--ease-out, margin .3s $--ease-in-out;
+    + span {
+      transition: opacity .3s $--ease-in-out, width .3s $--ease-in-out;
+      opacity: 1;
+    }
+  }
+}
+
+@mixin menu-horizontal-item() {
+  position: relative;
+  top: 1px;
+  float: left;
+  border-bottom: 2px solid transparent;
+
+  &:hover,
+  &.active,
+  &.open{
+    border-bottom: 2px solid $--menu-highlight-color;
+    color: $--menu-highlight-color;
+  }
+}
+
+@mixin menu-item-disabled () {
+  color: $--disabled-color !important;
+  cursor: not-allowed;
+  background: none;
+  border-color: transparent !important;
+  > a {
+    color: $--disabled-color !important;
+    pointer-events: none;
+  }
+  //> .@{menu-prefix-cls}-submenu-title {
+  //                       color: @disabled-color !important;
+  //                       cursor: not-allowed;
+  //                       > .@{menu-prefix-cls}-submenu-arrow {
+  //                                              &:before,
+  //                                              &:after {
+  //                                                background: @disabled-color !important;
+  //                                              }
+  //                                            }
+  //                     }
+}

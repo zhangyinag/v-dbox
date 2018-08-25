@@ -1,0 +1,70 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/themes/default";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/clearfix";
+@import "./mixin";
+
+@include b(menu) {
+  @include reset-component();
+  outline: none;
+  margin-bottom: 0;
+  padding-left: 0; // Override default ul/ol
+  list-style: none;
+  box-shadow: $--box-shadow-base;
+  color: $--menu-item-color;
+  background: $--menu-bg;
+  line-height: 0; // Fix display inline-block gap
+  transition: background .3s, width .2s;
+  @include clearfix();
+
+  @include m(horizontal) {
+    border: 0;
+    border-bottom: $--border-width-base $--border-style-base $--border-color-split;
+    box-shadow: none;
+    line-height: 46px;
+
+    &:after {
+      content: "\20";
+      display: block;
+      height: 0;
+      clear: both;
+    }
+  }
+}
+
+
+@include b(menu-item){
+  @include menu-common-item();
+
+  @include m(horizontal) {
+    @include menu-horizontal-item();
+    > a {
+      display: block;
+      color: $--menu-item-color;
+      &:hover {
+        color: $--menu-highlight-color;
+      }
+      &:before {
+        bottom: -2px;
+      }
+    }
+  }
+
+  @include when(disabled){
+    @include menu-item-disabled()
+  }
+}
+
+@include b(sub-menu){
+  @include menu-common-item();
+  transition: border-color .3s $--ease-in-out, background .3s $--ease-in-out, padding .15s $--ease-in-out;
+
+
+  @include m(horizontal) {
+    @include menu-horizontal-item();
+  }
+
+  @include when(disabled){
+    @include menu-item-disabled()
+  }
+}

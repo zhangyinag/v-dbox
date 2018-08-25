@@ -34,7 +34,7 @@ export default class Dropdown extends BaseComponent {
 
   get options () {
     return {
-      placement: this.placement,
+      placement: this.isSub ? 'right-start' : this.placement,
       modifiers: {
         computeStyle: {
           gpuAcceleration: false
@@ -74,7 +74,7 @@ export default class Dropdown extends BaseComponent {
     return this.isSub ? this.m('is-sub') : ''
   }
 
-  mounted () {
+  created () {
     this.isSub = this.$parent && (this.$parent as any).bemBlock === 'dropdown-item'
   }
 }
