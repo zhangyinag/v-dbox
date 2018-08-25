@@ -57,7 +57,6 @@
 
 @include b(sub-menu){
   @include menu-common-item();
-  height: 46px;
   transition: border-color .3s $--ease-in-out, background .3s $--ease-in-out, padding .15s $--ease-in-out;
 
 
@@ -67,6 +66,8 @@
       @include menu-horizontal-sub-item();
       &.active, &:hover{
         border-bottom-color: transparent;
+      }
+      &.active{
         background-color: $--item-hover-bg;
       }
     }
@@ -74,18 +75,19 @@
       padding: 0;
       width: 100%;
       line-height: $--menu-item-height;
-      height: $--menu-item-height;
       border-bottom-color: transparent;
-      background-color: $--item-hover-bg;
     }
 
     @include e(title) {
-      height: $--menu-item-height;
+
     }
 
     @include e(title) {
       @include when(is-sub) {
-        padding: 0 $--control-padding-horizontal + 20px;
+        padding: 0 16px;
+        &.active{
+          background-color: $--item-hover-bg;
+        }
       }
     }
   }

@@ -29,7 +29,7 @@
          <template slot="title">我的工作台</template>
          <v-menu-item index="2-1"><v-icon type="setting"></v-icon>选项1</v-menu-item>
          <v-sub-menu index="2-2">
-            <template slot="title">选项2</template>
+            <template slot="title"><v-icon type="setting"></v-icon>选项2</template>
             <v-menu-item index="2-2-1">第三级选项1</v-menu-item>
             <v-menu-item index="2-2-2">第三级选项2</v-menu-item>
             <v-menu-item index="2-2-3">第三级选项3</v-menu-item>
