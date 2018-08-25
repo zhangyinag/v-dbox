@@ -3,11 +3,12 @@
 @import "./mixin";
 
 @include b(dropdown) {
-  @include e(popper) {
-    border: none;
-    padding: 0;
-    box-shadow: none;
-  }
+  /* has reset in popper class*/
+  //@include e(popper) {
+  //  border: none;
+  //  padding: 0;
+  //  box-shadow: none;
+  //}
   @include e(reference){
     display: inline-block;
     padding: 5px $--control-padding-horizontal;
@@ -15,29 +16,23 @@
   @include m(is-sub){
     @include e(reference){
       margin: -5px (-$--control-padding-horizontal);
-      &:after{
-          font-family: "anticon" !important;
-          font-style: normal;
-          content: "\e61f";
-          display: inline-block;
-          font-size: $--font-size-sm - 2px;
-          color: $--text-color-secondary;
-      }
+      @include make-arrow();
     }
   }
 }
 
 @include b(dropdown-menu) {
-  outline: none;
-  position: relative;
-  list-style-type: none;
-  padding: 4px 0;
-  margin: 0;
-  text-align: left;
-  background-color: $--component-background;
-  border-radius: $--border-radius-base;
-  box-shadow: $--box-shadow-base;
-  background-clip: padding-box;
+  /* has reset in popper class*/
+  //outline: none;
+  //position: relative;
+  //list-style-type: none;
+  //padding: 4px 0;
+  //margin: 0;
+  //text-align: left;
+  //background-color: $--component-background;
+  //border-radius: $--border-radius-base;
+  //box-shadow: $--box-shadow-base;
+  //background-clip: padding-box;
 }
 
 @include b(dropdown-item){

@@ -54,3 +54,15 @@
   //                                            }
   //                     }
 }
+
+@mixin menu-horizontal-sub-item{
+  width: 100%; // ???
+  padding: 0 16px;
+  font-size: $--font-size-base;
+  line-height: $--menu-item-height;
+  height: $--menu-item-height;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

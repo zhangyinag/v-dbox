@@ -21,6 +21,10 @@ export default class Menu extends BaseComponent {
     return this.m(this.mode)
   }
 
+  @Provide() close () {
+    // do nothing, prevent menu-item close emit
+  }
+
   @Provide() getMode (): string {
     return this.mode
   }

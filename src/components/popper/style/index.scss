@@ -1,19 +1,37 @@
+@import "../../../styles/themes/default";
+
 .popper {
   width: auto;
-  background-color: #fafafa;
+  //background-color: #fafafa;
   color: #212121;
-  text-align: center;
-  padding: 2px;
+  //text-align: center;
+  //padding: 2px;
   display: inline-block;
-  border-radius: 3px;
-  position: absolute;
+  //border-radius: 3px;
+  //position: absolute;
   font-size: 14px;
   font-weight: normal;
   border: 1px #ebebeb solid;
   z-index: 200000;
   -moz-box-shadow: rgb(58, 58, 58) 0 0 6px 0;
   -webkit-box-shadow: rgb(58, 58, 58) 0 0 6px 0;
-  box-shadow: rgb(58, 58, 58) 0 0 6px 0;
+  //box-shadow: rgb(58, 58, 58) 0 0 6px 0;
+
+  // reset
+  //  border: none;
+  //  padding: 0;
+  //  box-shadow: none;
+
+    outline: none;
+    position: relative;
+    list-style-type: none;
+    padding: 4px 0;
+    margin: 0;
+    text-align: left;
+    background-color: $--component-background;
+    border-radius: $--border-radius-base;
+    box-shadow: $--box-shadow-base;
+    background-clip: padding-box;
 }
 
 .popper .popper__arrow {

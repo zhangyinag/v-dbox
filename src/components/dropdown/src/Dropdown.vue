@@ -6,14 +6,15 @@
             :delay-on-mouse-over="200"
             :delay-on-mouse-out="200"
             :disabled="disabled"
+            ref="popper"
             :options="options">
-       <span class="popper" :class="[e('popper')]"><slot name="dropdown"></slot></span>
+       <span class="popper"><slot name="dropdown"></slot></span>
 
         <span slot="reference" :class="[e('reference')]"><slot></slot></span>
     </popper>
 </template>
 <script lang="ts">
-import {Component, Prop} from 'vue-property-decorator'
+import {Component, Inject, Prop, Provide} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import {Popper} from '../../popper/index'
 
@@ -45,34 +46,46 @@ export default class Dropdown extends BaseComponent {
 
   get enterActiveClass () {
     return {
-      'top': 'slide-down-enter-active',
-      'bottom': 'slide-up-enter-active',
-      'left': 'slide-right-enter-active',
-      'right': 'slide-left-enter-active'
+      'top': !this.isSub ? 'slide-down-enter-active' : 'zoom-enter-active',
+      'bottom': !this.isSub ? 'slide-up-enter-active' : 'zoom-enter-active',
+      'left': !this.isSub ? 'slide-right-enter-active' : 'zoom-enter-active',
+      'right': !this.isSub ? 'slide-left-enter-active' : 'zoom-enter-active'
     }
   }
 
   get leaveActiveClass () {
     return {
-      'top': 'slide-down-leave-active',
-      'bottom': 'slide-up-leave-active',
-      'left': 'slide-right-leave-active',
-      'right': 'slide-left-leave-active'
+      'top': !this.isSub ? 'slide-down-leave-active' : 'zoom-leave-active',
+      'bottom': !this.isSub ? 'slide-up-leave-active' : 'zoom-leave-active',
+      'left': !this.isSub ? 'slide-right-leave-active' : 'zoom-leave-active',
+      'right': !this.isSub ? 'slide-left-leave-active' : 'zoom-leave-active'
     }
   }
 
   get transition () {
     return {
-      'top': 'slide-down',
-      'bottom': 'slide-up',
-      'left': 'slide-right',
-      'right': 'slide-left'
+      'top': !this.isSub ? 'slide-down' : 'zoom',
+      'bottom': !this.isSub ? 'slide-up' : 'zoom',
+      'left': !this.isSub ? 'slide-right' : 'zoom',
+      'right': !this.isSub ? 'slide-left' : 'zoom'
     }
   }
 
   get isSubCls () {
     return this.isSub ? this.m('is-sub') : ''
   }
+
+  @Provide() close () {
+    const $popper = this.$refs.popper as any
+    if ($popper) $popper.doClose()
+    if (this.isSub) {
+      setTimeout(() => {
+        this.upperClose()
+      }, 100)
+    }
+  }
+
+  @Inject('close') upperClose: () => never
 
   created () {
     this.isSub = this.$parent && (this.$parent as any).bemBlock === 'dropdown-item'

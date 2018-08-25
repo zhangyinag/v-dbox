@@ -1,2 +1,14 @@
 @import "../../../styles/mixins/bem";
 @import "../../../styles/themes/default";
+
+
+@mixin make-arrow{
+  &:after{
+    font-family: "anticon" !important;
+    font-style: normal;
+    content: "\e61f";
+    display: inline-block;
+    font-size: $--font-size-sm - 2px;
+    color: $--text-color-secondary;
+  }
+}

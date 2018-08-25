@@ -34,6 +34,8 @@ export default class MenuItem extends BaseComponent {
     return this.disabled ? this.s('disabled') : ''
   }
 
+  @Inject() close: () => never
+
   @Inject() getMode: () => string
 
   @Inject() setActiveIndex: (index: string | number) => any
@@ -42,6 +44,7 @@ export default class MenuItem extends BaseComponent {
 
   onItemClick () {
     this.setActiveIndex(this.index)
+    this.close()
   }
 }
 </script>
