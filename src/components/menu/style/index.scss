@@ -64,10 +64,10 @@
     @include menu-horizontal-item();
     & .#{nsb(menu-item)}{
       @include menu-horizontal-sub-item();
-      &.active, &:hover{
+      &.active, &.selected, &:hover{
         border-bottom-color: transparent;
       }
-      &.active{
+      &.active, &.selected{
         background-color: $--item-hover-bg;
       }
     }

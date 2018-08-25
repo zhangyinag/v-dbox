@@ -11,7 +11,7 @@
             :options="options">
         <span class="popper"><slot></slot></span>
 
-        <div slot="reference" :class="[e('title'), isSubCls]"><slot name="title"></slot></div>
+        <div slot="reference" :class="[e('title'), isSubCls, activeCls]"><slot name="title"></slot></div>
     </popper>
 </li>
 </template>
@@ -38,8 +38,10 @@ export default class SubMenu extends BaseComponent {
 
   isSub: boolean = false
 
+  latestSelectedIndex: string| number = ''
+
   get isActive () {
-    return this.getActiveIndex() === this.index
+    return this.getSelectedIndex() === this.latestSelectedIndex
   }
 
   get modeCls () {
@@ -102,17 +104,22 @@ export default class SubMenu extends BaseComponent {
     if (this.isSub) {
       setTimeout(() => {
         this.upperClose()
-      }, 100)
+      }, 150)
     }
+  }
+
+  @Provide('setSelectedIndex') interceptSetSelectedIndex (index: string | number) {
+    this.latestSelectedIndex = index
+    this.setSelectedIndex(index)
   }
 
   @Inject('close') upperClose: () => never
 
   @Inject() getMode: () => string
 
-  @Inject() setActiveIndex: (index: string | number) => any
+  @Inject() setSelectedIndex: (index: string | number) => any
 
-  @Inject() getActiveIndex: () => string | number
+  @Inject() getSelectedIndex: () => string | number
 
   created () {
     this.isSub = this.$parent && (this.$parent as any).bemBlock !== 'menu'

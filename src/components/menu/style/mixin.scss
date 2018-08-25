@@ -28,6 +28,7 @@
 
   &:hover,
   &.active,
+  &.selected,
   &.open{
     border-bottom: 2px solid $--menu-highlight-color;
     color: $--menu-highlight-color;

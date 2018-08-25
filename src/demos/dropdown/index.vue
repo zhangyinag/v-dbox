@@ -136,7 +136,7 @@ import {Component, Vue} from 'vue-property-decorator'
 @Component({
   components: {},
   })
-export default class PopperDemo extends Vue {
+export default class DropdownDemo extends Vue {
   delayOnMouseOver: number = 10
 
   delayOnMouseOut: number = 10

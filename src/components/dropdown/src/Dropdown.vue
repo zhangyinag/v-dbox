@@ -80,12 +80,11 @@ export default class Dropdown extends BaseComponent {
     if ($popper) $popper.doClose()
     if (this.isSub) {
       setTimeout(() => {
-        this.upperClose()
-      }, 100)
+        let $parent = this.$parent as any
+        if ($parent && $parent.bemBlock === 'dropdown-item') $parent.close()
+      }, 150)
     }
   }
-
-  @Inject('close') upperClose: () => never
 
   created () {
     this.isSub = this.$parent && (this.$parent as any).bemBlock === 'dropdown-item'

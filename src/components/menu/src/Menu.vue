@@ -13,7 +13,7 @@ import BaseComponent from '../../../core/BaseComponent'
 export default class Menu extends BaseComponent {
   @Prop({type: [String], default: 'horizontal'}) mode: 'horizontal' | 'vertical'
 
-  activeIndex: string | number = ''
+  selectedIndex: string | number = ''
 
   bemBlock: string = 'menu'
 
@@ -29,12 +29,12 @@ export default class Menu extends BaseComponent {
     return this.mode
   }
 
-  @Provide() setActiveIndex (index: string | number) {
-    this.activeIndex = index
+  @Provide() setSelectedIndex (index: string | number) {
+    this.selectedIndex = index
   }
 
-  @Provide() getActiveIndex () {
-    return this.activeIndex
+  @Provide() getSelectedIndex () {
+    return this.selectedIndex
   }
 }
 </script>

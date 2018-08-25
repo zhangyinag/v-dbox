@@ -1,5 +1,5 @@
 <template>
-<li :class="[b(), modeCls, activeCls, disabledCls]" @click="onItemClick">
+<li :class="[b(), modeCls, selectedCls, disabledCls]" @click="onItemClick">
     <slot></slot>
 </li>
 </template>
@@ -18,16 +18,16 @@ export default class MenuItem extends BaseComponent {
 
   bemBlock: string = 'menu-item'
 
-  get isActive () {
-    return this.getActiveIndex() === this.index
+  get isSelected () {
+    return this.getSelectedIndex() === this.index
   }
 
   get modeCls () {
     return this.m(this.getMode())
   }
 
-  get activeCls () {
-    return this.isActive ? this.s('active') : ''
+  get selectedCls () {
+    return this.isSelected ? this.s('selected') : ''
   }
 
   get disabledCls () {
@@ -38,12 +38,12 @@ export default class MenuItem extends BaseComponent {
 
   @Inject() getMode: () => string
 
-  @Inject() setActiveIndex: (index: string | number) => any
+  @Inject() setSelectedIndex: (index: string | number) => any
 
-  @Inject() getActiveIndex: () => string | number
+  @Inject() getSelectedIndex: () => string | number
 
   onItemClick () {
-    this.setActiveIndex(this.index)
+    this.setSelectedIndex(this.index)
     this.close()
   }
 }
