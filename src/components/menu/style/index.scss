@@ -197,14 +197,26 @@
   }
 
   @include m(inline){
-    transition: all 3s $--ease-out, opacity 3s $--ease-out;
     @include e(inline-panel){
-      transition: all 3s $--ease-out, opacity 3s $--ease-out;
+      transition: max-height .3s $--ease-in-out, opacity .3s $--ease-in-out;
       opacity: 0;
-      display: none;
+      max-height: 0;
       @include when(open){
-        display: block;
         opacity: 1;
+        max-height: 2000px;
+      }
+    }
+    @include e(title){
+      &:after{
+        transition: transform .15s $--ease-in-out;
+        transform: rotate(90deg);
+      }
+    }
+    @include when(open){
+      @include e(title){
+        &:after{
+          transform: rotate(-90deg);
+        }
       }
     }
   }
