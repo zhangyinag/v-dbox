@@ -11,7 +11,7 @@ import BaseComponent from '../../../core/BaseComponent'
   components: {},
   })
 export default class Menu extends BaseComponent {
-  @Prop({type: [String], default: 'horizontal'}) mode: 'horizontal' | 'vertical'
+  @Prop({type: [String], default: 'horizontal'}) mode: 'horizontal' | 'vertical' | 'inline'
 
   selectedIndex: string | number = ''
 

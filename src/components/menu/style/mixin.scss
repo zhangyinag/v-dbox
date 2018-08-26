@@ -18,6 +18,11 @@
       opacity: 1;
     }
   }
+
+  &:hover,
+  &.active{
+    color: $--menu-highlight-color;
+  }
 }
 
 @mixin menu-horizontal-item() {

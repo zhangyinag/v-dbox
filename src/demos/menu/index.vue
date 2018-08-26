@@ -69,6 +69,71 @@
       <v-menu-item index="3"><a><v-icon type="appstore"></v-icon>订单处理</a></v-menu-item>
    </v-menu>
 
+   <br>
+   <br>
+
+   <p>垂直模式 基本</p>
+   <v-menu mode="vertical" style="width: 256px;">
+      <v-menu-item index="1"> <v-icon type="mail"></v-icon>处理中心</v-menu-item>
+      <v-menu-item index="2"> <v-icon type="mail"></v-icon>我的工作台</v-menu-item>
+      <v-menu-item index="3"><v-icon type="appstore"></v-icon>订单处理</v-menu-item>
+   </v-menu>
+
+   <br>
+   <br>
+
+   <p>垂直模式 子菜单</p>
+   <v-menu mode="vertical" style="width: 256px;">
+      <v-menu-item index="1"> <v-icon type="mail"></v-icon>处理中心</v-menu-item>
+      <v-sub-menu index="2-2" trigger="click">
+         <template slot="title"><v-icon type="setting"></v-icon>选项2</template>
+         <v-menu-item-group>
+            <template slot="title">分组1</template>
+            <v-menu-item index="2-2-1">第三级选项1</v-menu-item>
+            <v-sub-menu index="2-2-2" trigger="click">
+               <template slot="title"><v-icon type="setting"></v-icon>Sub Menu</template>
+               <v-menu-item index="2-2-2-1">选项7</v-menu-item>
+               <v-menu-item index="2-2-2-2">选项8</v-menu-item>
+            </v-sub-menu>
+         </v-menu-item-group>
+
+         <v-menu-item-group>
+            <template slot="title">分组2</template>
+            <v-menu-item index="2-2-4">第三级选项4</v-menu-item>
+            <v-menu-item index="2-2-5">第三级选项5</v-menu-item>
+         </v-menu-item-group>
+      </v-sub-menu>
+      <v-menu-item index="3"><v-icon type="appstore"></v-icon>订单处理</v-menu-item>
+   </v-menu>
+
+   <br>
+   <br>
+
+   <p>行内模式 子菜单</p>
+   <v-menu mode="inline" style="width: 256px;">
+      <v-menu-item index="1"> <v-icon type="mail"></v-icon>处理中心</v-menu-item>
+      <v-sub-menu index="2-2" trigger="click">
+         <template slot="title"><v-icon type="setting"></v-icon>选项2</template>
+         <v-menu-item-group>
+            <template slot="title">分组1</template>
+            <v-menu-item index="2-2-1">第三级选项1</v-menu-item>
+            <v-sub-menu index="2-2-2" trigger="click">
+               <template slot="title"><v-icon type="setting"></v-icon>Sub Menu</template>
+               <v-menu-item index="2-2-2-1">选项7</v-menu-item>
+               <v-menu-item index="2-2-2-2">选项8</v-menu-item>
+            </v-sub-menu>
+         </v-menu-item-group>
+
+         <v-menu-item-group>
+            <template slot="title">分组2</template>
+            <v-menu-item index="2-2-4">第三级选项4</v-menu-item>
+            <v-menu-item index="2-2-5">第三级选项5</v-menu-item>
+         </v-menu-item-group>
+      </v-sub-menu>
+      <v-menu-item index="3"><v-icon type="appstore"></v-icon>订单处理</v-menu-item>
+   </v-menu>
+
+   <div style="margin-bottom: 240px;"></div>
 </div>
 </template>
 

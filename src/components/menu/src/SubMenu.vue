@@ -1,6 +1,15 @@
 <template>
-<li :class="[b(), modeCls, activeCls, disabledCls, isSubCls]">
-    <popper :trigger="trigger" :class="[]"
+<li :class="[b(), modeCls, activeCls, disabledCls, isSubCls, openCls]" @click="onClick">
+    <div v-if="getMode() === 'inline'">
+        <div :class="[e('title'), isSubCls, activeCls]">
+            <slot name="title"></slot>
+        </div>
+        <div :class="[e('inline-panel'), openCls]">
+            <slot></slot>
+        </div>
+    </div>
+    <popper v-else
+            :trigger="trigger" :class="[]"
             :enter-active-class="enterActiveClass"
             :leave-active-class="leaveActiveClass"
             :visible-arrow="false"
@@ -40,6 +49,8 @@ export default class SubMenu extends BaseComponent {
 
   latestSelectedIndex: string| number = ''
 
+  open: boolean = false
+
   get isActive () {
     return this.latestSelectedIndex && this.getSelectedIndex() === this.latestSelectedIndex
   }
@@ -60,9 +71,13 @@ export default class SubMenu extends BaseComponent {
     return this.isSub ? this.s('is-sub') : ''
   }
 
+  get openCls () {
+    return this.open ? this.s('open') : ''
+  }
+
   get options () {
     return {
-      placement: this.isSub ? 'right-start' : this.placement,
+      placement: (this.isSub || this.getMode() === 'vertical') ? 'right-start' : this.placement,
       modifiers: {
         computeStyle: {
           gpuAcceleration: false
@@ -120,6 +135,10 @@ export default class SubMenu extends BaseComponent {
   @Inject() setSelectedIndex: (index: string | number) => any
 
   @Inject() getSelectedIndex: () => string | number
+
+  onClick () {
+    this.open = !this.open
+  }
 
   created () {
     this.isSub = this.$parent && (this.$parent as any).bemBlock !== 'menu'

@@ -1,5 +1,5 @@
 <template>
-<li :class="[b(), modeCls, selectedCls, disabledCls]" @click="onItemClick">
+<li :class="[b(), modeCls, selectedCls, disabledCls, isSubCls]" @click="onItemClick">
     <slot></slot>
 </li>
 </template>
@@ -18,6 +18,8 @@ export default class MenuItem extends BaseComponent {
 
   bemBlock: string = 'menu-item'
 
+  isSub: boolean = true
+
   get isSelected () {
     return this.getSelectedIndex() === this.index
   }
@@ -34,6 +36,10 @@ export default class MenuItem extends BaseComponent {
     return this.disabled ? this.s('disabled') : ''
   }
 
+  get isSubCls () {
+    return this.isSub ? this.s('is-sub') : ''
+  }
+
   @Inject() close: () => never
 
   @Inject() getMode: () => string
@@ -45,6 +51,10 @@ export default class MenuItem extends BaseComponent {
   onItemClick () {
     this.setSelectedIndex(this.index)
     this.close()
+  }
+
+  created () {
+    this.isSub = this.$parent && (this.$parent as any).bemBlock !== 'menu'
   }
 }
 </script>
