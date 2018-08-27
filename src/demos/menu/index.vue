@@ -129,6 +129,8 @@
             <v-menu-item index="2-2-4">第三级选项4</v-menu-item>
             <v-menu-item index="2-2-5">第三级选项5</v-menu-item>
          </v-menu-item-group>
+         <v-menu-item index="2-2-6">选项6</v-menu-item>
+         <v-menu-item index="2-2-7">选项7</v-menu-item>
       </v-sub-menu>
       <v-menu-item index="3"><v-icon type="appstore"></v-icon>订单处理</v-menu-item>
    </v-menu>

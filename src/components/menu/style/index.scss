@@ -17,6 +17,11 @@
   transition: background .3s, width .2s;
   @include clearfix();
 
+  ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
   @include m(horizontal) {
     border: 0;
     border-bottom: $--border-width-base $--border-style-base $--border-color-split;
@@ -39,6 +44,11 @@
 
 @include b(menu-item){
   @include menu-common-item();
+
+  &:hover,
+  &.active{
+    color: $--menu-highlight-color;
+  }
 
   &.selected {
     color: $--menu-highlight-color;
@@ -106,6 +116,12 @@
   @include when(disabled){
     @include menu-item-disabled()
   }
+
+  //@include m(inline) {
+  //  @include when(is-sub){
+  //    padding-left: calc(100% + 30px);
+  //  }
+  //}
 }
 
 @include b(sub-menu){
@@ -157,13 +173,6 @@
     //  height: $--menu-inline-toplevel-item-height;
     //}
 
-    @include when(active){
-      color: $--menu-highlight-color;
-      > a {
-        color: $--menu-highlight-color;
-      }
-    }
-
     @include e(title) {
       padding: 0 (16px + 10px) 0 16px;
       font-size: $--font-size-base;
@@ -177,11 +186,12 @@
         line-height: $--menu-inline-toplevel-item-height;
         height: $--menu-inline-toplevel-item-height;
       }
-      &.active{
-        background-color: $--item-hover-bg;
-      }
-      &:active{
-        background: $--menu-item-active-bg;
+      &.active, &:active{
+        color: $--menu-highlight-color;
+        > a {
+          color: $--menu-highlight-color;
+        }
+        //background-color: $--item-hover-bg;
       }
       &:after{
         font-family: "anticon" !important;
@@ -211,9 +221,7 @@
         transition: transform .15s $--ease-in-out;
         transform: rotate(90deg);
       }
-    }
-    @include when(open){
-      @include e(title){
+      @include when(open){
         &:after{
           transform: rotate(-90deg);
         }
@@ -234,6 +242,9 @@
     padding: 0 16px 0 28px;
   }
 
+  .#{nsb('sub-menu__title')}{
+    padding: 0 (16px + 10px) 0 28px;
+  }
 
   > ul{
     list-style: none;

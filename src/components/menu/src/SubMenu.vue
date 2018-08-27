@@ -1,12 +1,12 @@
 <template>
-<li :class="[b(), modeCls, activeCls, disabledCls, isSubCls, openCls]" @click="onClick">
+<li :class="[b(), modeCls, activeCls, disabledCls, isSubCls, openCls]">
     <div v-if="getMode() === 'inline'">
-        <div :class="[e('title'), isSubCls, activeCls]">
+        <div :class="[e('title'), isSubCls, activeCls, openCls]" :style="[inlineIndentStyle]" @click="onInlineTitleClick">
             <slot name="title"></slot>
         </div>
-        <div :class="[e('inline-panel'), openCls]">
+        <ul :class="[e('inline-panel'), openCls]">
             <slot></slot>
-        </div>
+        </ul>
     </div>
     <popper v-else
             :trigger="trigger" :class="[]"
@@ -20,7 +20,7 @@
             :options="options">
         <ul class="popper"><slot></slot></ul>
 
-        <div slot="reference" :class="[e('title'), isSubCls, activeCls]"><slot name="title"></slot></div>
+        <div slot="reference" :class="[e('title'), isSubCls, activeCls, openCls]"><slot name="title"></slot></div>
     </popper>
 </li>
 </template>
@@ -113,6 +113,17 @@ export default class SubMenu extends BaseComponent {
     }
   }
 
+  get inlineIndentStyle () {
+    if (this.getMode() !== 'inline') return {}
+    return {
+      paddingLeft: this.level * this.getInlineIndent() + 'px'
+    }
+  }
+
+  get level (): number {
+    return this.getParentLevel() + 1
+  }
+
   @Provide() close () {
     const $popper = this.$refs.popper as any
     if ($popper) $popper.doClose()
@@ -128,6 +139,10 @@ export default class SubMenu extends BaseComponent {
     this.setSelectedIndex(index)
   }
 
+  @Provide('getParentLevel') getParentLevelIntercept (): number {
+    return this.level
+  }
+
   @Inject('close') upperClose: () => never
 
   @Inject() getMode: () => string
@@ -136,7 +151,11 @@ export default class SubMenu extends BaseComponent {
 
   @Inject() getSelectedIndex: () => string | number
 
-  onClick () {
+  @Inject() getParentLevel: () => number
+
+  @Inject() getInlineIndent: () => number
+
+  onInlineTitleClick () {
     this.open = !this.open
   }
 

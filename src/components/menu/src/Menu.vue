@@ -13,7 +13,11 @@ import BaseComponent from '../../../core/BaseComponent'
 export default class Menu extends BaseComponent {
   @Prop({type: [String], default: 'horizontal'}) mode: 'horizontal' | 'vertical' | 'inline'
 
+  @Prop({type: [Number], default: 24}) inlineIndent: number
+
   selectedIndex: string | number = ''
+
+  level: number = 0
 
   bemBlock: string = 'menu'
 
@@ -35,6 +39,14 @@ export default class Menu extends BaseComponent {
 
   @Provide() getSelectedIndex () {
     return this.selectedIndex
+  }
+
+  @Provide() getParentLevel (): number {
+    return this.level
+  }
+
+  @Provide() getInlineIndent (): number {
+    return this.inlineIndent
   }
 }
 </script>
