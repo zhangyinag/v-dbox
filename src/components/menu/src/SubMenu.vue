@@ -1,6 +1,6 @@
 <template>
-<li :class="[b(), modeCls, activeCls, disabledCls, isSubCls, openCls]">
-    <div v-if="getMode() === 'inline'">
+<li :class="[b(), modeCls, activeCls, disabledCls, isSubCls, openCls, inlineCollapsedCls]">
+    <div v-if="getMode() === 'inline' && !getInlineCollapsed()">
         <div :class="[e('title'), isSubCls, activeCls, openCls]" :style="[inlineIndentStyle]" @click="onInlineTitleClick">
             <slot name="title"></slot>
         </div>
@@ -75,9 +75,13 @@ export default class SubMenu extends BaseComponent {
     return this.open ? this.s('open') : ''
   }
 
+  get inlineCollapsedCls (): string {
+    return this.getInlineCollapsed() ? this.m('collapsed') : ''
+  }
+
   get options () {
     return {
-      placement: (this.isSub || this.getMode() === 'vertical') ? 'right-start' : this.placement,
+      placement: (this.isSub || this.getMode() === 'vertical' || this.getInlineCollapsed()) ? 'right-start' : this.placement,
       modifiers: {
         computeStyle: {
           gpuAcceleration: false
@@ -154,6 +158,8 @@ export default class SubMenu extends BaseComponent {
   @Inject() getParentLevel: () => number
 
   @Inject() getInlineIndent: () => number
+
+  @Inject() getInlineCollapsed: () => boolean
 
   onInlineTitleClick () {
     this.open = !this.open

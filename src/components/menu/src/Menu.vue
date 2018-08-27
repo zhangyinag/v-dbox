@@ -1,5 +1,5 @@
 <template>
-   <ul :class="[b(), modeCls]">
+   <ul :class="[b(), modeCls, inlineCollapsedCls, themeCls]">
        <slot></slot>
    </ul>
 </template>
@@ -15,6 +15,10 @@ export default class Menu extends BaseComponent {
 
   @Prop({type: [Number], default: 24}) inlineIndent: number
 
+  @Prop(Boolean) inlineCollapsed: boolean
+
+  @Prop({type: [String], default: 'light'}) theme: 'light' | 'dark'
+
   selectedIndex: string | number = ''
 
   level: number = 0
@@ -23,6 +27,14 @@ export default class Menu extends BaseComponent {
 
   get modeCls (): string {
     return this.m(this.mode)
+  }
+
+  get themeCls (): string {
+    return this.m(this.theme)
+  }
+
+  get inlineCollapsedCls (): string {
+    return this.inlineCollapsed ? this.m('collapsed') : ''
   }
 
   @Provide() close () {
@@ -47,6 +59,10 @@ export default class Menu extends BaseComponent {
 
   @Provide() getInlineIndent (): number {
     return this.inlineIndent
+  }
+
+  @Provide() getInlineCollapsed (): boolean {
+    return this.inlineCollapsed
   }
 }
 </script>

@@ -67,3 +67,21 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+@mixin menu-collapsed-title{
+  &:not(is-sub) {
+    left: 0;
+    text-overflow: clip;
+    padding: 0 ($--menu-collapsed-width - 16px) / 2 !important;
+    .#{$--iconfont-css-prefix} {
+      font-size: 16px;
+      line-height: $--menu-item-height;
+      margin: 0;
+      + span {
+        max-width: 0;
+        display: inline-block;
+        opacity: 0;
+      }
+    }
+  }
+}

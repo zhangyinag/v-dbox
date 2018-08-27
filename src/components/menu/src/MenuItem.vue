@@ -1,5 +1,5 @@
 <template>
-<li :class="[b(), modeCls, selectedCls, disabledCls, isSubCls]" :style="[inlineIndentStyle]" @click="onItemClick">
+<li :class="[b(), modeCls, selectedCls, disabledCls, isSubCls, inlineCollapsedCls]" :style="[inlineIndentStyle]" @click="onItemClick">
     <slot></slot>
 </li>
 </template>
@@ -40,6 +40,10 @@ export default class MenuItem extends BaseComponent {
     return this.isSub ? this.s('is-sub') : ''
   }
 
+  get inlineCollapsedCls (): string {
+    return this.getInlineCollapsed() ? this.m('collapsed') : ''
+  }
+
   get inlineIndentStyle () {
     if (this.getMode() !== 'inline') return {}
     return {
@@ -62,6 +66,8 @@ export default class MenuItem extends BaseComponent {
   @Inject() getParentLevel: () => number
 
   @Inject() getInlineIndent: () => number
+
+  @Inject() getInlineCollapsed: () => boolean
 
   onItemClick () {
     this.setSelectedIndex(this.index)
