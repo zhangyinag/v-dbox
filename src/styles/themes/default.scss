@@ -235,3 +235,35 @@ $--menu-dark-arrow-color: #fff !default;
 $--menu-dark-submenu-bg: #000c17 !default;
 $--menu-dark-highlight-color: #fff !default;
 $--menu-dark-item-active-bg: $--primary-color !default;
+
+
+// Input
+// ---
+$--input-height-base           : 32px !default;
+$--input-height-lg             : 40px !default;
+$--input-height-sm             : 24px !default;
+$--input-padding-horizontal    : $--control-padding-horizontal - 1px !default;
+$--input-padding-horizontal-base: $--input-padding-horizontal !default;
+$--input-padding-horizontal-sm : $--control-padding-horizontal-sm - 1px !default;
+$--input-padding-horizontal-lg : $--input-padding-horizontal !default;
+$--input-padding-vertical-base : 4px !default;
+$--input-padding-vertical-sm   : 1px !default;
+$--input-padding-vertical-lg   : 6px !default;
+$--input-placeholder-color     : hsl(0, 0, 75%) !default;
+$--input-color                 : $--text-color !default;
+$--input-border-color          : $--border-color-base !default;
+$--input-bg                    : #fff !default;
+$--input-addon-bg              : $--background-color-light !default;
+$--input-hover-border-color    : $--primary-color !default;
+$--input-disabled-bg           : $--disabled-bg !default;
+$--input-outline-offset        : 0 0 !default;
+
+// Radio
+$--radio-size             : 16px !default;
+$--radio-dot-color        : $--primary-color !default;
+
+// Radio buttons
+$--radio-button-bg           : $--btn-default-bg !default;
+$--radio-button-color        : $--btn-default-color !default;
+$--radio-button-hover-color  : $--primary-5 !default;
+$--radio-button-active-color : $--primary-7 !default;
