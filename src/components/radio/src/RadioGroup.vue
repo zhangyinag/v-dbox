@@ -1,35 +1,37 @@
 <template>
-<div></div>
+<div :class="b()" v-if="!isButtonGroup">
+    <slot></slot>
+</div>
+<button-group v-else><slot></slot></button-group>
 </template>
 
 <script lang="ts">
-import {Component, Emit, Model, Prop} from 'vue-property-decorator'
+import {Component, Emit, Model, Prop, Provide} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
+import {ButtonGroup} from '../../button/index'
 
 @Component({
-  components: {},
+  components: {ButtonGroup},
   })
-export default class Radio extends BaseComponent {
+export default class RadioGroup extends BaseComponent {
+    @Prop([String, Number, Boolean]) @Model('change') value: string | number | boolean
+
+    @Prop(String) type: 'primary'
+
+    @Prop(String) size: 'sm' | 'lg'
+
     bemBlock: string = 'radio-group'
 
-    @Prop({type: [String, Number, Boolean]}) @Model('change') value: string| number| boolean
+    isButtonGroup: boolean = false
 
-    @Prop({type: [String, Number, Boolean]}) label: string| number| boolean
+    @Provide() getType (): string {
+      return this.type
+    }
 
-    @Prop(Boolean) disabled: boolean
+    @Provide() getSize (): string {
+      return this.size
+    }
 
     @Emit() change (value: string| number| boolean) {}
-
-    get checkedCls (): string {
-      return this.value !== this.label ? '' : this.m('checked')
-    }
-
-    get disabledCls (): string {
-      return !this.disabled ? '' : this.s('disabled')
-    }
-
-    onChange () {
-      this.change(this.label)
-    }
 }
 </script>
