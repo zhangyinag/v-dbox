@@ -1,0 +1,148 @@
+@import "../../../styles/themes/default";
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/colorPalette";
+@import "../../../styles/mixins/size";
+@import "../../../styles/mixins/compatibility";
+
+$input-affix-width: 19px;
+
+@mixin input-lg(){
+  padding: $--input-padding-vertical-lg $--input-padding-horizontal-lg;
+  height: $--input-height-lg;
+  font-size: $--font-size-lg;
+}
+
+@mixin input-sm(){
+  padding: $--input-padding-vertical-sm $--input-padding-horizontal-sm;
+  height: $--input-height-sm;
+}
+
+@mixin active($color: $--outline-color){
+  border-color: colorPalette($color, 5);
+  outline: 0;
+  box-shadow: $--input-outline-offset $--outline-blur-size $--outline-width rgba($color, .25);
+  z-index: 1;
+}
+
+@mixin hover($color: $--input-hover-border-color){
+  border-color: colorPalette($color, 5);
+}
+
+@mixin disabled(){
+  background-color: $--input-disabled-bg;
+  opacity: 1;
+  cursor: not-allowed;
+  color: $--disabled-color;
+  &:hover{
+    @include hover($--input-border-color);
+  }
+}
+
+@mixin input(){
+  position: relative;
+  display: inline-block;
+  padding: $--input-padding-vertical-base $--input-padding-horizontal-base;
+  width: 100%;
+  height: $--input-height-base;
+  font-size: $--font-size-base;
+  line-height: $--line-height-base;
+  color: $--input-color;
+  background-color: $--input-bg;
+  background-image: none;
+  border: $--border-width-base $--border-style-base $--input-border-color;
+  border-radius: $--border-radius-base;
+  @include placeholder();
+  transition: all .3s;
+
+  &:hover{
+    @include hover();
+  }
+
+  &:focus{
+    @include active();
+  }
+
+  @include when(disabled){
+    @include disabled();
+  }
+
+  @include when(lg){
+    @include input-lg();
+  }
+
+  @include when(sm){
+    @include input-sm();
+  }
+}
+
+@mixin addon(){
+  padding: 0 $--input-padding-horizontal-base;
+  font-size: $--font-size-base;
+  font-weight: normal;
+  color: $--input-color;
+  text-align: center;
+  line-height: $--line-height-base;
+  background-color: $--input-addon-bg;
+  border: $--border-width-base $--border-style-base $--input-border-color;
+  border-radius: $--border-radius-base;
+  position: relative;
+  transition: all .3s;
+  display: table-cell;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+@mixin prepend(){
+  @include e(prepend){
+    border-right-width: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  @include e(control){
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+@mixin append(){
+  @include e(append){
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  @include e(control){
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+@mixin affix () {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  line-height: 0;
+  color: $--input-color;
+  z-index: 2;
+}
+
+@mixin prefix(){
+  @include e(prefix){
+    @include affix();
+    left: $--input-padding-horizontal-base + 1px;
+  }
+  @include e(control){
+    padding-left: $--input-padding-horizontal-base + $input-affix-width;
+  }
+}
+
+@mixin suffix(){
+  @include e(suffix){
+    @include affix();
+    right: $--input-padding-horizontal-base + 1px;
+  }
+  @include e(control){
+    padding-right: $--input-padding-horizontal-base + $input-affix-width;
+  }
+}
+
+

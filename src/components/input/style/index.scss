@@ -1,0 +1,39 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(input){
+  position: relative;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  @include e(control){
+    @include reset-component();
+    @include input();
+  }
+  @include e(addon){
+    @include addon();
+  }
+
+  @include m(prefix){
+    @include prefix();
+  }
+
+  @include m(suffix){
+    @include suffix();
+  }
+
+  @include m(prepend){
+    @include prepend();
+  }
+
+  @include m(append){
+    @include append();
+  }
+}
+
+
+
+
