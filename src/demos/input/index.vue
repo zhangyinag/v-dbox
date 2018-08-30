@@ -54,6 +54,14 @@
    <v-input class="input" placeholder="请输入内容" v-model="value10" clearable ></v-input>
    <br>
    <v-input class="input" placeholder="请输入内容" v-model="value11" prefix-icon="user" suffix-icon="search" clearable ></v-input>
+
+   <br>
+   <br>
+   <p>文本域</p>
+   <v-input class="input" type="textarea" placeholder="请输入内容" v-model="value12" ></v-input>
+   <br>
+   <small>指定行/列</small>
+   <v-input class="input" type="textarea" placeholder="请输入内容" rows="6" cols="10" v-model="value12" ></v-input>
 </div>
 </template>
 
