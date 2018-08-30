@@ -30,7 +30,7 @@
    <small>搜索按钮</small>
    <br>
    <v-input class="input" placeholder="请输入内容" v-model="value7">
-      <template slot="append"> <v-icon type="search"></v-icon> </template>
+       <v-button type="primary" icon="search" slot="append"></v-button>
    </v-input>
    <br>
 
@@ -47,6 +47,13 @@
    <small>属性方式</small>
    <br>
    <v-input class="input" placeholder="请输入内容" v-model="value9" prefix-icon="search" suffix-icon="user"></v-input>
+
+   <br>
+   <br>
+   <p>可清空</p>
+   <v-input class="input" placeholder="请输入内容" v-model="value10" clearable ></v-input>
+   <br>
+   <v-input class="input" placeholder="请输入内容" v-model="value11" prefix-icon="user" suffix-icon="search" clearable ></v-input>
 </div>
 </template>
 
@@ -66,6 +73,9 @@ export default class InputDemo extends Vue {
   value8: string = ''
   value9: string = ''
   value10: string = ''
+  value11: string = ''
+  value12: string = ''
+  value13: string = ''
   disabled: boolean = false
 }
 </script>

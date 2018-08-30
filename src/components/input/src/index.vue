@@ -6,15 +6,18 @@
                :disabled="disabled"
                @input="onInput"
                @change="onChange"
+               @focus="onFocus"
+               @blur="onBlur"
                v-bind="$attrs">
         <span :class="[e('addon'), e('append')]" v-if="$slots.append"><slot name="append"></slot></span>
         <span :class="[e('prefix')]" v-if="$slots.prefix || prefixIcon">
             <slot name="prefix"></slot>
             <icon-font :type="prefixIcon" v-if="!$slots.prefix && prefixIcon"></icon-font>
         </span>
-        <span :class="[e('suffix')]" v-if="$slots.suffix || suffixIcon">
-            <slot name="suffix"></slot>
-            <icon-font :type="suffixIcon" v-if="!$slots.suffix && suffixIcon"></icon-font>
+        <span :class="[e('suffix')]" v-if="$slots.suffix || suffixIcon || clearIconVisible">
+            <slot name="suffix" v-if="!clearIconVisible"></slot>
+            <icon-font :type="suffixIcon" v-if="!$slots.suffix && suffixIcon && !clearIconVisible"></icon-font>
+            <icon-font type="close-circle" :class="[e('suffix-close')]" v-if="clearIconVisible" @click.native="onClear"></icon-font>
         </span>
     </div>
 </template>
@@ -38,6 +41,16 @@ export default class Input extends BaseComponent {
 
     @Prop(String) suffixIcon: string
 
+    @Prop(Boolean) clearable: boolean
+
+    bemBlock: string = 'input'
+
+    isFocus: boolean = false
+
+    get clearIconVisible () {
+      return this.clearable && this.value
+    }
+
     get disabledCls () {
       return !this.disabled ? '' : this.s('disabled')
     }
@@ -59,21 +72,31 @@ export default class Input extends BaseComponent {
     }
 
     get suffixCls () {
-      return (!this.$slots.suffix && !this.suffixIcon) ? '' : this.m('suffix')
+      return (!this.$slots.suffix && !this.suffixIcon && !this.clearIconVisible) ? '' : this.m('suffix')
     }
 
     @Emit() change (value: string | number| boolean) {}
 
     @Emit() input (value: string | number| boolean) {}
 
-    bemBlock: string = 'input'
-
     onInput (e: any) {
       this.input(e.target.value)
     }
 
     onChange (e: any) {
-      this.input(e.target.value)
+      // this.input(e.target.value)
+    }
+
+    onFocus () {
+      this.isFocus = true
+    }
+
+    onBlur () {
+      this.isFocus = false
+    }
+
+    onClear () {
+      this.input('')
     }
 }
 </script>

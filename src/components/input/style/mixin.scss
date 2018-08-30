@@ -109,7 +109,18 @@ $input-affix-width: 19px;
     border-left-width: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+
+    // support button
+    >{
+      @include b(button) {
+        margin: -1px (-$--input-padding-horizontal-base - 4px);
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+      }
+    }
   }
+
+  @include b(input) {} // just overwrite the block name
   @include e(control){
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -142,6 +153,14 @@ $input-affix-width: 19px;
   }
   @include e(control){
     padding-right: $--input-padding-horizontal-base + $input-affix-width;
+  }
+  @include e(suffix-close){
+    color: $--text-color-secondary;
+    cursor: pointer;
+    transition: all .3s;
+    &:hover{
+      color: $--input-color;
+    }
   }
 }
 
