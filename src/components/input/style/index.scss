@@ -34,6 +34,11 @@
   }
 }
 
+@include b(autocomplete){
+  position: relative;
+  display: inline-block;
+}
+
 
 
 

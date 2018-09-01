@@ -69,6 +69,12 @@
    <small>自动尺寸(设置最大最小值)</small>
    <v-input class="input" type="textarea" placeholder="请输入内容" :autosize="{maxRows: 5, minRows: 2}" v-model="value14" ></v-input>
 
+   <br>
+   <br>
+   <p>自动完成</p>
+   <v-autocomplete class="input" placeholder="请输入搜索内容" v-model="value15" :fetch-suggestions="querySearch1"></v-autocomplete>
+
+   <div style="margin-top: 480px;"></div>
 </div>
 </template>
 
@@ -92,7 +98,18 @@ export default class InputDemo extends Vue {
   value12: string = ''
   value13: string = ''
   value14: string = ''
+  value15: string = ''
+  value16: string = ''
   disabled: boolean = false
+
+  querySearch1 (qs: string, cb: (data: any[]) => void) {
+    let data = [
+      {value: '1'},
+      {value: '2'},
+      {value: '3'}
+    ]
+    cb(data)
+  }
 }
 </script>
 
