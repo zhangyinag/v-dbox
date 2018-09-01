@@ -2,7 +2,9 @@
     <div :class="[b(), prependCls, appendCls, prefixCls, suffixCls]">
         <span :class="[e('addon'), e('prepend')]" v-if="$slots.prepend"><slot name="prepend"></slot></span>
         <component :is="isTextarea ? 'textarea' : 'input'"
-               :type="type" :class="[e('control'), disabledCls, sizeCls, sizeCls]"
+               :type="type"
+               :class="[e('control'), disabledCls, sizeCls, sizeCls]"
+               :style="[textareaAutosizeStyle]"
                :value="value"
                :disabled="disabled"
                @input="onInput"
@@ -46,6 +48,8 @@ export default class Input extends BaseComponent {
 
     @Prop({type: String, default: 'text'}) type: string
 
+    @Prop([Boolean, Object]) autosize: {minRows?: number, maxRows?: number} & boolean
+
     bemBlock: string = 'input'
 
     isFocus: boolean = false
@@ -80,6 +84,20 @@ export default class Input extends BaseComponent {
 
     get suffixCls () {
       return (!this.$slots.suffix && !this.suffixIcon && !this.clearIconVisible) ? '' : this.m('suffix')
+    }
+
+    get textareaAutosizeStyle () {
+      if (!this.autosize) return {}
+      const minRows = (this.autosize && this.autosize.minRows) || 1
+      const maxRows = (this.autosize && this.autosize.maxRows) || 1000
+      let baseHeight = 32
+      let rowHeight = 21
+      let currentRow = (this.value + '').split(/\r*\n/).length
+      return {
+        maxHeight: baseHeight + rowHeight * (maxRows - 1) + 'px',
+        minHeight: baseHeight + rowHeight * (minRows - 1) + 'px',
+        height: baseHeight + rowHeight * (currentRow - 1) + 'px'
+      }
     }
 
     @Emit() change (value: string | number| boolean) {}

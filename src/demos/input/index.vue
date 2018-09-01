@@ -62,6 +62,13 @@
    <br>
    <small>指定行/列</small>
    <v-input class="input" type="textarea" placeholder="请输入内容" rows="6" cols="10" v-model="value12" ></v-input>
+   <br>
+   <small>自动尺寸</small>
+   <v-input class="input" type="textarea" placeholder="请输入内容" autosize v-model="value13" ></v-input>
+   <br>
+   <small>自动尺寸(设置最大最小值)</small>
+   <v-input class="input" type="textarea" placeholder="请输入内容" :autosize="{maxRows: 5, minRows: 2}" v-model="value14" ></v-input>
+
 </div>
 </template>
 
@@ -84,6 +91,7 @@ export default class InputDemo extends Vue {
   value11: string = ''
   value12: string = ''
   value13: string = ''
+  value14: string = ''
   disabled: boolean = false
 }
 </script>
