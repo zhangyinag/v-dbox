@@ -35,6 +35,7 @@
 }
 
 @include b(autocomplete){
+  @include reset-component();
   position: relative;
   display: inline-block;
 }

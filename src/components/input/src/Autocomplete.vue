@@ -120,6 +120,7 @@ export default class Autocomplete extends BaseComponent {
   }
 
   onFocus () {
+    this.delaySearch(this.value + '', this.cb)
   }
 
   onBlur () {
