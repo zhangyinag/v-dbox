@@ -33,6 +33,7 @@
    <br>
    <br>
    <p>指令模式</p>
+   <input type="checkbox" v-model="visible3"> 显示/隐藏 <br>
    <div style="background: #cccccc" v-loading="visible3">
       <p>item 1</p>
       <p>item 2</p>

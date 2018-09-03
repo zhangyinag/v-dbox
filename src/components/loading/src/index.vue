@@ -50,6 +50,10 @@ export default class Loading extends BaseComponent {
     }
   }
 
+  mounted () {
+    this.resetPosition()
+  }
+
   @Watch('value') valueChange (value: boolean) {
     if (value) this.resetPosition()
   }

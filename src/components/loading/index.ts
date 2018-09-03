@@ -10,7 +10,7 @@ export {Loading, LoadingDirective}
 const plugin: PluginObject<InstallationOptions> = {
   install: function (vue: typeof Vue, opt: InstallationOptions = {}): void {
     vue.component(config.compPrefix + '-loading', Loading)
-    vue.directive(config.compPrefix + '-loading', new LoadingDirective())
+    vue.directive('loading', new LoadingDirective())
   }
 }
 
