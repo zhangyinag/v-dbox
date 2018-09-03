@@ -1,6 +1,6 @@
 import {Vue} from 'vue-property-decorator'
 import Loading from './src/index.vue'
-import LoadingDirective from './src/index'
+import LoadingDirective from './src/LoadingDerective'
 import {InstallationOptions} from '@/core'
 import config from '@/core/config'
 import {PluginObject} from 'vue/types/plugin'
