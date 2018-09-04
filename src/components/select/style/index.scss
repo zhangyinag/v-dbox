@@ -1,0 +1,48 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(select){
+  @include reset-component();
+  display: inline-block;
+  position: relative;
+  outline: 0;
+}
+
+@include b(select-selection) {
+  @include reset-component();
+  display: block;
+  position: relative;
+  outline: 0;
+  user-select: none;
+  box-sizing: border-box;
+  background-color: $--component-background;
+  border-radius: $--border-radius-base;
+  border: $--border-width-base $--border-style-base $--border-color-base;
+  transition: all .3s $--ease-in-out;
+  height: $--input-height-base;
+  cursor: pointer;
+
+  &.active, &:active, &.focus, &:focus{
+    @include active()
+  }
+
+  &:hover{
+    @include hover()
+  }
+
+  @include e(arrow){
+    position: absolute;
+    top: 50%;
+    right: $--control-padding-horizontal - 1px;
+    line-height: 1;
+    margin-top: -$--font-size-sm / 2;
+    transform-origin: 50% 50%;
+    color: $--disabled-color;
+    font-size: $--font-size-sm;
+  }
+}
+
+
+

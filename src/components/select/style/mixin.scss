@@ -1,0 +1,18 @@
+@import "../../../styles/themes/default";
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/colorPalette";
+@import "../../../styles/mixins/size";
+@import "../../../styles/mixins/compatibility";
+
+
+@mixin active($color: $--outline-color){
+  border-color: colorPalette($color, 5);
+  outline: 0;
+  box-shadow: $--input-outline-offset $--outline-blur-size $--outline-width rgba($color, .25);
+  z-index: 1;
+}
+
+@mixin hover($color: $--input-hover-border-color){
+  border-color: colorPalette($color, 5);
+}
+
