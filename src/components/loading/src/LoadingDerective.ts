@@ -12,12 +12,12 @@ function generateId (): string {
 
 const loadingCompId = 'loadingCompId'
 
-export default class LoadingDirective implements DirectiveOptions{
+export default class LoadingDirective implements DirectiveOptions {
   bind (el: HTMLElement, binding: VNodeDirective, vnode: VNode, oldVnode: VNode): void {
     const div = document.createElement('div')
     el.appendChild(div)
     const LoadingComp = Vue.extend(Loading)
-    const comp =  new LoadingComp().$mount(div)
+    const comp = new LoadingComp().$mount(div)
     let id = generateId()
     store.set(id, comp)
     el.dataset[loadingCompId] = id

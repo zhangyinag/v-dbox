@@ -13,7 +13,6 @@ import BaseComponent from '../../../core/BaseComponent'
   components: {},
   })
 export default class MenuItemGroup extends BaseComponent {
-
   bemBlock: string = 'menu-item-group'
 }
 </script>
