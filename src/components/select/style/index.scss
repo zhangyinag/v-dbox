@@ -8,6 +8,18 @@
   display: inline-block;
   position: relative;
   outline: 0;
+
+  @include e(dropdown){
+    @include reset-component();
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @include e(popper){
+    padding: 0;
+    margin-top: 3px;
+  }
 }
 
 @include b(select-selection) {
@@ -22,7 +34,11 @@
   border: $--border-width-base $--border-style-base $--border-color-base;
   transition: all .3s $--ease-in-out;
   height: $--input-height-base;
+  padding-left: $--control-padding-horizontal - 1px;
+  padding-right: $--control-padding-horizontal - 1px;
+  line-height: $--input-height-base - 2px;
   cursor: pointer;
+
 
   &.active, &:active, &.focus, &:focus{
     @include active()
@@ -41,7 +57,20 @@
     transform-origin: 50% 50%;
     color: $--disabled-color;
     font-size: $--font-size-sm;
+    transition: all .3s $--ease-in-out;
   }
+
+  @include m(open){
+    @include active();
+    @include e(arrow){
+      transform: rotate(180deg);
+    }
+  }
+}
+
+@include b(option){
+  @include reset-component();
+  @include item();
 }
 
 
