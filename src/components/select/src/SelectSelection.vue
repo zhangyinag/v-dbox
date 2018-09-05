@@ -1,6 +1,6 @@
 <template>
     <div :class="[b(), openCls]">
-        {{selectedOptions[0] && selectedOptions[0].text}}
+        <span v-for="(op, i) in selectedOptions" :key="i">{{op.text}};</span>
         <span :class="[e('arrow')]"><icon-font type="down"></icon-font></span>
     </div>
 </template>
@@ -9,7 +9,11 @@
 import {Component, Emit, Model, Prop} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import {IconFont} from '../../iconfont/index'
-import {SelectOption} from './Option.vue'
+
+export interface SelectOption {
+  label: any
+  text: string
+}
 
 @Component({
   components: {IconFont},

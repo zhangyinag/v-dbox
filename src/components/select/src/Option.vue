@@ -9,11 +9,6 @@ import {Component, Emit, Inject, Model, Prop} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import {IconFont} from '../../iconfont/index'
 
-export interface SelectOption {
-  label: any
-  text: string
-}
-
 @Component({
   components: {IconFont},
   })
@@ -29,18 +24,44 @@ export default class Option extends BaseComponent {
   }
 
   get selectedCls () {
-    return !this.getSelectedOptionLabels().includes(this.label) ? '' : this.s('selected')
+    let value = this.getValue()
+    if (Array.isArray(value)) {
+      return !value.includes(this.label) ? '' : this.s('selected')
+    }
+    return value !== this.label ? '' : this.s('selected')
   }
 
-  @Inject() addSelectedOption: (value: SelectOption) => void
+  @Inject() getValue: () => any
 
-  @Inject() getSelectedOptionLabels: () => any[]
+  @Inject() setValue: (value: any) => void
 
   @Inject() close: () => void
 
+  @Inject() addOptionComp: (comp: Option) => void
+
+  @Inject() removeOptionComp: (comp: Option) => void
+
+  @Inject() getMultiple: () => boolean
+
   onClick () {
-    this.addSelectedOption({label: this.label, text: this.text})
-    this.close()
+    if (this.getMultiple()) {
+      let newValue: any[] = []
+      let value = this.getValue()
+      if (value !== null || value !== undefined) newValue = newValue.concat(value)
+      let idx = newValue.findIndex(v => v === this.label)
+      if (idx !== -1) newValue.splice(idx, 1)
+      else newValue.push(this.label)
+    } else {
+      this.setValue(this.label)
+      this.close()
+    }
+  }
+
+  mounted () {
+    this.addOptionComp(this)
+    this.$once('hook:beforeDestroy', () => {
+      this.removeOptionComp(this)
+    })
   }
 }
 </script>

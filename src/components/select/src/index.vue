@@ -27,8 +27,8 @@ import {Component, Emit, Model, Prop, Provide, Watch} from 'vue-property-decorat
 import BaseComponent from '../../../core/BaseComponent'
 import {IconFont} from '../../iconfont/index'
 import {Popper} from '../../popper/index'
-import SelectSelection from './SelectSelection.vue'
-import {SelectOption} from './Option.vue'
+import SelectSelection, {SelectOption} from './SelectSelection.vue'
+import Option from './Option.vue'
 
 @Component({
   components: {IconFont, Popper, SelectSelection},
@@ -53,10 +53,21 @@ export default class Select extends BaseComponent {
 
   dropdownVisible: boolean = false
 
-  selectedOptions: SelectOption[] = [] // the better way is to use Set, but vue not support yet
+  optionComps: Option[] = []
 
-  get selectedOptionLabels (): any[] {
-    return this.selectedOptions.map(v => v.label)
+  get selectedOptions (): SelectOption[] {
+    if (this.value === undefined || this.value === null) return []
+    let arr: SelectOption[] = []
+    if (Array.isArray(this.value)) arr.push(...this.value)
+    else arr.push(this.value)
+    return arr.map(v => {
+      let comp = this.optionComps[0]
+      let text = comp && comp.text
+      return {
+        label: v,
+        text
+      }
+    })
   }
 
   get options () {
@@ -88,19 +99,30 @@ export default class Select extends BaseComponent {
     }
   }
 
-  @Provide() addSelectedOption (value: SelectOption) {
-    if (this.selectedOptionLabels.includes(value.label)) return
-    this.selectedOptions.splice(0)
-    this.selectedOptions.push(value)
+  @Provide() addOptionComp (comp: Option) {
+    this.optionComps.push(comp)
   }
 
-  @Provide() getSelectedOptionLabels (): any[] {
+  @Provide() removeOptionComp (comp: Option) {
+    let idx = this.optionComps.findIndex(v => v === comp)
+    if (idx !== -1) this.optionComps.splice(idx, 1)
+  }
+
+  @Provide() getValue (): any {
     return this.value
+  }
+
+  @Provide() setValue (value: any): any {
+    this.input(value)
   }
 
   @Provide() close () {
     const $popper = this.$refs.popper as any
     if ($popper) $popper.doClose()
+  }
+
+  @Provide() getMultiple (): boolean {
+    return this.multiple
   }
 
   @Emit() input (value: any): void {}
