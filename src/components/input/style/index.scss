@@ -5,7 +5,8 @@
 
 @include b(input){
   position: relative;
-  display: table;
+  //display: table;
+  display: inline-block;
   border-collapse: separate;
   border-spacing: 0;
   width: 100%;

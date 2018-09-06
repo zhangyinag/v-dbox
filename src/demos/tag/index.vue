@@ -15,9 +15,14 @@
    <br>
    <p>可关闭</p>
    <v-tag closable v-if="value1" @close="value1 = false">tag 2</v-tag>
-   <v-tag closable v-if="value2" @close="value2 = false">tag 3</v-tag>
-   <v-tag closable v-if="value3" @close="value3 = false">tag 4</v-tag>
-   <v-tag closable v-if="value4" @close="value4 = false">tag 5</v-tag>
+
+   <br>
+   <br>
+   <p>动态添加</p>
+   <v-tag closable v-for="(tag, i) in tags" :key="i" v-if="tag" @close="tags.splice(i, 1)">{{tag}}</v-tag>
+
+   <v-button v-if="!inputMode" @click="inputMode = true" size="sm">+ 添加标签</v-button>
+   <v-input v-else @keyup.native.enter="addTag" v-model.trim="newTagName" style="width: 120px;" size="sm" autofocus></v-input>
 
 </div>
 </template>
@@ -32,6 +37,16 @@ export default class TagDemo extends Vue {
   value2: boolean = true
   value3: boolean = true
   value4: boolean = true
+  tags: string[] = []
+  inputMode: boolean = false
+  newTagName: string = ''
+
+  addTag () {
+    if (!this.newTagName) return
+    this.tags.push(this.newTagName)
+    this.newTagName = ''
+    this.inputMode = false
+  }
 }
 </script>
 
