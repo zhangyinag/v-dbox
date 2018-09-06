@@ -1,0 +1,42 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(tag){
+  @include reset-component();
+  @include tag();
+  @include tag-link();
+
+  @include e(close){
+    margin-left: 3px;
+  }
+
+  @include m(click-animating){
+    &:after{
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      bottom: -1px;
+      right: -1px;
+      border-radius: inherit;
+      border: 0 solid $--primary-color;
+      opacity: 0.4;
+      animation: antTagEffect .4s cubic-bezier(.25, .8, .25, 1);
+      display: block;
+    }
+  }
+}
+
+
+@keyframes antTagEffect {
+  to {
+    opacity: 0;
+    top: -$--btn-animation-width;
+    left: -$--btn-animation-width;
+    bottom: -$--btn-animation-width;
+    right: -$--btn-animation-width;
+    border-width: $--btn-animation-width;
+  }
+}

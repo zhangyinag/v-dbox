@@ -1,0 +1,35 @@
+@import "../../../styles/themes/default";
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/colorPalette";
+@import "../../../styles/mixins/size";
+@import "../../../styles/mixins/compatibility";
+
+
+@mixin tag () {
+  display: inline-block;
+  position: relative;
+  line-height: 20px;
+  height: 22px;
+  padding: 0 7px;
+  border-radius: $--border-radius-base;
+  border: $--border-width-base $--border-color-base $--border-style-base;
+  background: $--tag-default-bg;
+  font-size: $--tag-font-size;
+  transition: all .3s $--ease-out;
+  opacity: 1;
+  margin-right: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+
+  &:hover{
+    opacity: .85;
+  }
+}
+
+@mixin tag-link () {
+  a, a:hover{
+    color: $--tag-default-color;
+  }
+}
+
+
