@@ -1,5 +1,5 @@
 <template>
-    <transition name="slide-left">
+    <transition name="zoom">
         <div :class="[b()]" @click="onClick">
             <slot></slot>
             <icon-font type="close" v-show="closable" :class="[e('close')]" @click.native.stop="onClose"></icon-font>
