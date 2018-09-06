@@ -1,6 +1,7 @@
 import {Vue} from 'vue-property-decorator'
 import Select from './src/index.vue'
 import Option from './src/Option.vue'
+import OptionGroup from './src/OptionGroup.vue'
 import {InstallationOptions} from '@/core'
 import config from '@/core/config'
 import {PluginObject} from 'vue/types/plugin'
@@ -11,6 +12,7 @@ const plugin: PluginObject<InstallationOptions> = {
   install: function (vue: typeof Vue, opt: InstallationOptions = {}): void {
     vue.component(config.compPrefix + '-select', Select)
     vue.component(config.compPrefix + '-option', Option)
+    vue.component(config.compPrefix + '-option-group', OptionGroup)
   }
 }
 

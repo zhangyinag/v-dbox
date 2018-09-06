@@ -16,6 +16,16 @@
   border-color: colorPalette($color, 5);
 }
 
+@mixin disabled () {
+  background-color: $--input-disabled-bg;
+  opacity: 1;
+  cursor: not-allowed;
+  color: $--disabled-color;
+  &:hover {
+    @include hover($--input-border-color);
+  }
+}
+
 @mixin item(){
   padding: 5px $--control-padding-horizontal;
   margin: 0;

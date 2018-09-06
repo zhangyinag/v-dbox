@@ -17,7 +17,11 @@
                 </ul>
             </span>
 
-            <select-selection slot="reference" :dropdown-visible="dropdownVisible" :selected-options="selectedOptions"></select-selection>
+            <select-selection slot="reference"
+                              :dropdown-visible="dropdownVisible"
+                              :size="size"
+                              :disabled="disabled"
+                              :selected-options="selectedOptions"></select-selection>
         </popper>
     </div>
 </template>
@@ -27,8 +31,9 @@ import {Component, Emit, Model, Prop, Provide, Watch} from 'vue-property-decorat
 import BaseComponent from '../../../core/BaseComponent'
 import {IconFont} from '../../iconfont/index'
 import {Popper} from '../../popper/index'
-import SelectSelection, {SelectOption} from './SelectSelection.vue'
+import SelectSelection from './SelectSelection.vue'
 import Option from './Option.vue'
+import {SelectOption} from './type'
 
 @Component({
   components: {IconFont, Popper, SelectSelection},
@@ -61,7 +66,7 @@ export default class Select extends BaseComponent {
     if (Array.isArray(this.value)) arr.push(...this.value)
     else arr.push(this.value)
     return arr.map(v => {
-      let comp = this.optionComps[0]
+      let comp = this.optionComps.find(w => (w as any).label === v) as any
       let text = comp && comp.text
       return {
         label: v,
@@ -128,7 +133,7 @@ export default class Select extends BaseComponent {
   @Emit() input (value: any): void {}
 
   onShow () {
-    this.dropdownVisible = true
+    if (!this.disabled) this.dropdownVisible = true
   }
 
   onHide () {

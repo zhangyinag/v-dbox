@@ -1,5 +1,5 @@
 <template>
-    <li :class="[b(), selectedCls]" @click="onClick">
+    <li :class="[b(), selectedCls, disabledCls]" @click="onClick">
         <slot></slot>
     </li>
 </template>
@@ -14,6 +14,8 @@ import {IconFont} from '../../iconfont/index'
   })
 export default class Option extends BaseComponent {
   @Prop({required: true}) label: any
+
+  @Prop(Boolean) disabled: boolean
 
   bemBlock: string = 'option'
 
@@ -31,6 +33,10 @@ export default class Option extends BaseComponent {
     return value !== this.label ? '' : this.s('selected')
   }
 
+  get disabledCls () {
+    return !this.disabled ? '' : this.s('disabled')
+  }
+
   @Inject() getValue: () => any
 
   @Inject() setValue: (value: any) => void
@@ -44,6 +50,7 @@ export default class Option extends BaseComponent {
   @Inject() getMultiple: () => boolean
 
   onClick () {
+    if (this.disabled) return
     if (this.getMultiple()) {
       let newValue: any[] = []
       let value = this.getValue()

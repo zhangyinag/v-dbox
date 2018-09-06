@@ -48,6 +48,10 @@
     @include hover()
   }
 
+  @include when(disabled) {
+    @include disabled();
+  }
+
   @include e(arrow){
     position: absolute;
     top: 50%;
@@ -66,11 +70,43 @@
       transform: rotate(180deg);
     }
   }
+
+  @include m(lg){
+    height: $--input-height-lg;
+    line-height: $--input-height-lg - 2px;
+  }
+
+  @include m(sm){
+    height: $--input-height-sm;
+    padding-left: $--control-padding-horizontal-sm - 1px;
+    padding-right: $--control-padding-horizontal-sm - 1px;
+    line-height: $--input-height-sm - 2px;
+  }
 }
 
 @include b(option){
   @include reset-component();
   @include item();
+}
+
+@include b (option-group){
+  @include reset-component();
+
+  @include e(list) {
+    @include reset-component();
+    @include b(option){
+      padding-left: 20px;
+    }
+    @include b(option-group){} // restore it
+  }
+
+  @include e(title){
+    color: $--text-color-secondary;
+    padding: 0 $--control-padding-horizontal;
+    height: 32px;
+    line-height: 32px;
+    font-size: $--font-size-sm;
+  }
 }
 
 
