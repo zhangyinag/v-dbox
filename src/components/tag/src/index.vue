@@ -1,5 +1,5 @@
 <template>
-    <transition name="zoom">
+    <transition name="zoom"  @before-leave="onBeforeLeave" @leave="onLeave">
         <div :class="[b()]" @click="onClick">
             <slot></slot>
             <icon-font type="close" v-show="closable" :class="[e('close')]" @click.native.stop="onClose"></icon-font>
@@ -29,6 +29,18 @@ export default class Tag extends BaseComponent {
 
   onClick () {
     animate(this.$el, this.m('click-animating'), 'antTagEffect')
+  }
+
+  onLeave (el: HTMLElement) {
+    el.style.maxWidth = '0'
+    el.style.opacity = '.6'
+    el.style.padding = '0'
+    el.style.margin = '0'
+  }
+
+  onBeforeLeave (el: HTMLElement) {
+    el.style.maxWidth = el.scrollWidth + 'px'
+    el.style.opacity = '1'
   }
 }
 </script>
