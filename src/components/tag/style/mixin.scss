@@ -33,7 +33,7 @@
   }
 }
 
-@mixin make-color() {
+@mixin make-preset-color() {
   @each $name in $--colors{
     @include m(color-#{$name}){
       $color: extractColor($name);

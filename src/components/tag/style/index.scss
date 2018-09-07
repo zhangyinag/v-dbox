@@ -9,7 +9,16 @@
   @include tag-link();
 
   @include e(close){
+    transform: scale(0.83); // under chrome, font size less 12px won't work; this equals to 10px
+    cursor: pointer;
     margin-left: 3px;
+    transition: all .3s;
+    color: $--text-color-secondary;
+    font-weight: bold;
+
+    &:hover {
+      color: $--heading-color;
+    }
   }
 
   @include m(click-animating){
@@ -28,7 +37,17 @@
     }
   }
 
-  @include make-color();
+  @include m(color){
+    @include e(close){
+      color: inherit;
+      &:hover{
+        color: inherit;
+        filter: brightness(90%);
+      }
+    }
+  }
+
+  @include make-preset-color();
 
   @include m(checkable){
     @include m-checkable();

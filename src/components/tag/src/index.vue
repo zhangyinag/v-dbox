@@ -1,6 +1,6 @@
 <template>
     <transition name="zoom"  @before-leave="onBeforeLeave" @leave="onLeave">
-        <div :class="[b(), colorCls, checkableMcls, checkedScls]" :style="[colorStyle]" @click="onClick">
+        <div :class="[b(), colorCls, colorPresetCls, checkableMcls, checkedScls]" :style="[colorStyle]" @click="onClick">
             <slot></slot>
             <icon-font type="close" v-show="closable" :class="[e('close')]" @click.native.stop="onClose"></icon-font>
         </div>
@@ -27,9 +27,13 @@ export default class Tag extends BaseComponent {
 
   bemBlock: string = 'tag'
 
-  get colorCls () {
+  get colorPresetCls () {
     if (!this.color || this.color.startsWith('#')) return ''
     return this.m(`color-${this.color}`)
+  }
+
+  get colorCls () {
+    return !this.color ? '' : this.m('color')
   }
 
   get checkableMcls () {
