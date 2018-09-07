@@ -3,9 +3,11 @@
 @import "../../../styles/themes/default";
 @import "./mixin";
 
+$tag-height: 22px;
+
 @include b(tag){
   @include reset-component();
-  @include tag();
+  @include tag($tag-height);
   @include tag-link();
 
   @include e(close){
@@ -51,6 +53,10 @@
 
   @include m(checkable){
     @include m-checkable();
+  }
+
+  @include m(round) {
+    border-radius: $tag-height/2;
   }
 }
 

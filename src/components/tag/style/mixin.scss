@@ -6,11 +6,11 @@
 @import "../../../styles/mixins/compatibility";
 
 
-@mixin tag () {
+@mixin tag ($height: 22px) {
   display: inline-block;
   position: relative;
-  line-height: 20px;
-  height: 22px;
+  line-height: $height - 2px;
+  height: $height;
   padding: 0 7px;
   border-radius: $--border-radius-base;
   border: $--border-width-base $--border-color-base $--border-style-base;

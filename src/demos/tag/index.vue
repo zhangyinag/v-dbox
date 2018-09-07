@@ -58,6 +58,16 @@
    <v-tag checkable v-model="checked1">#f50</v-tag>
    <v-tag checkable v-model="checked2" color="#f50">#f50</v-tag>
 
+   <br>
+   <br>
+   <p>圆角模式</p>
+   <v-tag closable round>tag</v-tag>
+   <v-tag color="pink" closable round>pink</v-tag>
+   <v-tag color="#f50" closable round>#f50</v-tag>
+   <v-tag color="#2db7f5" closable round>#2db7f5</v-tag>
+   <v-tag color="#87d068" closable round>#87d068</v-tag>
+   <v-tag color="#108ee9" closable round>#108ee9</v-tag>
+
 </div>
 </template>
 
