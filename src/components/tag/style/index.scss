@@ -27,6 +27,12 @@
       display: block;
     }
   }
+
+  @include make-color();
+
+  @include m(checkable){
+    @include m-checkable();
+  }
 }
 
 

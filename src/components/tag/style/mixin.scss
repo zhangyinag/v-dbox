@@ -1,5 +1,6 @@
 @import "../../../styles/themes/default";
 @import "../../../styles/mixins/bem";
+@import "../../../styles/core/color";
 @import "../../../styles/mixins/colorPalette";
 @import "../../../styles/mixins/size";
 @import "../../../styles/mixins/compatibility";
@@ -31,5 +32,36 @@
     color: $--tag-default-color;
   }
 }
+
+@mixin make-color() {
+  @each $name in $--colors{
+    @include m(color-#{$name}){
+      $color: extractColor($name);
+      $bgColor: colorPalette($color, 1);
+      $borderColor: colorPalette($color, 3);
+      color: $color;
+      background-color: $bgColor;
+      border-color: $borderColor;
+    }
+  }
+}
+
+@mixin m-checkable() {
+  &:not(.checked){
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: $--tag-default-color !important;
+    &:hover{
+      color: $--primary-5;
+    }
+  }
+  &.checked{
+    background-color: $--primary-color;
+    color: #fff;
+    border-color: $--primary-color;
+  }
+  transition: all .3s $--ease-in-out;
+}
+
 
 

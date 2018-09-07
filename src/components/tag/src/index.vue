@@ -1,6 +1,6 @@
 <template>
     <transition name="zoom"  @before-leave="onBeforeLeave" @leave="onLeave">
-        <div :class="[b()]" @click="onClick">
+        <div :class="[b(), colorCls, checkableMcls, checkedScls]" :style="[colorStyle]" @click="onClick">
             <slot></slot>
             <icon-font type="close" v-show="closable" :class="[e('close')]" @click.native.stop="onClose"></icon-font>
         </div>
@@ -19,16 +19,50 @@ import {animate} from '../../../utils'
 export default class Tag extends BaseComponent {
   @Prop(Boolean) closable: boolean
 
+  @Prop(String) color: string
+
+  @Prop([Boolean]) @Model('input') value: boolean
+
+  @Prop(Boolean) checkable: boolean
+
   bemBlock: string = 'tag'
 
+  get colorCls () {
+    if (!this.color || this.color.startsWith('#')) return ''
+    return this.m(`color-${this.color}`)
+  }
+
+  get checkableMcls () {
+    return !this.checkable ? '' : this.m('checkable')
+  }
+
+  get checkedScls () {
+    return !this.value ? '' : this.s('checked')
+  }
+
+  get colorStyle () {
+    if (!this.color || !this.color.startsWith('#')) return {}
+    return {
+      color: '#fff',
+      backgroundColor: this.color,
+      borderColor: this.color
+    }
+  }
+
   @Emit() close () {}
+
+  @Emit() input (value: boolean) {}
 
   onClose () {
     this.close()
   }
 
   onClick () {
-    animate(this.$el, this.m('click-animating'), 'antTagEffect')
+    if (this.checkable) {
+      this.input(!this.value)
+    } else {
+      animate(this.$el, this.m('click-animating'), 'antTagEffect')
+    }
   }
 
   onLeave (el: HTMLElement) {

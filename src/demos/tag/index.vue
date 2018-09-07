@@ -27,6 +27,37 @@
    <v-button v-if="!inputMode" @click="inputMode = true" size="sm">+ 添加标签</v-button>
    <v-input v-else @keyup.native.enter="addTag" v-model.trim="newTagName" style="width: 120px;" size="sm" autofocus></v-input>
 
+   <br>
+   <br>
+   <p>预置颜色</p>
+   <v-tag color="pink" closable>pink</v-tag>
+   <v-tag color="magenta" closable>magenta</v-tag>
+   <v-tag color="red" closable>red</v-tag>
+   <v-tag color="volcano" closable>volcano</v-tag>
+   <v-tag color="orange" closable>orange</v-tag>
+   <v-tag color="yellow" closable>yellow</v-tag>
+   <v-tag color="gold" closable>gold</v-tag>
+   <v-tag color="cyan" closable>cyan</v-tag>
+   <v-tag color="lime" closable>lime</v-tag>
+   <v-tag color="green" closable>green</v-tag>
+   <v-tag color="blue" closable>blue</v-tag>
+   <v-tag color="geekblue" closable>geekblue</v-tag>
+   <v-tag color="purple" closable>purple</v-tag>
+
+   <br>
+   <br>
+   <p>自定义颜色</p>
+   <v-tag color="#f50" closable>#f50</v-tag>
+   <v-tag color="#2db7f5" closable>#2db7f5</v-tag>
+   <v-tag color="#87d068" closable>#87d068</v-tag>
+   <v-tag color="#108ee9" closable>#108ee9</v-tag>
+
+   <br>
+   <br>
+   <p>checkbox效果 <small>目前只支持 boolean 的双向绑定， 以后可能会扩展</small></p>
+   <v-tag checkable v-model="checked1">#f50</v-tag>
+   <v-tag checkable v-model="checked2" color="#f50">#f50</v-tag>
+
 </div>
 </template>
 
@@ -40,6 +71,8 @@ export default class TagDemo extends Vue {
   value2: boolean = true
   value3: boolean = true
   value4: boolean = true
+  checked1: boolean = false
+  checked2: boolean = false
   tags: string[] = ['1111111111', '2222222222', '3333333333', '44444444444']
   inputMode: boolean = false
   newTagName: string = ''
