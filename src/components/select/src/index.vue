@@ -21,7 +21,9 @@
                               :dropdown-visible="dropdownVisible"
                               :size="size"
                               :disabled="disabled"
-                              :selected-options="selectedOptions"></select-selection>
+                              :placeholder="placeholder"
+                              :clearable="clearable"
+                              :selected-options.sync="selectedOptions"></select-selection>
         </popper>
     </div>
 </template>
@@ -51,6 +53,8 @@ export default class Select extends BaseComponent {
 
   @Prop(Boolean) multiple: boolean
 
+  @Prop(String) placeholder: string
+
   @Prop({type: [String], default: 'bottom-start'}) placement: 'top'| 'top-start'| 'top-end'|
     'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'| 'right'| 'right-start'| 'right-end'
 
@@ -67,12 +71,13 @@ export default class Select extends BaseComponent {
     else arr.push(this.value)
     return arr.map(v => {
       let comp = this.optionComps.find(w => (w as any).label === v) as any
+      if (!comp && !v) return null // doesn't count value is '' and not have option
       let text = comp && comp.text
       return {
         label: v,
         text
       }
-    })
+    }).filter(v => !!v) as SelectOption[]
   }
 
   get options () {
@@ -101,6 +106,14 @@ export default class Select extends BaseComponent {
       'bottom': 'slide-up-leave-active',
       'left': 'slide-right-leave-active',
       'right': 'slide-left-leave-active'
+    }
+  }
+
+  set selectedOptions (selectedOptions: SelectOption[]) {
+    if (this.multiple) {
+      this.input(selectedOptions.map(v => v.label))
+    } else {
+      this.input(selectedOptions[0] && selectedOptions[0].label)
     }
   }
 

@@ -58,3 +58,31 @@
     }
   }
 }
+
+@mixin placeholder() {
+  position: absolute;
+  top: 50%;
+  left: $--control-padding-horizontal;
+  right: 9px;
+  color: $--input-placeholder-color;
+  line-height: 20px;
+  height: 20px;
+  max-width: 100%;
+  margin-top: -10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+@mixin suffix() {
+  position: absolute;
+  top: 50%;
+  right: $--control-padding-horizontal - 1px;
+  line-height: 1;
+  margin-top: -$--font-size-sm / 2;
+  transform-origin: 50% 50%;
+  color: $--disabled-color;
+  font-size: $--font-size-sm;
+  transition: all .3s $--ease-in-out;
+}

@@ -52,16 +52,19 @@
     @include disabled();
   }
 
+  @include e(placeholder){
+    @include placeholder();
+  }
+
   @include e(arrow){
-    position: absolute;
-    top: 50%;
-    right: $--control-padding-horizontal - 1px;
-    line-height: 1;
-    margin-top: -$--font-size-sm / 2;
-    transform-origin: 50% 50%;
-    color: $--disabled-color;
-    font-size: $--font-size-sm;
-    transition: all .3s $--ease-in-out;
+    @include suffix();
+  }
+
+  @include e(close){
+    @include suffix();
+    &:hover{
+      color: $--text-color-secondary;
+    }
   }
 
   @include m(open){

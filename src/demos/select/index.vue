@@ -62,6 +62,24 @@
       </v-option-group>
    </v-select>
 
+   <br>
+   <br>
+   <p>占位符</p>
+   <v-select class="select" v-model="value8" placeholder="请选择">
+      <v-option label="1">Jack</v-option>
+      <v-option label="2">Lee</v-option>
+      <v-option label="3">Lucy Liu</v-option>
+   </v-select>
+
+   <br>
+   <br>
+   <p>可清空</p>
+   <v-select class="select" v-model="value9" clearable placeholder="请选择">
+      <v-option label="1">Jack</v-option>
+      <v-option label="2">Lee</v-option>
+      <v-option label="3">Lucy Liu</v-option>
+   </v-select>
+
 </div>
 </template>
 
@@ -78,7 +96,8 @@ export default class SelectDemo extends Vue {
   value5: string = '2'
   value6: string = '2'
   value7: string = '2'
-  value8: string = '2'
+  value8: string = ''
+  value9: string = ''
 }
 </script>
 
