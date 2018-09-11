@@ -95,7 +95,7 @@ $input-affix-width: 19px;
   border-radius: $--border-radius-base;
   position: relative;
   transition: all .3s;
-  //display: table-cell;
+  display: table-cell;
   vertical-align: middle;
   white-space: nowrap;
 }

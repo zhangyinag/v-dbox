@@ -1,27 +1,29 @@
 <template>
     <div :class="[b(), prependCls, appendCls, prefixCls, suffixCls]">
-        <span :class="[e('addon'), e('prepend')]" v-if="$slots.prepend"><slot name="prepend"></slot></span>
-        <component :is="isTextarea ? 'textarea' : 'input'"
-               :type="type"
-               :class="[e('control'), disabledCls, sizeCls, sizeCls]"
-               :style="[textareaAutosizeStyle]"
-               :value="value"
-               :disabled="disabled"
-               @input="onInput"
-               @change="onChange"
-               @focus="onFocus"
-               @blur="onBlur"
-               v-bind="$attrs"></component>
-        <span :class="[e('addon'), e('append')]" v-if="$slots.append"><slot name="append"></slot></span>
-        <span :class="[e('prefix')]" v-if="$slots.prefix || prefixIcon">
+       <div :class="[e('group')]">
+           <span :class="[e('addon'), e('prepend')]" v-if="$slots.prepend"><slot name="prepend"></slot></span>
+           <component :is="isTextarea ? 'textarea' : 'input'"
+                      :type="type"
+                      :class="[e('control'), disabledCls, sizeCls, sizeCls]"
+                      :style="[textareaAutosizeStyle]"
+                      :value="value"
+                      :disabled="disabled"
+                      @input="onInput"
+                      @change="onChange"
+                      @focus="onFocus"
+                      @blur="onBlur"
+                      v-bind="$attrs"></component>
+           <span :class="[e('addon'), e('append')]" v-if="$slots.append"><slot name="append"></slot></span>
+           <span :class="[e('prefix')]" v-if="$slots.prefix || prefixIcon">
             <slot name="prefix"></slot>
             <icon-font :type="prefixIcon" v-if="!$slots.prefix && prefixIcon"></icon-font>
         </span>
-        <span :class="[e('suffix')]" v-if="$slots.suffix || suffixIcon || clearIconVisible">
+           <span :class="[e('suffix')]" v-if="$slots.suffix || suffixIcon || clearIconVisible">
             <slot name="suffix" v-if="!clearIconVisible"></slot>
             <icon-font :type="suffixIcon" v-if="!$slots.suffix && suffixIcon && !clearIconVisible"></icon-font>
             <icon-font type="close-circle" :class="[e('suffix-close')]" v-if="clearIconVisible" @click.native="onClear"></icon-font>
         </span>
+       </div>
     </div>
 </template>
 

@@ -4,12 +4,19 @@
 @import "./mixin";
 
 @include b(input){
+  @include reset-component();
   position: relative;
-  //display: table;
-  display: inline-flex; // still have some problem with button addon, will fix that later
-  border-collapse: separate;
-  border-spacing: 0;
-  width: 100%;
+  display: inline-block;
+
+  @include e(group){
+    @include reset-component();
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+  }
+
   @include e(control){
     @include reset-component();
     @include input();
