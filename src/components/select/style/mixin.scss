@@ -59,7 +59,7 @@
   }
 }
 
-@mixin placeholder() {
+@mixin e-placeholder() {
   position: absolute;
   top: 50%;
   left: $--control-padding-horizontal;

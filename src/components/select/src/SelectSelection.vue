@@ -5,7 +5,7 @@
             {{singleText}}
         </div>
         <div :class="[e('input')]">
-            <input type="text" :placeholder="singleText">
+            <input type="text" :placeholder="singleText" v-model="searchValue" @blur="onInputBlur">
         </div>
         <span :class="[e('close')]" v-if="clearableVisible">
             <icon-font type="close-circle" @click.native.stop="onClear"></icon-font>
@@ -42,6 +42,8 @@ export default class SelectSelection extends BaseComponent {
 
   bemBlock: string = 'select-selection'
 
+  searchValue: string = ''
+
   get singleText () {
     return (!this.multiple && this.selectedOptions[0] && this.selectedOptions[0].text) || ''
   }
@@ -70,6 +72,10 @@ export default class SelectSelection extends BaseComponent {
 
   onClear () {
     this.selectedOptionsUpdate([])
+  }
+
+  onInputBlur () {
+    this.searchValue = ''
   }
 }
 </script>
