@@ -24,6 +24,7 @@
                               :placeholder="placeholder"
                               :clearable="clearable"
                               :multiple="multiple"
+                              :filterable="filterable"
                               :selected-options.sync="selectedOptions"></select-selection>
         </popper>
     </div>
@@ -55,6 +56,8 @@ export default class Select extends BaseComponent {
   @Prop(Boolean) multiple: boolean
 
   @Prop(String) placeholder: string
+
+  @Prop(Boolean) filterable: boolean
 
   @Prop({type: [String], default: 'bottom-start'}) placement: 'top'| 'top-start'| 'top-end'|
     'bottom'| 'bottom-start'| 'bottom-end'| 'left'| 'left-start'| 'left-end'| 'right'| 'right-start'| 'right-end'

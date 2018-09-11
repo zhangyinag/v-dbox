@@ -4,7 +4,7 @@
         <div :class="[e('value')]">
             {{singleText}}
         </div>
-        <div :class="[e('input')]">
+        <div :class="[e('input')]" v-show="filterable">
             <input type="text" :placeholder="singleText" v-model="searchValue" @blur="onInputBlur">
         </div>
         <span :class="[e('close')]" v-if="clearableVisible">
@@ -39,6 +39,8 @@ export default class SelectSelection extends BaseComponent {
   @Prop(Boolean) clearable: boolean
 
   @Prop(Boolean) multiple: boolean
+
+  @Prop(Boolean) filterable: boolean
 
   bemBlock: string = 'select-selection'
 

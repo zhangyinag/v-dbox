@@ -80,6 +80,15 @@
       <v-option label="3">Lucy Liu</v-option>
    </v-select>
 
+   <br>
+   <br>
+   <p>过滤(或搜索)</p>
+   <v-select class="select" v-model="value10" clearable filterable placeholder="请选择">
+      <v-option label="1">Jack</v-option>
+      <v-option label="2">Lee</v-option>
+      <v-option label="3">Lucy Liu</v-option>
+   </v-select>
+
 </div>
 </template>
 
@@ -98,6 +107,7 @@ export default class SelectDemo extends Vue {
   value7: string = '2'
   value8: string = ''
   value9: string = ''
+  value10: string = ''
 }
 </script>
 
