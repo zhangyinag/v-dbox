@@ -23,6 +23,7 @@
                               :disabled="disabled"
                               :placeholder="placeholder"
                               :clearable="clearable"
+                              :multiple="multiple"
                               :selected-options.sync="selectedOptions"></select-selection>
         </popper>
     </div>

@@ -1,9 +1,12 @@
 <template>
     <div :class="[b(), openCls, sizeCls, disabledCls]">
         <div :class="[e('placeholder')]" v-show="placeholderVisible">{{placeholder}}</div>
-        <div :class="[e('value')]"></div>
-        <div :class="[e('input')]"></div>
-        <span v-for="(op, i) in selectedOptions" :key="i">{{op.text}};</span>
+        <div :class="[e('value')]">
+            {{singleText}}
+        </div>
+        <div :class="[e('input')]">
+            <input type="text" :placeholder="singleText">
+        </div>
         <span :class="[e('close')]" v-if="clearableVisible">
             <icon-font type="close-circle" @click.native.stop="onClear"></icon-font>
         </span>
@@ -35,7 +38,13 @@ export default class SelectSelection extends BaseComponent {
 
   @Prop(Boolean) clearable: boolean
 
+  @Prop(Boolean) multiple: boolean
+
   bemBlock: string = 'select-selection'
+
+  get singleText () {
+    return (!this.multiple && this.selectedOptions[0] && this.selectedOptions[0].text) || ''
+  }
 
   get placeholderVisible () {
     return this.placeholder && this.selectedOptions.length < 1
