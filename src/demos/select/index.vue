@@ -89,6 +89,17 @@
       <v-option label="3">Lucy Liu</v-option>
    </v-select>
 
+   <br>
+   <br>
+   <p>多选</p>
+   <v-select class="select" v-model="value11" multiple clearable filterable placeholder="请选择">
+      <v-option label="1">Jack</v-option>
+      <v-option label="2">Lee</v-option>
+      <v-option label="3">Lucy Liu</v-option>
+      <v-option label="4">Alex</v-option>
+      <v-option label="5">Molly</v-option>
+   </v-select>
+
 </div>
 </template>
 
@@ -108,6 +119,7 @@ export default class SelectDemo extends Vue {
   value8: string = ''
   value9: string = ''
   value10: string = ''
+  value11: string[] = []
 }
 </script>
 

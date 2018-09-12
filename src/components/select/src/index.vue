@@ -25,6 +25,7 @@
                               :clearable="clearable"
                               :multiple="multiple"
                               :filterable="filterable"
+                              @search="onSearch"
                               :selected-options.sync="selectedOptions"></select-selection>
         </popper>
     </div>
@@ -155,6 +156,16 @@ export default class Select extends BaseComponent {
 
   onHide () {
     this.dropdownVisible = false
+  }
+
+  onSearch (searchValue: string) {
+    this.optionComps.forEach((v: Option) => {
+      if (!searchValue) v.visible = true
+      else {
+        if (v.text && (v.text as string).indexOf(searchValue) !== -1) v.visible = true
+        else v.visible = false
+      }
+    })
   }
 }
 </script>

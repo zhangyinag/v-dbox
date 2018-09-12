@@ -86,3 +86,60 @@
   font-size: $--font-size-sm;
   transition: all .3s $--ease-in-out;
 }
+
+@mixin e-value () {
+  @include e(value){
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    padding-right: 20px;
+  }
+  @include m(multiple) {
+    @include e(value){
+      white-space: normal;
+      >input{
+        width: .75em;
+        max-width: 100%;
+        border-width: 0;
+        font-size: 100%;
+        height: 100%;
+        opacity: 0;
+        outline: 0;
+        border-radius: $--border-radius-base;
+        line-height: 1;
+
+        &:focus, &:active{
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+@mixin e-input () {
+  @include e(input){
+    position: absolute;
+    height: 100%;
+    //width: 100%;
+    left: $--control-padding-horizontal;
+    right: $--control-padding-horizontal + 8px;
+    >input{
+      @include placeholder();
+      border-width: 0;
+      font-size: 100%;
+      height: 100%;
+      //width: calc(100% - 2 * #{$--control-padding-horizontal} - 8px);
+      width: 100%;
+      opacity: 0;
+      outline: 0;
+      border-radius: $--border-radius-base;
+      line-height: 1;
+
+      &:focus, &:active{
+        opacity: 1;
+      }
+    }
+  }
+}

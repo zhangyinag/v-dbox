@@ -56,36 +56,9 @@
     @include e-placeholder();
   }
 
-  @include e(value){
-    float: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
-    padding-right: 20px;
-  }
+  @include e-value();
 
-  @include e(input){
-    position: absolute;
-    height: 100%;
-    width: 100%;
-
-    >input{
-      @include placeholder();
-      border-width: 0;
-      font-size: 100%;
-      height: 100%;
-      width: calc(100% - 2 * #{$--control-padding-horizontal} - 8px);
-      opacity: 0;
-      outline: 0;
-      border-radius: $--border-radius-base;
-      line-height: 1;
-
-      &:focus, &:active{
-        opacity: 1;
-      }
-    }
-  }
+  @include e-input();
 
   @include e(arrow){
     @include suffix();
@@ -115,6 +88,11 @@
     padding-left: $--control-padding-horizontal-sm - 1px;
     padding-right: $--control-padding-horizontal-sm - 1px;
     line-height: $--input-height-sm - 2px;
+  }
+
+  @include m(multiple){
+    height: auto;
+    min-height: $--input-height-base;
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <li :class="[b(), selectedCls, disabledCls]" @click="onClick">
+    <li :class="[b(), selectedCls, disabledCls]" @click="onClick" v-show="visible">
         <slot></slot>
     </li>
 </template>
@@ -18,6 +18,8 @@ export default class Option extends BaseComponent {
   @Prop(Boolean) disabled: boolean
 
   bemBlock: string = 'option'
+
+  visible: boolean = true
 
   get text (): any {
     let i: any
@@ -58,6 +60,7 @@ export default class Option extends BaseComponent {
       let idx = newValue.findIndex(v => v === this.label)
       if (idx !== -1) newValue.splice(idx, 1)
       else newValue.push(this.label)
+      this.setValue(newValue)
     } else {
       this.setValue(this.label)
       this.close()
