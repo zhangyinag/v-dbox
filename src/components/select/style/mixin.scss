@@ -37,11 +37,11 @@
   transition: all .3s;
   line-height: $--line-height-base;
 
-  &:hover {
-    background-color: $--item-hover-bg;
+  @include when(selected) {
+    background-color: $--input-disabled-bg;
   }
 
-  @include when(selected) {
+  &:hover, &.active {
     background-color: $--item-hover-bg;
   }
 

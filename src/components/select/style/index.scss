@@ -20,6 +20,11 @@
     padding: 0;
     margin-top: 3px;
   }
+
+  @include e(nodataitem){
+    @include reset-component();
+    @include item();
+  }
 }
 
 @include b(select-selection) {
@@ -93,12 +98,28 @@
   @include m(multiple){
     height: auto;
     min-height: $--input-height-base;
+
+    @include e(value){
+      float: none;
+    }
   }
 }
 
 @include b(option){
   @include reset-component();
   @include item();
+  position: relative;
+  padding-right: $--control-padding-horizontal * 2 + 14px;
+
+  @include e(suffix){
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    line-height: 0;
+    color: $--primary-color;
+    z-index: 2;
+    right: $--input-padding-horizontal-base + 1px;
+  }
 }
 
 @include b (option-group){

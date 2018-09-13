@@ -1,5 +1,8 @@
 <template>
-    <div :class="[b()]">
+    <div :class="[b()]"
+         @keydown.down.prevent="changeActiveOption(1)"
+         @keydown.up.prevent="changeActiveOption(-1)"
+         @keydown.enter.prevent="selectOption">
         <popper trigger="click"
                 :enter-active-class="enterActiveClass"
                 :leave-active-class="leaveActiveClass"
@@ -14,6 +17,7 @@
             <span class="popper" :class="[e('popper')]">
                 <ul :class="[e('dropdown')]">
                     <slot></slot>
+                    <li v-if="noData" :class="[e('nodataitem')]">{{t('select.noDataText')}}</li>
                 </ul>
             </span>
 
@@ -68,6 +72,10 @@ export default class Select extends BaseComponent {
   dropdownVisible: boolean = false
 
   optionComps: Option[] = []
+
+  noData: boolean = false
+
+  activeOption: Option| null = null
 
   get selectedOptions (): SelectOption[] {
     if (this.value === undefined || this.value === null) return []
@@ -148,6 +156,14 @@ export default class Select extends BaseComponent {
     return this.multiple
   }
 
+  @Provide() setActiveOption (activeOption: Option| null): void {
+    this.activeOption = activeOption
+  }
+
+  @Provide() getActiveOption (): Option| null {
+    return this.activeOption
+  }
+
   @Emit() input (value: any): void {}
 
   onShow () {
@@ -159,13 +175,48 @@ export default class Select extends BaseComponent {
   }
 
   onSearch (searchValue: string) {
-    this.optionComps.forEach((v: Option) => {
-      if (!searchValue) v.visible = true
-      else {
-        if (v.text && (v.text as string).indexOf(searchValue) !== -1) v.visible = true
-        else v.visible = false
+    let noData = true
+    this.optionComps.forEach((v: any) => {
+      if (!searchValue) {
+        v.visible = true
+        noData = false
+      } else {
+        if (v.text && (v.text as string).indexOf(searchValue) !== -1) {
+          v.visible = true
+          noData = false
+        } else v.visible = false
       }
     })
+    this.noData = noData
+  }
+
+  changeActiveOption (offset: number) {
+    let visibleOpts = this.optionComps.filter(v => v.visible)
+    let len = visibleOpts.length
+    if (len < 1) return
+    let idx = !this.activeOption ? -1 : visibleOpts.findIndex(v => v === this.activeOption)
+    let newIdx = idx + offset
+    if (newIdx < 0) this.activeOption = visibleOpts[len - 1]
+    else if (newIdx >= len) this.activeOption = visibleOpts[0]
+    else this.activeOption = visibleOpts[newIdx]
+  }
+
+  selectOption () {
+    // TODO consider merge with Option's change value
+    if (!this.activeOption) return
+    if (this.multiple) {
+      let label = this.activeOption.label
+      let newValue: any[] = []
+      let value = this.value
+      if (value !== null || value !== undefined) newValue = newValue.concat(value)
+      let idx = newValue.findIndex(v => v === label)
+      if (idx !== -1) newValue.splice(idx, 1)
+      else newValue.push(label)
+      this.input(newValue)
+    } else {
+      this.input(this.activeOption.label)
+      this.close()
+    }
   }
 }
 </script>

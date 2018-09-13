@@ -1,17 +1,24 @@
 <template>
-    <div :class="[b(), openCls, sizeCls, disabledCls, multipleCls]">
+    <div :class="[b(), openCls, sizeCls, disabledCls, multipleCls]" @click="onSelectClick">
         <div :class="[e('placeholder')]" v-show="placeholderVisible">{{placeholder}}</div>
-        <div :class="[e('value')]" unselectable="on">
+        <div :class="[e('value')]">
             <template v-if="multiple">
-                <tag closable v-for="opt in selectedOptions" :key="opt.label">{{opt.text}}</tag>
-                <input type="text" :placeholder="singleText" v-model="searchValue" @blur="onInputBlur">
+                <tag unselectable="on" closable v-for="(opt, i) in selectedOptions" :key="opt.label" @close="onTagClose(i)">{{opt.text}}</tag>
+                <input type="text" :placeholder="singleText" v-model="searchValue"
+                       ref="multipleInput"
+                       :style="[multipleInputAutoWidth]"
+                       @focus="onInput"
+                       @blur="onInputBlur" @input="onInput">
             </template>
             <template v-else>
                 {{singleText}}
             </template>
         </div>
         <div :class="[e('input')]" v-show="filterable" v-if="!multiple">
-            <input type="text" :placeholder="singleText" v-model.trim="searchValue" @blur="onInputBlur" @input="onInput">
+            <input type="text" :placeholder="singleText" v-model.trim="searchValue"
+                   @blur="onInputBlur"
+                   @focus="onInput"
+                   @input="onInput">
         </div>
         <span :class="[e('close')]" v-if="clearableVisible">
             <icon-font type="close-circle" @click.native.stop="onClear"></icon-font>
@@ -68,6 +75,14 @@ export default class SelectSelection extends BaseComponent {
     return this.clearable && this.selectedOptions.length > 0
   }
 
+  get multipleInputAutoWidth () {
+    if (!this.multiple) return {}
+    let width = 14 * (this.searchValue || '').length + 14
+    return {
+      width: width + 'px'
+    }
+  }
+
   get openCls () {
     return !this.dropdownVisible ? '' : this.m('open')
   }
@@ -99,8 +114,21 @@ export default class SelectSelection extends BaseComponent {
     this.delaySearch(this.searchValue)
   }
 
+  onTagClose (i: number) {
+    let copy = this.selectedOptions.slice(0)
+    copy.splice(i, 1)
+    this.selectedOptionsUpdate(copy)
+  }
+
   // @Watch('searchValue') searchValueChange (searchValue: string) {
   //   this.delaySearch(searchValue)
   // }
+
+  onSelectClick () {
+    if (this.multiple) {
+      const $multipleInput = this.$refs.multipleInput as HTMLInputElement
+      if ($multipleInput) $multipleInput.focus()
+    }
+  }
 }
 </script>

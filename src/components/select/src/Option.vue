@@ -1,6 +1,9 @@
 <template>
-    <li :class="[b(), selectedCls, disabledCls]" @click="onClick" v-show="visible">
+    <li :class="[b(), selectedCls, disabledCls, activeCls]" @click="onClick" v-show="visible">
         <slot></slot>
+        <div :class="[e('suffix')]" v-show="selected">
+            <icon-font type="check"></icon-font>
+        </div>
     </li>
 </template>
 
@@ -27,16 +30,28 @@ export default class Option extends BaseComponent {
     return slotText || this.label
   }
 
-  get selectedCls () {
+  get selected (): boolean {
     let value = this.getValue()
     if (Array.isArray(value)) {
-      return !value.includes(this.label) ? '' : this.s('selected')
+      return value.includes(this.label)
     }
-    return value !== this.label ? '' : this.s('selected')
+    return value === this.label
+  }
+
+  get active () {
+    return this === this.getActiveOption()
+  }
+
+  get selectedCls () {
+    return !this.selected ? '' : this.s('selected')
   }
 
   get disabledCls () {
     return !this.disabled ? '' : this.s('disabled')
+  }
+
+  get activeCls () {
+    return !this.active ? '' : this.s('active')
   }
 
   @Inject() getValue: () => any
@@ -51,8 +66,13 @@ export default class Option extends BaseComponent {
 
   @Inject() getMultiple: () => boolean
 
+  @Inject() setActiveOption: (activeOption: Option| null) => void
+
+  @Inject() getActiveOption: () => Option| null
+
   onClick () {
     if (this.disabled) return
+    this.setActiveOption(this)
     if (this.getMultiple()) {
       let newValue: any[] = []
       let value = this.getValue()
