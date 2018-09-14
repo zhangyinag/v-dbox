@@ -10,7 +10,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "strictPropertyInitialization": false,
+    "strictPropertyInitialization": false,  // the legacy issue, the props should use `!:` to avoid this error
     "declaration": true,
     "declarationDir": "types",
     "baseUrl": ".",
