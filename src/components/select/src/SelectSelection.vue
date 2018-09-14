@@ -7,6 +7,10 @@
                 <input type="text" :placeholder="singleText" v-model="searchValue"
                        ref="multipleInput"
                        :style="[multipleInputAutoWidth]"
+                       @keydown.down.prevent="changeActiveOption(1)"
+                       @keydown.up.prevent="changeActiveOption(-1)"
+                       @keydown.enter.prevent="selectOption"
+                       @keydown.esc.prevent="close"
                        @focus="onInput"
                        @blur="onInputBlur" @input="onInput">
             </template>
@@ -16,6 +20,11 @@
         </div>
         <div :class="[e('input')]" v-show="filterable" v-if="!multiple">
             <input type="text" :placeholder="singleText" v-model.trim="searchValue"
+                   ref="singleInput"
+                   @keydown.down.prevent="changeActiveOption(1)"
+                   @keydown.up.prevent="changeActiveOption(-1)"
+                   @keydown.enter.prevent="selectOption"
+                   @keydown.esc.prevent="close"
                    @blur="onInputBlur"
                    @focus="onInput"
                    @input="onInput">
@@ -30,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Model, Prop, Watch} from 'vue-property-decorator'
+import {Component, Emit, Inject, Model, Prop, Watch} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import {IconFont} from '../../iconfont/index'
 import {SelectOption} from './type'
@@ -106,6 +115,12 @@ export default class SelectSelection extends BaseComponent {
     this.selectedOptionsUpdate([])
   }
 
+  @Inject() changeActiveOption: (offset: number) => void
+
+  @Inject() selectOption: () => void
+
+  @Inject() close: () => void
+
   onInputBlur () {
     this.searchValue = ''
   }
@@ -124,11 +139,18 @@ export default class SelectSelection extends BaseComponent {
   //   this.delaySearch(searchValue)
   // }
 
-  onSelectClick () {
+  focus () {
+    let $input = null
     if (this.multiple) {
-      const $multipleInput = this.$refs.multipleInput as HTMLInputElement
-      if ($multipleInput) $multipleInput.focus()
+      $input = this.$refs.multipleInput as HTMLInputElement
+    } else {
+      $input = this.$refs.singleInput as HTMLInputElement
     }
+    if ($input) $input.focus()
+  }
+
+  onSelectClick () {
+    this.focus()
   }
 }
 </script>

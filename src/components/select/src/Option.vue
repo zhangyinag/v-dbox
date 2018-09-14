@@ -70,6 +70,8 @@ export default class Option extends BaseComponent {
 
   @Inject() getActiveOption: () => Option| null
 
+  @Inject() focus: () => void
+
   onClick () {
     if (this.disabled) return
     this.setActiveOption(this)
@@ -81,6 +83,7 @@ export default class Option extends BaseComponent {
       if (idx !== -1) newValue.splice(idx, 1)
       else newValue.push(this.label)
       this.setValue(newValue)
+      this.focus()
     } else {
       this.setValue(this.label)
       this.close()

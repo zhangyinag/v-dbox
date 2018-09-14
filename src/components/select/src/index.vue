@@ -1,8 +1,5 @@
 <template>
-    <div :class="[b()]"
-         @keydown.down.prevent="changeActiveOption(1)"
-         @keydown.up.prevent="changeActiveOption(-1)"
-         @keydown.enter.prevent="selectOption">
+    <div :class="[b()]">
         <popper trigger="click"
                 :enter-active-class="enterActiveClass"
                 :leave-active-class="leaveActiveClass"
@@ -22,6 +19,7 @@
             </span>
 
             <select-selection slot="reference"
+                              ref="selection"
                               :dropdown-visible="dropdownVisible"
                               :size="size"
                               :disabled="disabled"
@@ -164,6 +162,40 @@ export default class Select extends BaseComponent {
     return this.activeOption
   }
 
+  @Provide() changeActiveOption (offset: number) {
+    let visibleOpts = this.optionComps.filter(v => v.visible)
+    let len = visibleOpts.length
+    if (len < 1) return
+    let idx = !this.activeOption ? -1 : visibleOpts.findIndex(v => v === this.activeOption)
+    let newIdx = idx + offset
+    if (newIdx < 0) this.activeOption = visibleOpts[len - 1]
+    else if (newIdx >= len) this.activeOption = visibleOpts[0]
+    else this.activeOption = visibleOpts[newIdx]
+  }
+
+  @Provide() selectOption () {
+    // TODO consider merge with Option's change value
+    if (!this.activeOption) return
+    if (this.multiple) {
+      let label = this.activeOption.label
+      let newValue: any[] = []
+      let value = this.value
+      if (value !== null || value !== undefined) newValue = newValue.concat(value)
+      let idx = newValue.findIndex(v => v === label)
+      if (idx !== -1) newValue.splice(idx, 1)
+      else newValue.push(label)
+      this.input(newValue)
+    } else {
+      this.input(this.activeOption.label)
+      this.close()
+    }
+  }
+
+  @Provide() focus () {
+    const $selection = this.$refs.selection as SelectSelection
+    if ($selection) $selection.focus()
+  }
+
   @Emit() input (value: any): void {}
 
   onShow () {
@@ -188,35 +220,6 @@ export default class Select extends BaseComponent {
       }
     })
     this.noData = noData
-  }
-
-  changeActiveOption (offset: number) {
-    let visibleOpts = this.optionComps.filter(v => v.visible)
-    let len = visibleOpts.length
-    if (len < 1) return
-    let idx = !this.activeOption ? -1 : visibleOpts.findIndex(v => v === this.activeOption)
-    let newIdx = idx + offset
-    if (newIdx < 0) this.activeOption = visibleOpts[len - 1]
-    else if (newIdx >= len) this.activeOption = visibleOpts[0]
-    else this.activeOption = visibleOpts[newIdx]
-  }
-
-  selectOption () {
-    // TODO consider merge with Option's change value
-    if (!this.activeOption) return
-    if (this.multiple) {
-      let label = this.activeOption.label
-      let newValue: any[] = []
-      let value = this.value
-      if (value !== null || value !== undefined) newValue = newValue.concat(value)
-      let idx = newValue.findIndex(v => v === label)
-      if (idx !== -1) newValue.splice(idx, 1)
-      else newValue.push(label)
-      this.input(newValue)
-    } else {
-      this.input(this.activeOption.label)
-      this.close()
-    }
   }
 }
 </script>

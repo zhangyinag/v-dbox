@@ -1,6 +1,7 @@
 <template>
 <div>
    <h3>下拉框 select</h3>
+   <code style="color: red;">普通模式下（指没有光标的情况下）， 将不能使用键盘操作， 主要是设计时忽略了应该始终有一个聚焦的input， 将在未来的版本改进</code>
    <br>
    <br>
    <p>基本</p>
