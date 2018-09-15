@@ -20,3 +20,16 @@ const hyphenateRE = /\B([A-Z])/g
 export const hyphenate = (str: string): string => {
   return str.replace(hyphenateRE, '-$1').toLowerCase()
 }
+
+
+/**
+ * Check if value is primitive
+ */
+export function isPrimitive (value: any): boolean {
+  return (
+    typeof value === 'string' ||
+    typeof value === 'number' ||
+    typeof value === 'symbol' ||
+    typeof value === 'boolean'
+  )
+}

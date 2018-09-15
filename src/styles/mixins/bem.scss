@@ -66,16 +66,26 @@ $namespace: $--ant-prefix;
     $currentSelector: #{$currentSelector + "." + $B + $element-separator + $unit + ","};
   }
 
-  @if hitAllSpecialNestRule($selector) {
-    @at-root {
-      #{$selector} {
-        #{$currentSelector} {
-          @content;
-        }
-      }
-    }
-  } @else {
-    @at-root {
+  //@if hitAllSpecialNestRule($selector) {
+  //  @at-root {
+  //    #{$selector} {
+  //      #{$currentSelector} {
+  //        @content;
+  //      }
+  //    }
+  //  }
+  //} @else {
+  //  @at-root {
+  //    #{$currentSelector} {
+  //      @content;
+  //    }
+  //  }
+  //}
+
+  /* always use nested style
+  */
+  @at-root {
+    #{$selector} {
       #{$currentSelector} {
         @content;
       }

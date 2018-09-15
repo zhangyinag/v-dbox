@@ -30,7 +30,7 @@ $radio-duration: .3s;
     cursor: pointer;
   }
 
-  @include e(control-inner){
+  @include e(control-inner){ // circle
     position: relative;
     top: 0;
     left: 0;
@@ -44,7 +44,7 @@ $radio-duration: .3s;
     background: $--radio-button-bg;
     transition: all $radio-duration;
 
-    &:after {
+    &:after { // dot
       $radio-dot-size: $--radio-size - 8px;
       position: absolute;
       width: $radio-dot-size;

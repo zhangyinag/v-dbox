@@ -3,7 +3,31 @@
 @import "../../../styles/themes/default";
 @import "./mixin";
 
+@include b(checkbox){
+  @include checkbox();
 
+  @include e(control){
+    @include e-control();
+  }
+
+  @include e(control-inner){
+    @include e-control-inner();
+  }
+
+  @include e(control-input){
+    @include e-control-input();
+  }
+
+  @include e(text){
+    @include e-text();
+  }
+
+  // state
+  @include when(checked){
+    @include s-checked();
+  }
+
+}
 
 
 
