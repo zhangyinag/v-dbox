@@ -84,13 +84,22 @@ $namespace: $--ant-prefix;
 
   /* always use nested style
   */
-  @at-root {
-    #{$selector} {
+  @if ($selector) { // nest
+    @at-root {
+      #{$selector} {
+        #{$currentSelector} {
+          @content;
+        }
+      }
+    }
+  } @else { // no nest
+    @at-root {
       #{$currentSelector} {
         @content;
       }
     }
   }
+
 }
 
 @mixin m($modifier) {

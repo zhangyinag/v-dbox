@@ -18,7 +18,7 @@ import {Component, Prop, Model, Emit, Inject} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import {isPrimitive} from '../../../utils'
-import CheckboxGroup from './CheckboxGroup'
+import CheckboxGroup from './CheckboxGroup.vue'
 
 @Component({
   components: {},
@@ -52,7 +52,7 @@ export default class Checkbox extends mixins(BemMixin) {
 
   get checked (): boolean {
     if (isPrimitive(this.model)) return !!this.model
-    if (Array.isArray(this.model)) return (this.model as Array).includes(this.label)
+    if (Array.isArray(this.model)) return (this.model as any[]).includes(this.label)
     return false
   }
 
