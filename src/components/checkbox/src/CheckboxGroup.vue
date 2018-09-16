@@ -1,5 +1,5 @@
 <template>
-    <div style="display: inline-block"><slot></slot></div>
+    <div :class="[b()]"><slot></slot></div>
 </template>
 
 <script lang="ts">

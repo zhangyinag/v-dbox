@@ -54,4 +54,12 @@
 
 
 
+/* checkbox-group */
+@include b(checkbox-group){
+  @include reset-component();
+  display: inline-block;
+}
+
+
+
 
