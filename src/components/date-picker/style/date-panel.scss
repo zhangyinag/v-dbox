@@ -3,16 +3,9 @@
 @import "../../../styles/themes/default";
 @import "./mixin";
 
-@include b(date-picker) {
+@include b(date-panel) {
   @include reset-component();
-  display: inline-block;
 }
-
-@include e(popper) {
-
-}
-
-@import "./date-panel";
 
 
 

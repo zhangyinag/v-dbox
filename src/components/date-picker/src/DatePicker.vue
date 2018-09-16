@@ -9,10 +9,12 @@
                 :disabled="disabled"
                 :options="options">
             <span class="popper" :class="[e('popper')]">
-                <p>popper</p>
+                <date-panel></date-panel>
             </span>
             <v-input slot="reference"
                      ref="input"
+                     :clearable="clearable"
+                     suffix-icon="calendar"
                      v-model="model"></v-input>
         </popper>
     </div>
@@ -24,14 +26,17 @@ import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import {Input as VInput} from '../../input'
 import {Popper} from '../../popper/index'
+import DatePanel from './DatePanel.vue'
 
 @Component({
-  components: {VInput, Popper},
+  components: {VInput, Popper, DatePanel},
   })
 export default class DatePicker extends mixins(BemMixin) {
   @Prop() @Model('input') value!: any
 
   @Prop(Boolean) disabled!: boolean
+
+  @Prop(Boolean) clearable: boolean
 
   get model (): any {
     return this.value
