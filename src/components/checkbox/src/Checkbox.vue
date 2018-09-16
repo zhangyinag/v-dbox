@@ -14,10 +14,11 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Model, Emit} from 'vue-property-decorator'
+import {Component, Prop, Model, Emit, Inject} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import {isPrimitive} from '../../../utils'
+import CheckboxGroup from './CheckboxGroup'
 
 @Component({
   components: {},
@@ -34,11 +35,19 @@ export default class Checkbox extends mixins(BemMixin) {
   focus: boolean = false
 
   get model (): any {
-    return this.value
+    if (this.checkboxGroup) {
+      return this.checkboxGroup.value
+    } else {
+      return this.value
+    }
   }
 
   set model (value: any) {
-    this.input(value)
+    if (this.checkboxGroup) {
+      this.checkboxGroup.input(value)
+    } else {
+      this.input(value)
+    }
   }
 
   get checked (): boolean {
@@ -62,6 +71,8 @@ export default class Checkbox extends mixins(BemMixin) {
   get disabledCls () {
     return !this.disabled ? '' : this.s('disabled')
   }
+
+  @Inject({ default: null }) checkboxGroup!: CheckboxGroup| null
 
   @Emit() input (value: any) {}
 

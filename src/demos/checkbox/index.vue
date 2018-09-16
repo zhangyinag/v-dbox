@@ -22,6 +22,37 @@
    <label><input type="checkbox" v-model="value6"> 切换 </label> <br>
    <v-checkbox :indeterminate="value6">unchecked</v-checkbox> &nbsp;
    <v-checkbox indeterminate disabled>checked</v-checkbox> &nbsp;
+
+   <br>
+   <br>
+   <p>复选框组</p>
+   <v-checkbox-group v-model="value7">
+      <v-checkbox label="Jack">Jack</v-checkbox> &nbsp;
+      <v-checkbox label="Jone" disabled>Jone</v-checkbox> &nbsp;
+      <v-checkbox label="Lee">Lee</v-checkbox> &nbsp;
+   </v-checkbox-group>
+   <br>
+   <small>配合栅格系统</small>
+   <br>
+   <v-checkbox-group v-model="value8" style="width: 360px;">
+      <v-row :gutter="8">
+         <v-col :span="8">
+            <v-checkbox label="Jack">Jack</v-checkbox>
+         </v-col>
+         <v-col :span="8">
+            <v-checkbox label="Jone" disabled>Jone</v-checkbox>
+         </v-col>
+         <v-col :span="8">
+            <v-checkbox label="Lee">Lee</v-checkbox>
+         </v-col>
+         <v-col :span="8">
+            <v-checkbox label="Alice">Alice</v-checkbox>
+         </v-col>
+         <v-col :span="8">
+            <v-checkbox label="Spencer">Spencer</v-checkbox>
+         </v-col>
+      </v-row>
+   </v-checkbox-group>
 </div>
 </template>
 
@@ -37,7 +68,8 @@ export default class CheckboxDemo extends Vue {
   value4: boolean = false
   value5: boolean = true
   value6: boolean = true
-  value7: boolean = true
+  value7: string[] = ['Jack']
+  value8: string[] = ['Jack']
   disabled1: boolean = true
   disabled2: boolean = true
 }
