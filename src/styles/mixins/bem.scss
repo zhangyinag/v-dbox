@@ -114,3 +114,15 @@ $namespace: $--ant-prefix;
     }
   }
 }
+
+@mixin a($name) {
+  @at-root {
+    @keyframes #{$B + '-' + $name} {
+      @content;
+    }
+  }
+}
+
+@function a($name) {
+  @return #{$B}-$name
+}

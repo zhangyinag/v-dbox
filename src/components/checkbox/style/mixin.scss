@@ -13,6 +13,11 @@ $radio-duration: .3s;
   white-space: nowrap;
   margin-left: 8px;
   cursor: pointer;
+  &:hover{
+    @include e(control-inner) {
+      border-color: $--checkbox-color;
+    }
+  }
 }
 
 @mixin e-control{
@@ -42,28 +47,27 @@ $radio-duration: .3s;
   top: 0;
   left: 0;
   display: block;
-  width: $--radio-size;
-  height: $--radio-size;
-  border-radius: 100px; // make sure it's a circle
+  width: $--checkbox-size;
+  height: $--checkbox-size;
+  border-radius: $--border-radius-sm;
   border: solid 1px $--border-color-base;
-  background: $--radio-button-bg;
+  background: $--checkbox-check-color;
 
   &:after { // dot
-    $radio-dot-size: $--radio-size - 8px;
+    $check-width: ($--checkbox-size / 14) * 5;
+    $check-height: ($--checkbox-size / 14) * 8;
+    transform: rotate(45deg) scale(0);
     position: absolute;
-    width: $radio-dot-size;
-    height: $radio-dot-size;
-    left: ($--radio-size - $radio-dot-size) / 2 - 1px;
-    top: ($--radio-size - $radio-dot-size) / 2 - 1px;
-    border-radius: $radio-dot-size;
+    left: ($--checkbox-size - $check-width) / 2 - 0.5 * ($--checkbox-size / 14);
+    top: ($--checkbox-size - $check-height) / 2 - 2 * ($--checkbox-size / 14);
     display: table;
+    width: $check-width;
+    height: $check-height;
+    border: 2px solid $--checkbox-check-color;
     border-top: 0;
     border-left: 0;
     content: ' ';
-    background-color: $--radio-dot-color;
-    opacity: 0;
-    transform: scale(0);
-    transition: all $radio-duration $--ease-in-out-circ;
+    transition: all .1s $--ease-in-back;
   }
 }
 
@@ -73,12 +77,79 @@ $radio-duration: .3s;
 }
 
 @mixin s-checked(){
+  @include e(control){
+    &:after{ // checked animation
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: $--border-radius-sm;
+      border: 1px solid $--checkbox-color;
+      content: '';
+      animation: #{a(effect)} 0.36s ease-in-out;
+      animation-fill-mode: both;
+      visibility: visible;
+    }
+  }
   @include e(control-inner){
-    border-color: $--radio-dot-color;
+    border-color: $--checkbox-color;
+    background-color: $--checkbox-color;
     &:after {
-      transform: scale(.875);
-      opacity: 1;
-      transition: all $radio-duration $--ease-in-out-circ;
+      transform: rotate(45deg) scale(1);
+      position: absolute;
+      display: table;
+      border: 2px solid $--checkbox-check-color;
+      border-top: 0;
+      border-left: 0;
+      content: ' ';
+      transition: all .2s $--ease-out-back .1s;
+    }
+  }
+}
+
+@mixin s-focus () {
+  @include e (control-inner) {
+    border-color: $--checkbox-color;
+  }
+}
+
+@mixin s-disabled () {
+  @include e(control-inner){
+    border-color: $--border-color-base !important;
+    background-color: $--input-disabled-bg;
+    &:after {
+      border-color: $--disabled-color;
+    }
+  }
+  @include e(control-input) {
+    cursor: not-allowed;
+  }
+  @include e(text) {
+    color: $--disabled-color;
+    cursor: not-allowed;
+  }
+}
+
+@mixin s-indeterminate(){
+  @include when(disabled){
+    @include e(control-inner){
+      background-color: $--input-disabled-bg;
+    }
+  }
+  @include e(control-inner){
+    border-color: $--checkbox-color;
+    background-color: $--checkbox-color;
+    &:after{
+      $indeterminate-width: ($--checkbox-size / 14) * 8;
+      $indeterminate-height: ($--checkbox-size / 14) * 1;
+      content: ' ';
+      transform: scale(1);
+      position: absolute;
+      left: ($--checkbox-size - 2 - $indeterminate-width) / 2;
+      top: ($--checkbox-size - 3 - $indeterminate-height) / 2;
+      width: $indeterminate-width;
+      height: $indeterminate-height;
     }
   }
 }

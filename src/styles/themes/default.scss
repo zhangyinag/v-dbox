@@ -276,6 +276,11 @@ $--spin-dot-size-lg: 32px !default;
 
 // Tag
 // --
-$--tag-default-bg: $--background-color-light;
-$--tag-default-color: $--text-color;
-$--tag-font-size: $--font-size-sm;
+$--tag-default-bg: $--background-color-light !default;
+$--tag-default-color: $--text-color !default;
+$--tag-font-size: $--font-size-sm !default;
+
+// Checkbox
+$--checkbox-size          : 16px !default;
+$--checkbox-color         : $--primary-color !default;
+$--checkbox-check-color   : #fff !default;

@@ -1,7 +1,12 @@
 <template>
-    <label :class="[b(), sCheckedCls]">
+    <label :class="[b(), disabledCls, sCheckedCls, sIndeterminateCls, sFocusCls]">
         <span :class="[e('control')]">
-            <input type="checkbox" :class="[e('control-input')]" :value="label" v-model="model" tabindex="-1">
+            <input type="checkbox"
+                   :class="[e('control-input')]"
+                   :value="label" v-model="model"
+                   :disabled="disabled"
+                   @blur="onBlur"
+                   @focus="onFocus">
             <span :class="[e('control-inner')]"></span>
         </span>
         <span :class="[e('text')]"><slot></slot></span>
@@ -22,6 +27,12 @@ export default class Checkbox extends mixins(BemMixin) {
 
   @Prop({type: [String, Number, Boolean]}) label: string| number| boolean
 
+  @Prop(Boolean) disabled!: boolean
+
+  @Prop(Boolean) indeterminate!: boolean
+
+  focus: boolean = false
+
   get model (): any {
     return this.value
   }
@@ -40,6 +51,26 @@ export default class Checkbox extends mixins(BemMixin) {
     return !this.checked ? '' : this.s('checked')
   }
 
+  get sIndeterminateCls () {
+    return !this.indeterminate ? '' : this.s('indeterminate')
+  }
+
+  get sFocusCls () {
+    return !this.focus ? '' : this.s('focus')
+  }
+
+  get disabledCls () {
+    return !this.disabled ? '' : this.s('disabled')
+  }
+
   @Emit() input (value: any) {}
+
+  onFocus () {
+    this.focus = true
+  }
+
+  onBlur () {
+    this.focus = false
+  }
 }
 </script>
