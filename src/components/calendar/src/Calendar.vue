@@ -4,9 +4,13 @@
             <v-select v-model="year">
                 <v-option v-for="year in yearOpts" :key="year" :label="year">{{year}} 年</v-option>
             </v-select>
-            <v-select v-model="month" v-if="mode === 'month'">
+            <v-select v-model="month" v-if="mode === 'month'" :class="[e('month-select')]">
                 <v-option v-for="month in monthOpts" :key="month" :label="month">{{month + 1}} 月</v-option>
             </v-select>
+            <radio-group v-model="mode" :class="[e('mode-select')]">
+                <radio-button label="year">年</radio-button>
+                <radio-button label="month">月</radio-button>
+            </radio-group>
         </div>
         <div :class="[e('body')]">
             <table :class="[e('table')]">
@@ -45,15 +49,16 @@ import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import {Input as VInput} from '../../input'
 import {Select as VSelect, Option as VOption} from '../../select'
+import {RadioGroup, RadioButton} from '../../radio'
 import {getRecentDayOfWeek, range} from '../../../utils'
 
 @Component({
-  components: {VInput, VSelect, VOption},
+  components: {RadioButton, RadioGroup, VInput, VSelect, VOption},
   })
 export default class Calendar extends mixins(BemMixin) {
-  @Prop({type: Boolean, default: true}) fullscreen!: boolean
+  @Prop(Boolean) card!: boolean
 
-  @Prop({type: String, default: 'month'}) mode!: 'month'| 'year'
+  mode: 'month'| 'year' = 'month'
 
   year: number = new Date().getFullYear()
 
