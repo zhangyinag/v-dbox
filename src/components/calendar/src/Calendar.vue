@@ -28,11 +28,11 @@
                 <tbody>
                     <tr v-for="(row, i) in rows" :key="i">
                         <td v-for="(cell, j) in row" :key="j">
-                            <div :class="[e('cell')]">
-                                <div :class="['cell-value']">
+                            <div :class="[e('cell'), sSelectedCls(cell)]" @click="onCellClick(cell)">
+                                <div :class="[e('cell-value')]">
                                     {{cellText(cell)}}
                                 </div>
-                                <div :class="['cell-content']">
+                                <div :class="[e('cell-content')]">
                                 </div>
                             </div>
                         </td>
@@ -50,7 +50,7 @@ import BemMixin from '../../../core/mixins/BemMixin'
 import {Input as VInput} from '../../input'
 import {Select as VSelect, Option as VOption} from '../../select'
 import {RadioGroup, RadioButton} from '../../radio'
-import {getRecentDayOfWeek, range} from '../../../utils'
+import {getRecentDayOfWeek, isSameDay, isSameMonth, range} from '../../../utils'
 
 @Component({
   components: {RadioButton, RadioGroup, VInput, VSelect, VOption},
@@ -63,6 +63,8 @@ export default class Calendar extends mixins(BemMixin) {
   year: number = new Date().getFullYear()
 
   month: number = new Date().getMonth()
+
+  selectedDate: Date| null = null
 
   get rows (): Date[][] {
     let ret: Date[][] = []
@@ -100,6 +102,19 @@ export default class Calendar extends mixins(BemMixin) {
     return range(0, 11)
   }
 
+  selected (date: Date): boolean {
+    if (this.mode === 'month') {
+      return isSameDay(date, this.selectedDate)
+    } else if (this.mode === 'year') {
+      return isSameMonth(date, this.selectedDate)
+    }
+    return false
+  }
+
+  sSelectedCls (date: Date): string {
+    return !this.selected(date) ? '' : 'selected'
+  }
+
   cellText (date: Date): string {
     if (this.mode === 'year') {
       return (date.getMonth() + 1) + '月'
@@ -107,6 +122,10 @@ export default class Calendar extends mixins(BemMixin) {
       return ('0' + date.getDate()).substr(-2)
     }
     return ''
+  }
+
+  onCellClick (cell: Date) {
+    this.selectedDate = cell
   }
 }
 </script>
