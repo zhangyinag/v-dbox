@@ -33,3 +33,13 @@ export function isPrimitive (value: any): boolean {
     typeof value === 'boolean'
   )
 }
+
+/**
+ * generate a order array from a specific start and end point.
+ * @param {number} start
+ * @param {number} end
+ * @returns {number[]}
+ */
+export function range (start: number, end: number): number[] {
+  return Array(end - start + 1).fill(0).map((v, i) => i + start)
+}
