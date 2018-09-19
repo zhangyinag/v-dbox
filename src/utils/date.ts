@@ -15,14 +15,14 @@ export function getRecentDayOfWeek (date: Date, dayOfWeek: number, next: boolean
   return newDate
 }
 
-
-export function isSameMonth (date1: Date, date2: Date): boolean {
+export function isSameMonth (date1: Date| null, date2: Date| null): boolean {
   if (!date1 || !date2) return false
   return date1.getFullYear() === date2.getFullYear() &&
     date1.getMonth() === date2.getMonth()
 }
 
-export function isSameDay (date1: Date, date2: Date): boolean {
+export function isSameDay (date1: Date| null, date2: Date| null): boolean {
   return isSameMonth(date1, date2) &&
+    (!!date1 && !!date2) &&
     date1.getDate() === date2.getDate()
 }

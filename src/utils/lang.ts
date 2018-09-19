@@ -21,7 +21,6 @@ export const hyphenate = (str: string): string => {
   return str.replace(hyphenateRE, '-$1').toLowerCase()
 }
 
-
 /**
  * Check if value is primitive
  */
