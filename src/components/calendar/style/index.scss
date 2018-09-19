@@ -8,6 +8,61 @@
   outline: none;
   //border-top: $--border-width-base $--border-style-base $--border-color-base;
 
+  // card mode
+  @include m(card) {
+    border: $--border-style-base $--border-color-base $--border-width-base;
+    border-top-left-radius: $--border-radius-base;
+    border-top-right-radius: $--border-radius-base;
+
+    @include e(header){
+      border-bottom: $--border-style-base $--border-color-base $--border-width-base;
+    }
+
+    @include e(table){
+      height: 256px;
+    }
+
+    @include e(cell){
+      height: auto;
+      width: auto;
+      border-top-width: 0;
+      padding: 0;
+      margin: 0;
+
+      &:hover{
+        background: transparent;
+      }
+
+      &.selected, &:active{
+        background: transparent;
+        @include e(cell-value){
+          background-color: $--primary-color;
+          color: #fff;
+        }
+      }
+
+      &.current{
+        @include e(cell-value){
+          border: $--border-width-base $--border-style-base $--primary-color;
+        }
+      }
+    }
+
+    @include e(cell-value){
+      text-align: center;
+      margin: 0 auto;
+      border-radius: $--border-radius-sm;
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      background: transparent;
+      line-height: 24px;
+
+      &:hover{
+        background-color: $--primary-2;
+      }
+    }
+  }
 }
 
 @include e(mode-select){
@@ -27,31 +82,29 @@
 
 @include e(body){
   padding: 8px 12px;
-  table {
-    border-collapse: collapse;
-    max-width: 100%;
-    background-color: transparent;
-    width: 100%;
-    table-layout: fixed;
-  }
-
-  table,
-  th,
   td {
     border: 0;
     padding: 0;
-  }
-
-  td {
     position: relative;
   }
+}
 
-  @include e(column-header) { // weight problem
-    line-height: 18px;
-    padding: 0 12px 5px 0;
-    width: 33px;
-    text-align: right;
-  }
+@include e(table) {
+  border-collapse: collapse;
+  max-width: 100%;
+  background-color: transparent;
+  width: 100%;
+  table-layout: fixed;
+  border: 0;
+  padding: 0;
+}
+
+@include e(column-header) { // weight problem
+  line-height: 18px;
+  padding: 0 12px 5px 0;
+  width: 33px;
+  text-align: right;
+  border: 0;
 }
 
 @include e(column-header-inner) {
@@ -93,6 +146,14 @@
   &.current {
     border-color: $--primary-color;
   }
+
+  &.disabled {
+    cursor: not-allowed;
+    background-color: $--disabled-bg;
+    @include e(cell-value) {
+      color: $--disabled-color;
+    }
+  }
 }
 
 @include e(cell-value) {
@@ -100,6 +161,7 @@
   background: transparent;
   width: auto;
 }
+
 
 
 

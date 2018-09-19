@@ -1,13 +1,13 @@
 <template>
-    <div :class="[b()]">
+    <div :class="[b(), mCardCls]">
         <div :class="[e('header')]">
-            <v-select v-model="year">
+            <v-select v-model="year" :size="card ? 'sm' : ''">
                 <v-option v-for="year in yearOpts" :key="year" :label="year">{{year}} 年</v-option>
             </v-select>
-            <v-select v-model="month" v-if="mode === 'month'" :class="[e('month-select')]">
+            <v-select v-model="month" v-if="mode === 'month'" :class="[e('month-select')]" :size="card ? 'sm' : ''">
                 <v-option v-for="month in monthOpts" :key="month" :label="month">{{month + 1}} 月</v-option>
             </v-select>
-            <radio-group v-model="mode" :class="[e('mode-select')]">
+            <radio-group v-model="mode" :class="[e('mode-select')]" :size="card ? 'sm' : ''">
                 <radio-button label="year">年</radio-button>
                 <radio-button label="month">月</radio-button>
             </radio-group>
@@ -28,7 +28,8 @@
                 <tbody>
                     <tr v-for="(row, i) in rows" :key="i">
                         <td v-for="(cell, j) in row" :key="j">
-                            <div :class="[e('cell'), sSelectedCls(cell), sNotCurrentMonthDayCls(cell), currentCls(cell)]" @click="onCellClick(cell)">
+                            <div :class="[e('cell'), sSelectedCls(cell), sNotCurrentMonthDayCls(cell), currentCls(cell), sDisabledCls(cell)]"
+                                 @click="onCellClick(cell)">
                                 <div :class="[e('cell-value')]">
                                     {{cellText(cell)}}
                                 </div>
@@ -58,6 +59,8 @@ import {getRecentDayOfWeek, isSameDay, isSameMonth, isToday, range} from '../../
   })
 export default class Calendar extends mixins(BemMixin) {
   @Prop(Boolean) card!: boolean
+
+  @Prop(Function) disabledDate!: (date: Date) => boolean
 
   mode: 'month'| 'year' = 'month'
 
@@ -103,6 +106,10 @@ export default class Calendar extends mixins(BemMixin) {
     return range(0, 11)
   }
 
+  get mCardCls (): string {
+    return !this.card ? '' : this.m('card')
+  }
+
   selected (date: Date): boolean {
     if (this.mode === 'month') {
       return isSameDay(date, this.selectedDate)
@@ -125,6 +132,10 @@ export default class Calendar extends mixins(BemMixin) {
     return this.isCurrentMonthDay(date) ? '' : this.s('not-current-month-day')
   }
 
+  sDisabledCls (date: Date): string {
+    return !this.disabled(date) ? '' : 'disabled'
+  }
+
   currentCls (date: Date): string { // 当前月 或 今天
     if (this.mode === 'year') return !isSameMonth(date, new Date()) ? '' : 'current'
     return !isToday(date) ? '' : 'current'
@@ -139,8 +150,13 @@ export default class Calendar extends mixins(BemMixin) {
     return ''
   }
 
+  disabled (date: Date): boolean {
+    if (!this.disabledDate) return false
+    return this.disabledDate(date)
+  }
+
   onCellClick (cell: Date) {
-    this.selectedDate = cell
+    if (!this.disabled(cell)) this.selectedDate = cell
     if (this.mode === 'month' && !this.isCurrentMonthDay(cell)) {
       this.year = cell.getFullYear()
       this.month = cell.getMonth()
