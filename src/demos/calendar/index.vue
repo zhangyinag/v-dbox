@@ -5,6 +5,13 @@
    <br>
    <p :class="[$style.red]">基本</p>
    <v-calendar></v-calendar>
+
+   <br>
+   <br>
+   <p>自定义 cell 内容</p>
+   <v-calendar>
+      <span slot-scope="{date}" :class="[$style.red]" v-if="date.getDate() === 1">First day of Month</span>
+   </v-calendar>
 </div>
 </template>
 

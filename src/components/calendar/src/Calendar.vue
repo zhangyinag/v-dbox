@@ -28,11 +28,12 @@
                 <tbody>
                     <tr v-for="(row, i) in rows" :key="i">
                         <td v-for="(cell, j) in row" :key="j">
-                            <div :class="[e('cell'), sSelectedCls(cell), sNotCurrentMonthDayCls(cell)]" @click="onCellClick(cell)">
+                            <div :class="[e('cell'), sSelectedCls(cell), sNotCurrentMonthDayCls(cell), currentCls(cell)]" @click="onCellClick(cell)">
                                 <div :class="[e('cell-value')]">
                                     {{cellText(cell)}}
                                 </div>
                                 <div :class="[e('cell-content')]">
+                                    <slot :date="cell" :mode="mode"></slot>
                                 </div>
                             </div>
                         </td>
@@ -50,7 +51,7 @@ import BemMixin from '../../../core/mixins/BemMixin'
 import {Input as VInput} from '../../input'
 import {Select as VSelect, Option as VOption} from '../../select'
 import {RadioGroup, RadioButton} from '../../radio'
-import {getRecentDayOfWeek, isSameDay, isSameMonth, range} from '../../../utils'
+import {getRecentDayOfWeek, isSameDay, isSameMonth, isToday, range} from '../../../utils'
 
 @Component({
   components: {RadioButton, RadioGroup, VInput, VSelect, VOption},
@@ -122,6 +123,11 @@ export default class Calendar extends mixins(BemMixin) {
 
   sNotCurrentMonthDayCls (date: Date): string {
     return this.isCurrentMonthDay(date) ? '' : this.s('not-current-month-day')
+  }
+
+  currentCls (date: Date): string { // 当前月 或 今天
+    if (this.mode === 'year') return !isSameMonth(date, new Date()) ? '' : 'current'
+    return !isToday(date) ? '' : 'current'
   }
 
   cellText (date: Date): string {

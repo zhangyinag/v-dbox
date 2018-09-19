@@ -89,6 +89,10 @@
       color: $--disabled-color;
     }
   }
+
+  &.current {
+    border-color: $--primary-color;
+  }
 }
 
 @include e(cell-value) {
