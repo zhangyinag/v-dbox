@@ -8,75 +8,95 @@
   outline: none;
   //border-top: $--border-width-base $--border-style-base $--border-color-base;
 
-  @include e(header){
-    padding: 11px 16px 11px 0;
+}
+
+@include e(mode-select){
+  margin-left: 8px;
+  text-align: left;
+  vertical-align: top; // need to specific, is a problem???
+}
+
+@include e(header){
+  padding: 11px 16px 11px 0;
+  text-align: right;
+}
+
+@include e(month-select){
+  margin-left: 5px;
+}
+
+@include e(body){
+  padding: 8px 12px;
+  table {
+    border-collapse: collapse;
+    max-width: 100%;
+    background-color: transparent;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  table,
+  th,
+  td {
+    border: 0;
+    padding: 0;
+  }
+
+  td {
+    position: relative;
+  }
+
+  @include e(column-header) { // weight problem
+    line-height: 18px;
+    padding: 0 12px 5px 0;
+    width: 33px;
     text-align: right;
   }
-
-  @include e(mode-select){
-    margin-left: 8px;
-    text-align: left;
-    vertical-align: top; // need to specific, is a problem???
-  }
-
-  @include e(month-select){
-    margin-left: 5px;
-  }
-
-  @include e(body){
-    padding: 8px 12px;
-    table {
-      border-collapse: collapse;
-      max-width: 100%;
-      background-color: transparent;
-      width: 100%;
-      table-layout: fixed;
-    }
-
-    table,
-    th,
-    td {
-      border: 0;
-    }
-
-    td {
-      position: relative;
-    }
-
-    @include e (cell) {
-      text-align: left;
-      margin: 0 4px;
-      display: block;
-      color: $--text-color;
-      height: 116px;
-      padding: 4px 8px;
-      border-top: 2px solid $--border-color-split;
-      transition: background .3s;
-
-      &:hover {
-        background: $--item-hover-bg;
-        cursor: pointer;
-      }
-
-      &:active, &.selected {
-        background: $--primary-2;
-      }
-
-      &.selected {
-        @include e(cell-value) {
-          color: $--primary-color ;
-        }
-      }
-
-      @include e(cell-value) {
-        text-align: right;
-        background: transparent;
-        width: auto;
-      }
-    }
-  }
-
 }
+
+@include e(column-header-inner) {
+  display: block;
+  font-weight: normal;
+}
+
+@include e (cell) {
+  text-align: left;
+  margin: 0 4px;
+  display: block;
+  color: $--text-color;
+  height: 116px;
+  padding: 4px 8px;
+  border-top: 2px solid $--border-color-split;
+  transition: background .3s;
+
+  &:hover {
+    background: $--item-hover-bg;
+    cursor: pointer;
+  }
+
+  &:active, &.selected {
+    background: $--primary-2;
+  }
+
+  &.selected {
+    @include e(cell-value) {
+      color: $--primary-color ;
+    }
+  }
+
+  &.not-current-month-day{
+    @include e(cell-value) {
+      color: $--disabled-color;
+    }
+  }
+}
+
+@include e(cell-value) {
+  text-align: right;
+  background: transparent;
+  width: auto;
+}
+
 
 
 

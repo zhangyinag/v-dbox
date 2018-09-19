@@ -16,19 +16,19 @@
             <table :class="[e('table')]">
                 <thead v-if="mode === 'month'">
                     <tr>
-                        <th>日</th>
-                        <th>一</th>
-                        <th>二</th>
-                        <th>三</th>
-                        <th>四</th>
-                        <th>五</th>
-                        <th>六</th>
+                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">日</span></th>
+                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">一</span></th>
+                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">二</span></th>
+                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">三</span></th>
+                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">四</span></th>
+                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">五</span></th>
+                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">六</span></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(row, i) in rows" :key="i">
                         <td v-for="(cell, j) in row" :key="j">
-                            <div :class="[e('cell'), sSelectedCls(cell)]" @click="onCellClick(cell)">
+                            <div :class="[e('cell'), sSelectedCls(cell), sNotCurrentMonthDayCls(cell)]" @click="onCellClick(cell)">
                                 <div :class="[e('cell-value')]">
                                     {{cellText(cell)}}
                                 </div>
@@ -111,8 +111,17 @@ export default class Calendar extends mixins(BemMixin) {
     return false
   }
 
+  isCurrentMonthDay (date: Date): boolean {
+    if (this.mode === 'year') return false
+    return isSameMonth(new Date(this.year, this.month), date)
+  }
+
   sSelectedCls (date: Date): string {
     return !this.selected(date) ? '' : 'selected'
+  }
+
+  sNotCurrentMonthDayCls (date: Date): string {
+    return this.isCurrentMonthDay(date) ? '' : this.s('not-current-month-day')
   }
 
   cellText (date: Date): string {
@@ -126,6 +135,10 @@ export default class Calendar extends mixins(BemMixin) {
 
   onCellClick (cell: Date) {
     this.selectedDate = cell
+    if (this.mode === 'month' && !this.isCurrentMonthDay(cell)) {
+      this.year = cell.getFullYear()
+      this.month = cell.getMonth()
+    }
   }
 }
 </script>
