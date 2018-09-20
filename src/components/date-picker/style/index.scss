@@ -9,12 +9,12 @@
 }
 
 @include e(popper) {
-
+  padding: 0;
+  margin-top: -32px - 2px !important;
+  margin-left: -2px !important;
 }
 
 @import "./date-panel";
-
-
 
 
 

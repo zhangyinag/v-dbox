@@ -5,9 +5,27 @@
 
 @include b(date-panel) {
   @include reset-component();
+  width: 278px;
+}
+
+@include e(input){
+  width: 100%;
 }
 
 
+@include e(header){
+  height: 34px;
+}
+
+
+@include e(body){
+  height: 256px;
+}
+
+
+@include e(footer){
+  height: 36px;
+}
 
 
 
