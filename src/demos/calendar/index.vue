@@ -27,7 +27,7 @@
    <br>
    <br>
    <p>卡片模式</p>
-   <v-calendar card style="width: 300px;"></v-calendar>
+   <v-calendar card style="width: 300px;" :disabled-date="disabledDate"></v-calendar>
 </div>
 </template>
 

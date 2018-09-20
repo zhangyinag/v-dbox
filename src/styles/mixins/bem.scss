@@ -135,3 +135,31 @@ $namespace: $--ant-prefix;
 @function a($name) {
   @return #{$B}-$name
 }
+
+@function b($name: false) {
+  @if $name {
+    @return '.' + $namespace+'-'+$name
+  }
+  @return '.' + #{$B}
+}
+
+@function e($e, $block: false) {
+  @if $block == false {
+    $block: $B
+  } @else {
+    $block: $namespace+'-'+$block
+  }
+  @return '.' + $block + $element-separator + $e
+}
+
+@function m($m, $block: false, $e: false) {
+  @if $block == false {
+    $block: $B
+  } @else {
+    $block: $namespace+'-'+$block
+  }
+  @if $e != false {
+    $block: $block  + $element-separator + $e
+  }
+  @return '.' + $block + $modifier-separator + $m
+}

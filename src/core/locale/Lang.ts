@@ -5,4 +5,9 @@ export default interface Lang {
   select: {
     noDataText: string
   }
+  calendar: {
+    weeks: [string, string, string, string, string, string, string],
+    year: string
+    month: string
+  }
 }

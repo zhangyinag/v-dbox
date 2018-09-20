@@ -1,28 +1,22 @@
 <template>
-    <div :class="[b(), mCardCls]">
+    <div :class="[b(), mCardCls, mModeCls]">
         <div :class="[e('header')]">
             <v-select v-model="year" :size="card ? 'sm' : ''">
-                <v-option v-for="year in yearOpts" :key="year" :label="year">{{year}} 年</v-option>
+                <v-option v-for="year in yearOpts" :key="year" :label="year">{{year}} {{t('year')}}</v-option>
             </v-select>
             <v-select v-model="month" v-if="mode === 'month'" :class="[e('month-select')]" :size="card ? 'sm' : ''">
-                <v-option v-for="month in monthOpts" :key="month" :label="month">{{month + 1}} 月</v-option>
+                <v-option v-for="month in monthOpts" :key="month" :label="month">{{month + 1}} {{t('month')}}</v-option>
             </v-select>
             <radio-group v-model="mode" :class="[e('mode-select')]" :size="card ? 'sm' : ''">
-                <radio-button label="year">年</radio-button>
-                <radio-button label="month">月</radio-button>
+                <radio-button label="year">{{t('year')}}</radio-button>
+                <radio-button label="month">{{t('month')}}</radio-button>
             </radio-group>
         </div>
         <div :class="[e('body')]">
             <table :class="[e('table')]">
                 <thead v-if="mode === 'month'">
                     <tr>
-                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">日</span></th>
-                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">一</span></th>
-                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">二</span></th>
-                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">三</span></th>
-                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">四</span></th>
-                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">五</span></th>
-                        <th :class="[e('column-header')]"><span :class="[e('column-header-inner')]">六</span></th>
+                        <th :class="[e('column-header')]" v-for="week in weeks" :key="week"><span :class="[e('column-header-inner')]">{{week}}</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,18 +40,19 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop} from 'vue-property-decorator'
+import {Component, Prop, Emit} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import {Input as VInput} from '../../input'
 import {Select as VSelect, Option as VOption} from '../../select'
 import {RadioGroup, RadioButton} from '../../radio'
 import {getRecentDayOfWeek, isSameDay, isSameMonth, isToday, range} from '../../../utils'
+import LocaleMixin from '../../../core/mixins/LocaleMixin'
 
 @Component({
   components: {RadioButton, RadioGroup, VInput, VSelect, VOption},
   })
-export default class Calendar extends mixins(BemMixin) {
+export default class Calendar extends mixins(BemMixin, LocaleMixin) {
   @Prop(Boolean) card!: boolean
 
   @Prop(Function) disabledDate!: (date: Date) => boolean
@@ -82,6 +77,10 @@ export default class Calendar extends mixins(BemMixin) {
       }
     }
     return ret
+  }
+
+  get weeks (): string [] {
+    return this.t('weeks')
   }
 
   get date (): Date {
@@ -109,6 +108,12 @@ export default class Calendar extends mixins(BemMixin) {
   get mCardCls (): string {
     return !this.card ? '' : this.m('card')
   }
+
+  get mModeCls (): string {
+    return this.m('mode-' + this.mode)
+  }
+
+  @Emit() select (date: Date) {}
 
   selected (date: Date): boolean {
     if (this.mode === 'month') {
@@ -156,7 +161,10 @@ export default class Calendar extends mixins(BemMixin) {
   }
 
   onCellClick (cell: Date) {
-    if (!this.disabled(cell)) this.selectedDate = cell
+    if (!this.disabled(cell)) {
+      this.selectedDate = cell
+      this.select(cell)
+    }
     if (this.mode === 'month' && !this.isCurrentMonthDay(cell)) {
       this.year = cell.getFullYear()
       this.month = cell.getMonth()

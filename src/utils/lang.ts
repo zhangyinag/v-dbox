@@ -3,7 +3,8 @@
  */
 const camelizeRE = /-(\w)/g
 export const camelize = (str: string): string => {
-  return str.replace(camelizeRE, (_, c) => c ? c.toUpperCase() : '')
+  let temp = str.replace(camelizeRE, (_, c) => c ? c.toUpperCase() : '')
+  return temp.charAt(0).toLowerCase() + temp.slice(1)
 }
 
 /**

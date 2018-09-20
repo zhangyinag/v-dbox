@@ -6,6 +6,11 @@ const zhCN: Lang = {
   },
   select: {
     noDataText: '无匹配数据'
+  },
+  calendar: {
+    weeks: ['日', '一', '二', '三', '四', '五', '六'],
+    year: '年',
+    month: '月'
   }
 }
 

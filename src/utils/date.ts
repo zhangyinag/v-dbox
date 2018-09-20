@@ -27,6 +27,6 @@ export function isSameDay (date1: Date| null, date2: Date| null): boolean {
     date1.getDate() === date2.getDate()
 }
 
-export function isToday (date: Date) {
+export function isToday (date: Date): boolean {
   return isSameDay(date, new Date())
 }

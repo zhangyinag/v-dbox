@@ -45,6 +45,11 @@
         @include e(cell-value){
           border: $--border-width-base $--border-style-base $--primary-color;
         }
+        &.disabled{
+          @include e(cell-value){
+            border-color: $--disabled-color;
+          }
+        }
       }
     }
 
@@ -61,6 +66,12 @@
       &:hover{
         background-color: $--primary-2;
       }
+    }
+  }
+
+  &#{m(mode-year)} {
+    @include e(cell-value){
+      width: 48px;
     }
   }
 }
