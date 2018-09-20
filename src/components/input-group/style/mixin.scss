@@ -1,0 +1,75 @@
+@import "../../../styles/themes/default";
+@import "../../../styles/mixins/colorPalette";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/size";
+
+
+@mixin input-left-attach() {
+  &#{b(input)}{
+    #{e(control, input)}{
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
+@mixin input-right-attach() {
+  &#{b(input)}{
+    #{e(control, input)}{
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+@mixin input-both-attach() {
+  @include input-left-attach();
+  @include input-right-attach();
+}
+
+@mixin select-left-attach() {
+  &#{b(select)}{
+    #{b(select-selection)}{
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+}
+
+@mixin select-right-attach() {
+  &#{b(select)}{
+    #{b(select-selection)}{
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+}
+
+@mixin select-both-attach() {
+  @include select-left-attach();
+  @include select-right-attach();
+}
+
+
+@mixin button-left-attach() {
+  &#{b(button)}{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    vertical-align: top;
+  }
+}
+
+@mixin button-right-attach() {
+  &#{b(button)}{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    vertical-align: top;
+  }
+}
+
+@mixin button-both-attach() {
+  @include button-left-attach();
+  @include button-right-attach();
+  vertical-align: top;
+}

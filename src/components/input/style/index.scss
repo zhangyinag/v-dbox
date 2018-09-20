@@ -40,6 +40,15 @@
   @include m(append){
     @include append();
   }
+
+  @include m(separator) {
+    pointer-events: none;
+    z-index: 2;
+    @include e(control){
+      border-right: 0;
+      border-left: 0;
+    }
+  }
 }
 
 @include b(autocomplete){

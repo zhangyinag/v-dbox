@@ -1,0 +1,48 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(input-group) {
+  @include reset-component();
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+
+  > *{
+    &:first-child:not(:last-child){
+      @include input-right-attach();
+      @include select-right-attach();
+      @include button-right-attach();
+    }
+    &:last-child:not(:first-child){
+      @include input-left-attach();
+      @include select-left-attach();
+      @include button-left-attach();
+    }
+    &:not(:first-child){
+      margin-left: -1px;
+      &:not(:last-child){
+        @include input-both-attach();
+        @include select-both-attach();
+        @include button-both-attach();
+      }
+    }
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      z-index: 2;
+    }
+  }
+
+}
+
+
+
+
+
+
+
+
+

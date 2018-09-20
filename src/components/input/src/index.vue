@@ -1,5 +1,5 @@
 <template>
-    <div :class="[b(), prependCls, appendCls, prefixCls, suffixCls]">
+    <div :class="[b(), prependCls, appendCls, prefixCls, suffixCls, separatorCls]">
        <div :class="[e('group')]">
            <span :class="[e('addon'), e('prepend')]" v-if="$slots.prepend"><slot name="prepend"></slot></span>
            <component :is="isTextarea ? 'textarea' : 'input'"
@@ -48,6 +48,8 @@ export default class Input extends BaseComponent {
 
     @Prop(Boolean) clearable: boolean
 
+    @Prop(Boolean) separator: boolean
+
     @Prop({type: String, default: 'text'}) type: string
 
     @Prop([Boolean, Object]) autosize: {minRows?: number, maxRows?: number} & boolean
@@ -86,6 +88,10 @@ export default class Input extends BaseComponent {
 
     get suffixCls () {
       return (!this.$slots.suffix && !this.suffixIcon && !this.clearIconVisible) ? '' : this.m('suffix')
+    }
+
+    get separatorCls (): string {
+      return !this.separator ? '' : this.m('separator')
     }
 
     get textareaAutosizeStyle () {
