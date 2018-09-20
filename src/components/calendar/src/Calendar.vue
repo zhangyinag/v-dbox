@@ -79,8 +79,8 @@ export default class Calendar extends mixins(BemMixin, LocaleMixin) {
     return ret
   }
 
-  get weeks (): string [] {
-    return this.t('weeks')
+  get weeks (): string[] {
+    return this.t('weeks') as string[]
   }
 
   get date (): Date {
