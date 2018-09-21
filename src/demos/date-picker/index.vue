@@ -4,7 +4,7 @@
    <br>
    <br>
    <p>基本</p>
-   <v-date-picker></v-date-picker>
+   <v-date-picker v-model="value1"></v-date-picker>
 </div>
 </template>
 
@@ -14,6 +14,7 @@ import {Component, Vue} from 'vue-property-decorator'
   components: {},
   })
 export default class DatePickerDemo extends Vue {
+  value1: Date = new Date(2018, 8, 20)
 }
 </script>
 

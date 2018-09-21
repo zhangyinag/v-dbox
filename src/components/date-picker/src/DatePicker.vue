@@ -1,15 +1,18 @@
 <template>
     <div :class="[b()]">
         <popper trigger="click"
+                ref="popper"
                 :enter-active-class="enterActiveClass"
                 :leave-active-class="leaveActiveClass"
                 :visible-arrow="false"
                 :delay-on-mouse-over="200"
                 :delay-on-mouse-out="200"
                 :disabled="disabled"
+                @show="popperVisible = true"
+                @hide="popperVisible = false"
                 :options="options">
             <span class="popper" :class="[e('popper')]">
-                <date-panel></date-panel>
+                <date-panel v-model="valueProp" :visible="popperVisible" @close="onClose"></date-panel>
             </span>
             <v-input slot="reference"
                      ref="input"
@@ -27,6 +30,7 @@ import BemMixin from '../../../core/mixins/BemMixin'
 import {Input as VInput} from '../../input'
 import {Popper} from '../../popper/index'
 import DatePanel from './DatePanel.vue'
+import {format, parse} from '../../../utils'
 
 @Component({
   components: {VInput, Popper, DatePanel},
@@ -34,15 +38,31 @@ import DatePanel from './DatePanel.vue'
 export default class DatePicker extends mixins(BemMixin) {
   @Prop() @Model('input') value!: any
 
+  @Prop({type: String, default: 'shortDate'}) format: string
+
   @Prop(Boolean) disabled!: boolean
 
   @Prop(Boolean) clearable: boolean
 
-  get model (): any {
+  $refs = {
+    popper: Popper
+  }
+
+  popperVisible: boolean = false
+
+  get model (): string {
+    return this.value && format(this.value, this.format)
+  }
+
+  set model (value: string) {
+    this.input((parse(value, this.format) || null) as Date | null)
+  }
+
+  get valueProp (): any {
     return this.value
   }
 
-  set model (value: any) {
+  set valueProp (value: any) {
     this.input(value)
   }
 
@@ -76,5 +96,9 @@ export default class DatePicker extends mixins(BemMixin) {
   }
 
   @Emit() input (value: any) {}
+
+  onClose () {
+    this.$refs.popper.doClose()
+  }
 }
 </script>

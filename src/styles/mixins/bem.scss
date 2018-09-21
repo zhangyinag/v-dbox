@@ -50,12 +50,25 @@ $namespace: $--ant-prefix;
   @return $namespace+'-'+$block;
 }
 
+// $B: '' !global; need future support
 @mixin b($block) {
+  // $oldB: $B;
   $B: $namespace+'-'+$block !global;
 
   .#{$B} {
     @content;
   }
+ // $B: $oldB !global;
+}
+
+@mixin nested-b($block){
+  $oldB: $B;
+  $B: $namespace+'-'+$block !global;
+
+  .#{$B} {
+    @content;
+  }
+  $B: $oldB !global;
 }
 
 @mixin e($element) {
@@ -107,6 +120,20 @@ $namespace: $--ant-prefix;
   $currentSelector: "";
   @each $unit in $modifier {
     $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ","};
+  }
+
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
+
+@mixin combo-m ($modifier){
+  $selector: &;
+  $currentSelector: "";
+  @each $unit in $modifier {
+    $currentSelector: #{$currentSelector + & + $modifier-separator + $unit + ""};
   }
 
   @at-root {

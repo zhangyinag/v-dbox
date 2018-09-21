@@ -1,5 +1,6 @@
 @import "../../../styles/mixins/bem";
 @import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/compatibility";
 @import "../../../styles/themes/default";
 @import "./mixin";
 
@@ -9,22 +10,147 @@
 }
 
 @include e(input){
+  height: 34px;
+  padding: 6px $--control-padding-horizontal - 2px;
+  border-bottom: $--border-width-base $--border-style-base $--border-color-split;
+}
+
+@include e(input-control){
+  border: 0;
   width: 100%;
+  cursor: auto;
+  outline: 0;
+  height: 22px;
+  color: $--input-color;
+  background: $--input-bg;
+  @include placeholder();
 }
 
 
 @include e(header){
-  height: 34px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  user-select: none;
+  position: relative;
+  border-bottom: $--border-width-base $--border-style-base $--border-color-split;
+}
+
+@include e(prev-year-btn){
+  @include first-select-btn();
+}
+
+@include e(prev-month-btn){
+  @include second-select-btn();
+}
+
+@include e(next-year-btn){
+  @include first-backwards-select-btn();
+}
+
+@include e(next-month-btn){
+  @include second-backwards-select-btn();
+}
+
+@include e(year-select month-select) {
+  padding: 0 2px;
+  font-weight: 500;
+  display: inline-block;
+  color: $--heading-color;
+  line-height: 40px;
 }
 
 
 @include e(body){
-  height: 256px;
+  padding: 8px 12px;
+  td {
+    border: 0;
+    padding: 0;
+    position: relative;
+  }
 }
 
+@include e(table){
+  border-collapse: collapse;
+  max-width: 100%;
+  background-color: transparent;
+  width: 100%;
+  table-layout: fixed;
+  border: 0;
+  padding: 0;
+}
+
+@include e(column-header){
+  line-height: 18px;
+  padding: 0 12px 5px 0;
+  width: 33px;
+  text-align: right;
+  border: 0;
+}
+
+@include e(column-header-inner){
+  display: block;
+  font-weight: normal;
+}
+
+@include e(cell){
+  height: auto;
+  width: auto;
+  padding: 0;
+  margin: 0;
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    background: $--item-hover-bg;
+    cursor: pointer;
+  }
+
+  &:hover{
+    background: transparent;
+  }
+
+  @include m(today) {
+    @include e(cell-value) {
+      border-color: $--primary-color;
+      color: $--primary-color;
+      font-weight: 500;
+    }
+  }
+
+  &.selected{
+    @include e(cell-value) {
+      background-color: $--primary-color;
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+}
+
+@include e(cell-value){
+  text-align: center;
+  margin: 0 auto;
+  border-radius: $--border-radius-sm;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  line-height: 24px;
+  border: $--border-style-base $--border-width-base transparent;
+
+  &:hover{
+    background-color: $--primary-2;
+  }
+}
 
 @include e(footer){
-  height: 36px;
+  border-top: $--border-width-base $--border-style-base $--border-color-split;
+  line-height: 38px;
+  padding: 0 12px;
+}
+
+@include e(footer-btn){
+  text-align: center;
+  display: block;
 }
 
 

@@ -4,3 +4,49 @@
 @import "../../../styles/mixins/bem";
 @import "../../../styles/mixins/size";
 
+
+@mixin select-btn() {
+  position: absolute;
+  top: 0;
+  color: $--text-color-secondary;
+  font-family: Arial, "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Sans Serif", sans-serif;
+  padding: 0 5px;
+  font-size: 16px;
+  display: inline-block;
+  line-height: 40px;
+}
+
+
+@mixin first-select-btn() {
+  @include select-btn();
+  left: 7px;
+  &:after {
+    content: '«';
+  }
+}
+
+@mixin second-select-btn() {
+  @include select-btn();
+  left: 29px;
+
+  &:after {
+    content: '‹';
+  }
+}
+
+@mixin first-backwards-select-btn() {
+  @include select-btn();
+  right: 7px;
+  &:after {
+    content: '»';
+  }
+}
+
+@mixin second-backwards-select-btn() {
+  @include select-btn();
+  right: 29px;
+
+  &:after {
+    content: '›';
+  }
+}

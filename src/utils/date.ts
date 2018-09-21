@@ -1,3 +1,13 @@
+import fecha from 'fecha'
+
+fecha.masks.default = 'YYYY/MM/DD HH:mm:ss'
+fecha.masks.shortDate = 'YYYY/MM/DD'
+
+const format = fecha.format
+const parse = fecha.parse
+
+export {format, parse}
+
 export function getDaysOfMonth (date: Date): number {
   return new Date(date.getFullYear(), date.getMonth() + 1).getDate()
 }
@@ -29,4 +39,17 @@ export function isSameDay (date1: Date| null, date2: Date| null): boolean {
 
 export function isToday (date: Date): boolean {
   return isSameDay(date, new Date())
+}
+
+
+export function addYear (date: Date, n: number): Date {
+  let newDate = new Date(date)
+  newDate.setFullYear(date.getFullYear() + n)
+  return newDate
+}
+
+export function addMonth (date: Date, n: number): Date {
+  let newDate = new Date(date)
+  newDate.setMonth(date.getMonth() + n)
+  return newDate
 }
