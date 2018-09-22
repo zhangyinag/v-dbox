@@ -14,28 +14,7 @@
             <a :class="[e('next-year-btn')]" title="下一年 (Control键加右方向键)" @click="nextYear()"></a>
         </div>
         <div :class="[e('body')]">
-            <table :class="[e('table')]">
-                <thead>
-                <tr>
-                    <th :class="[e('column-header')]" v-for="week in weeks" :key="week"><span :class="[e('column-header-inner')]">{{week}}</span></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="(row, i) in rows" :key="i">
-                    <td v-for="(cell, j) in row" :key="j">
-                        <div :class="[e('cell'), todayCls(cell), selectedCls(cell)]"
-                             @click="onCellClick(cell)">
-                            <div :class="[e('cell-value')]">
-                                {{cellText(cell)}}
-                            </div>
-                            <div :class="[e('cell-content')]">
-                                <slot :date="cell"></slot>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <date-calendar :year="year" :month="month" :selected-date="value" @select="onDateSelect"></date-calendar>
         </div>
         <div :class="[e('footer')]">
             <a :class="[e('footer-btn')]" @click="onToday">今天</a>
@@ -49,11 +28,12 @@ import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import {Input as VInput} from '../../input'
 import {Popper} from '../../popper/index'
+import DateCalendar from './DateCalendar.vue'
 import LocaleMixin from '../../../core/mixins/LocaleMixin'
 import {addMonth, addYear, format, getRecentDayOfWeek, isSameDay, isToday, parse, range} from '../../../utils'
 
 @Component({
-  components: {VInput, Popper},
+  components: {VInput, Popper, DateCalendar},
   })
 export default class DatePanel extends mixins(BemMixin, LocaleMixin) {
   @Prop([Date]) @Model('input') value: Date
@@ -72,10 +52,6 @@ export default class DatePanel extends mixins(BemMixin, LocaleMixin) {
     this.input((parse(value, this.format) || null) as Date | null)
   }
 
-  get weeks (): string[] {
-    return this.t('calendar.weeks') as string[]
-  }
-
   get year (): number {
     return this.currentDate.getFullYear()
   }
@@ -84,40 +60,18 @@ export default class DatePanel extends mixins(BemMixin, LocaleMixin) {
     return this.currentDate.getMonth()
   }
 
-  get rows (): Date[][] {
-    let start = getRecentDayOfWeek(new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), 1), 0)
-    let days = range(0, 41).map(v => new Date(start.getFullYear(), start.getMonth(), start.getDate() + v))
-    let ret: Date[][] = []
-    for (let i=0; i< days.length; i = i + 7) {
-      ret.push(days.slice(i, i + 7))
-    }
-    return ret
-  }
-
   @Emit() input (value: Date | null) {}
 
   @Emit() close () {}
-
-  onCellClick (cell: Date) {
-    this.input(cell)
-    this.close()
-  }
 
   onToday (cell: Date) {
     this.input(new Date())
     this.close()
   }
 
-  cellText (cell: Date): string {
-    return cell.getDate() + ''
-  }
-
-  todayCls (cell: Date) {
-    return !isToday(cell) ? '' : this.m('today', 'cell')
-  }
-
-  selectedCls (cell: Date) {
-    return !isSameDay(cell, this.value) ? '' : 'selected'
+  onDateSelect (date: Date) {
+    this.input(date)
+    this.close()
   }
 
   nextYear (negative: false) {

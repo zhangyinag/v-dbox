@@ -6,7 +6,6 @@
 
 @include b(date-calendar) {
   @include reset-component();
-  padding: 8px 12px;
   td {
     border: 0;
     padding: 0;

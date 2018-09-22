@@ -40,7 +40,7 @@ import {addMonth, addYear, format, getRecentDayOfWeek, isSameDay, isToday, parse
 export default class DateCalendar extends mixins(BemMixin, LocaleMixin) {
   @Prop(Number) year: number
 
-  @Prop(Month) month: number
+  @Prop(Number) month: number
 
   @Prop(Date) selectedDate: Date
 
