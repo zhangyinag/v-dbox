@@ -1,0 +1,89 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/compatibility";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(date-calendar) {
+  @include reset-component();
+  padding: 8px 12px;
+  td {
+    border: 0;
+    padding: 0;
+    position: relative;
+  }
+}
+
+@include e(table){
+  border-collapse: collapse;
+  max-width: 100%;
+  background-color: transparent;
+  width: 100%;
+  table-layout: fixed;
+  border: 0;
+  padding: 0;
+}
+
+@include e(column-header){
+  line-height: 18px;
+  padding: 0 12px 5px 0;
+  width: 33px;
+  text-align: right;
+  border: 0;
+}
+
+@include e(column-header-inner){
+  display: block;
+  font-weight: normal;
+}
+
+@include e(cell){
+  height: auto;
+  width: auto;
+  padding: 0;
+  margin: 0;
+  transition: all .3s ease-in-out;
+
+  &:hover {
+    background: $--item-hover-bg;
+    cursor: pointer;
+  }
+
+  &:hover{
+    background: transparent;
+  }
+
+  @include m(today) {
+    @include e(cell-value) {
+      border-color: $--primary-color;
+      color: $--primary-color;
+      font-weight: 500;
+    }
+  }
+
+  &.selected{
+    @include e(cell-value) {
+      background-color: $--primary-color;
+      color: #fff;
+      font-weight: 500;
+    }
+  }
+}
+
+@include e(cell-value){
+  text-align: center;
+  margin: 0 auto;
+  border-radius: $--border-radius-sm;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  line-height: 24px;
+  border: $--border-style-base $--border-width-base transparent;
+
+  &:hover{
+    background-color: $--primary-2;
+  }
+}
+
+

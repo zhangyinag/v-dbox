@@ -1,7 +1,7 @@
 <template>
     <div :class="[b()]">
         <div :class="[e('input')]">
-            <input type="text" :class="[e('input-control')]" v-model="model">
+            <input type="text" :class="[e('input-control')]" v-model.lazy="model">
         </div>
         <div :class="[e('header')]">
             <a :class="[e('prev-year-btn')]" title="上一年 (Control键加左方向键)" @click="nextYear(true)"></a>

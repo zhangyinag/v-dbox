@@ -44,7 +44,7 @@ export default class DatePicker extends mixins(BemMixin) {
 
   @Prop(Boolean) clearable: boolean
 
-  $refs = {
+  $refs: any = {
     popper: Popper
   }
 
