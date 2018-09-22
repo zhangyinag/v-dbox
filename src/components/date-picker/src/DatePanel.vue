@@ -1,5 +1,11 @@
 <template>
-    <div :class="[b()]">
+    <div :class="[b()]"
+        v-keyup.ctrl.left="() => {nextYear(true)}"
+        v-keyup.meta.left="() => {nextYear(true)}"
+        v-keyup.ctrl.right="() => {nextYear()}"
+        v-keyup.meta.right="() => {nextYear()}"
+        v-keyup.up="() => {nextMonth(true)}"
+        v-keyup.down="() => {nextMonth()}">
         <div :class="[e('input')]">
             <input type="text" :class="[e('input-control')]" v-model.lazy="model">
         </div>
@@ -31,9 +37,11 @@ import {Popper} from '../../popper/index'
 import DateCalendar from './DateCalendar.vue'
 import LocaleMixin from '../../../core/mixins/LocaleMixin'
 import {addMonth, addYear, format, getRecentDayOfWeek, isSameDay, isToday, parse, range} from '../../../utils'
+import keyup from '../../../core/directives/keyup'
 
 @Component({
   components: {VInput, Popper, DateCalendar},
+  directives: {keyup}
   })
 export default class DatePanel extends mixins(BemMixin, LocaleMixin) {
   @Prop([Date]) @Model('input') value: Date
