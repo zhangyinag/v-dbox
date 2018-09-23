@@ -28,7 +28,7 @@ const SYS_KEY: any = {
   ctrl: 'ctrlKey',
   shift: 'shiftKey',
   alt: 'altKey',
-  meta: 'metaKey',
+  meta: 'metaKey'
 }
 /**
  * Note: do not bind like this: v-keyup="a(true)", use v-keyup="() => {b(true)}" instead,
@@ -38,7 +38,7 @@ const keyup: DirectiveOptions = {
   inserted (el: HTMLElement, binding: VNodeDirective, vnode: VNode, oldVnode: VNode) : void {
     let fn = binding.value
     let modifiers: any = binding.modifiers
-    let keyCode: number| undefined = undefined
+    let keyCode: number| undefined
     Object.keys(modifiers).some((key: any) => {
       if (Number.isInteger(key)) {
         keyCode = key

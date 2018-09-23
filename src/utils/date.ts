@@ -41,7 +41,6 @@ export function isToday (date: Date): boolean {
   return isSameDay(date, new Date())
 }
 
-
 export function addYear (date: Date, n: number): Date {
   let newDate = new Date(date)
   newDate.setFullYear(date.getFullYear() + n)
