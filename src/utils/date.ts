@@ -52,3 +52,14 @@ export function addMonth (date: Date, n: number): Date {
   newDate.setMonth(date.getMonth() + n)
   return newDate
 }
+
+export function addDay (date: Date, n: number): Date {
+  let newDate = new Date(date)
+  newDate.setDate(date.getDate() + n)
+  return newDate
+}
+
+export function addWeek (date: Date, n: number): Date {
+  return addDay(date,n * 7)
+}
+

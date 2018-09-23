@@ -1,5 +1,16 @@
 <template>
-    <div :class="[b()]">
+    <div :class="[b()]"
+        @keydown.meta.down="nextYear()"
+        @keydown.meta.up="nextYear(true)"
+        @keydown.ctrl.down="nextYear()"
+        @keydown.ctrl.up="nextYear(true)"
+        @keyup.page-down="nextMonth()"
+        @keyup.page-up="nextMonth(true)"
+        @keyup.up="nextWeek(true)"
+        @keyup.down="nextWeek()"
+        @keyup.left="nextDay(true)"
+        @keyup.right="nextDay()"
+        @keyup.enter="select(currentDate)">
         <div :class="[e('header')]">
             <a :class="[e('prev-year-btn')]" title="上一年 (Control键加左方向键)" @click="nextYear(true)"></a>
             <a :class="[e('prev-month-btn')]" title="上个月 (翻页上键))" @click="nextMonth(true)"></a>
@@ -48,7 +59,8 @@ import {Input as VInput} from '../../input'
 import {Popper} from '../../popper/index'
 import LocaleMixin from '../../../core/mixins/LocaleMixin'
 import {
-  addMonth,
+  addDay,
+  addMonth, addWeek,
   addYear,
   format,
   getRecentDayOfWeek,
@@ -58,11 +70,12 @@ import {
   parse,
   range
 } from '../../../utils'
+import Focusable from '../../../core/mixins/Focusable'
 
 @Component({
   components: {VInput, Popper},
   })
-export default class DateCalendar extends mixins(BemMixin, LocaleMixin) {
+export default class DateCalendar extends mixins(BemMixin, LocaleMixin, Focusable) {
   @Prop(Date) selectedDate: Date
 
   @Prop(Date) currentDate: Date
@@ -127,6 +140,14 @@ export default class DateCalendar extends mixins(BemMixin, LocaleMixin) {
 
   nextMonth (negative: false) {
     this.currentDateUpdate(addMonth(this.currentDate, negative ? -1 : 1))
+  }
+
+  nextDay (negative: false) {
+    this.currentDateUpdate(addDay(this.currentDate, negative ? -1 : 1))
+  }
+
+  nextWeek (negative: false) {
+    this.currentDateUpdate(addWeek(this.currentDate, negative ? -1 : 1))
   }
 }
 </script>
