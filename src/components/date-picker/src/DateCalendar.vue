@@ -1,27 +1,42 @@
 <template>
     <div :class="[b()]">
-        <table :class="[e('table')]">
-            <thead>
-            <tr>
-                <th :class="[e('column-header')]" v-for="week in weeks" :key="week"><span :class="[e('column-header-inner')]">{{week}}</span></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="(row, i) in rows" :key="i">
-                <td v-for="(cell, j) in row" :key="j">
-                    <div :class="[e('cell'), todayCls(cell), selectedCls(cell)]"
-                         @click="onCellClick(cell)">
-                        <div :class="[e('cell-value')]">
-                            {{cellText(cell)}}
+        <div :class="[e('header')]">
+            <a :class="[e('prev-year-btn')]" title="上一年 (Control键加左方向键)" @click="nextYear(true)"></a>
+            <a :class="[e('prev-month-btn')]" title="上个月 (翻页上键))" @click="nextMonth(true)"></a>
+            <span :class="[e('ym-select')]">
+                <a :class="[e('year-select')]" title="选择年份"> {{year}}年 </a>
+                <a :class="[e('month-select')]" title="选择月份"> {{month + 1}}月 </a>
+            </span>
+            <a :class="[e('next-month-btn')]" title="下个月 (翻页下键)" @click="nextMonth()"></a>
+            <a :class="[e('next-year-btn')]" title="下一年 (Control键加右方向键)" @click="nextYear()"></a>
+        </div>
+        <div :class="[e('body')]">
+            <table :class="[e('table')]">
+                <thead>
+                <tr>
+                    <th :class="[e('column-header')]" v-for="week in weeks" :key="week"><span :class="[e('column-header-inner')]">{{week}}</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(row, i) in rows" :key="i">
+                    <td v-for="(cell, j) in row" :key="j">
+                        <div :class="[e('cell'), currentCls(cell), notCurrentMonthCls(cell), todayCls(cell), selectedCls(cell)]"
+                             @click="onCellClick(cell)">
+                            <div :class="[e('cell-value')]">
+                                {{cellText(cell)}}
+                            </div>
+                            <div :class="[e('cell-content')]">
+                                <slot :date="cell"></slot>
+                            </div>
                         </div>
-                        <div :class="[e('cell-content')]">
-                            <slot :date="cell"></slot>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div :class="[e('footer')]">
+            <a :class="[e('footer-btn')]" @click="onToday">今天</a>
+        </div>
     </div>
 </template>
 
@@ -32,21 +47,32 @@ import BemMixin from '../../../core/mixins/BemMixin'
 import {Input as VInput} from '../../input'
 import {Popper} from '../../popper/index'
 import LocaleMixin from '../../../core/mixins/LocaleMixin'
-import {addMonth, addYear, format, getRecentDayOfWeek, isSameDay, isToday, parse, range} from '../../../utils'
+import {
+  addMonth,
+  addYear,
+  format,
+  getRecentDayOfWeek,
+  isSameDay,
+  isSameMonth,
+  isToday,
+  parse,
+  range
+} from '../../../utils'
 
 @Component({
   components: {VInput, Popper},
   })
 export default class DateCalendar extends mixins(BemMixin, LocaleMixin) {
-  @Prop(Number) year: number
-
-  @Prop(Number) month: number
-
   @Prop(Date) selectedDate: Date
 
-  get currentDate (): Date {
-    let date = (this.selectedDate && this.selectedDate.getDate()) || new Date().getDate()
-    return new Date(this.year, this.month, date)
+  @Prop(Date) currentDate: Date
+
+  get year (): number {
+    return this.currentDate.getFullYear()
+  }
+
+  get month (): number {
+    return this.currentDate.getMonth()
   }
 
   get weeks (): string[] {
@@ -65,6 +91,8 @@ export default class DateCalendar extends mixins(BemMixin, LocaleMixin) {
 
   @Emit() select (value: Date) {}
 
+  @Emit('update:currentDate') currentDateUpdate (date: Date) {}
+
   onCellClick (cell: Date) {
     this.select(cell)
   }
@@ -79,6 +107,26 @@ export default class DateCalendar extends mixins(BemMixin, LocaleMixin) {
 
   selectedCls (cell: Date) {
     return !isSameDay(cell, this.selectedDate) ? '' : 'selected'
+  }
+
+  currentCls (cell: Date) {
+    return !isSameDay(cell, this.currentDate) ? '' : this.m('current', 'cell')
+  }
+
+  notCurrentMonthCls (cell: Date) {
+    return isSameMonth(cell, this.currentDate) ? '' : this.m('not-current-month', 'cell')
+  }
+
+  onToday (cell: Date) {
+    this.select(new Date())
+  }
+
+  nextYear (negative: false) {
+    this.currentDateUpdate(addYear(this.currentDate, negative ? -1 : 1))
+  }
+
+  nextMonth (negative: false) {
+    this.currentDateUpdate(addMonth(this.currentDate, negative ? -1 : 1))
   }
 }
 </script>

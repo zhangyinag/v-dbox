@@ -1,30 +1,9 @@
 <template>
-    <div :class="[b()]"
-        v-keyup.ctrl.left="() => {nextYear(true)}"
-        v-keyup.meta.left="() => {nextYear(true)}"
-        v-keyup.ctrl.right="() => {nextYear()}"
-        v-keyup.meta.right="() => {nextYear()}"
-        v-keyup.up="() => {nextMonth(true)}"
-        v-keyup.down="() => {nextMonth()}">
+    <div :class="[b()]">
         <div :class="[e('input')]">
             <input type="text" :class="[e('input-control')]" v-model.lazy="model">
         </div>
-        <div :class="[e('header')]">
-            <a :class="[e('prev-year-btn')]" title="上一年 (Control键加左方向键)" @click="nextYear(true)"></a>
-            <a :class="[e('prev-month-btn')]" title="上个月 (翻页上键))" @click="nextMonth(true)"></a>
-            <span :class="[e('ym-select')]">
-                <a :class="[e('year-select')]" title="选择年份"> {{year}}年 </a>
-                <a :class="[e('month-select')]" title="选择月份"> {{month + 1}}月 </a>
-            </span>
-            <a :class="[e('next-month-btn')]" title="下个月 (翻页下键)" @click="nextMonth()"></a>
-            <a :class="[e('next-year-btn')]" title="下一年 (Control键加右方向键)" @click="nextYear()"></a>
-        </div>
-        <div :class="[e('body')]">
-            <date-calendar :year="year" :month="month" :selected-date="value" @select="onDateSelect"></date-calendar>
-        </div>
-        <div :class="[e('footer')]">
-            <a :class="[e('footer-btn')]" @click="onToday">今天</a>
-        </div>
+        <date-calendar :selected-date="value" :current-date.sync="currentDate" @select="onDateSelect"></date-calendar>
     </div>
 </template>
 
@@ -60,40 +39,23 @@ export default class DatePanel extends mixins(BemMixin, LocaleMixin) {
     this.input((parse(value, this.format) || null) as Date | null)
   }
 
-  get year (): number {
-    return this.currentDate.getFullYear()
-  }
-
-  get month (): number {
-    return this.currentDate.getMonth()
-  }
-
   @Emit() input (value: Date | null) {}
 
   @Emit() close () {}
-
-  onToday (cell: Date) {
-    this.input(new Date())
-    this.close()
-  }
 
   onDateSelect (date: Date) {
     this.input(date)
     this.close()
   }
 
-  nextYear (negative: false) {
-    this.currentDate = addYear(this.currentDate, negative ? -1 : 1)
-  }
-
-  nextMonth (negative: false) {
-    this.currentDate = addMonth(this.currentDate, negative ? -1 : 1)
-  }
-
   @Watch('visible') visibleChange (visible: boolean) {
     if (visible && this.value) {
-      this.currentDate = this.value
+      this.currentDate = this.value || new Date()
     }
+  }
+
+  @Watch('value') valueChange (value: Date| null) {
+    this.currentDate = this.value || new Date()
   }
 }
 </script>

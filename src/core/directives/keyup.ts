@@ -6,7 +6,7 @@ const cbs: ((e: KeyboardEvent) => void)[] = []
 // win.cbs = cbs
 // there are some issue with 'keyup', when use Meta + , so apply 'keydown' here
 document.addEventListener('keydown', (e) => {
-  e.preventDefault()
+  // e.preventDefault()
   cbs.forEach(cb => {
     cb(e)
   })

@@ -13,6 +13,45 @@
   }
 }
 
+@include e(header){
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  user-select: none;
+  position: relative;
+  border-bottom: $--border-width-base $--border-style-base $--border-color-split;
+}
+
+@include e(prev-year-btn){
+  @include first-select-btn();
+}
+
+@include e(prev-month-btn){
+  @include second-select-btn();
+}
+
+@include e(next-year-btn){
+  @include first-backwards-select-btn();
+}
+
+@include e(next-month-btn){
+  @include second-backwards-select-btn();
+}
+
+@include e(year-select month-select) {
+  padding: 0 2px;
+  font-weight: 500;
+  display: inline-block;
+  color: $--heading-color;
+  line-height: 40px;
+}
+
+
+@include e(body){
+  padding: 8px 12px;
+}
+
+
 @include e(table){
   border-collapse: collapse;
   max-width: 100%;
@@ -52,6 +91,18 @@
     background: transparent;
   }
 
+  @include m(not-current-month) {
+    @include e(cell-value) {
+      color: $--disabled-color;
+    }
+  }
+
+  @include m(current) {
+    @include e(cell-value) {
+      background-color: $--primary-2;
+    }
+  }
+
   @include m(today) {
     @include e(cell-value) {
       border-color: $--primary-color;
@@ -84,5 +135,17 @@
     background-color: $--primary-2;
   }
 }
+
+@include e(footer){
+  border-top: $--border-width-base $--border-style-base $--border-color-split;
+  line-height: 38px;
+  padding: 0 12px;
+}
+
+@include e(footer-btn){
+  text-align: center;
+  display: block;
+}
+
 
 
