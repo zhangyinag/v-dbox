@@ -15,8 +15,8 @@
             <a :class="[e('prev-year-btn')]" title="上一年 (Control键加左方向键)" @click="nextYear(true)"></a>
             <a :class="[e('prev-month-btn')]" title="上个月 (翻页上键))" @click="nextMonth(true)"></a>
             <span :class="[e('ym-select')]">
-                <a :class="[e('year-select')]" title="选择年份"> {{year}}年 </a>
-                <a :class="[e('month-select')]" title="选择月份"> {{month + 1}}月 </a>
+                <a :class="[e('year-select')]" title="选择年份" @click="choose('year')"> {{year}}年 </a>
+                <a :class="[e('month-select')]" title="选择月份" @click="choose('month')"> {{month + 1}}月 </a>
             </span>
             <a :class="[e('next-month-btn')]" title="下个月 (翻页下键)" @click="nextMonth()"></a>
             <a :class="[e('next-year-btn')]" title="下一年 (Control键加右方向键)" @click="nextYear()"></a>
@@ -71,14 +71,12 @@ import {
   range
 } from '../../../utils'
 import Focusable from '../../../core/mixins/Focusable'
+import Calendar from './Calendar'
 
 @Component({
   components: {VInput, Popper},
   })
-export default class DateCalendar extends mixins(BemMixin, LocaleMixin, Focusable) {
-  @Prop(Date) selectedDate: Date
-
-  @Prop(Date) currentDate: Date
+export default class DateCalendar extends mixins(BemMixin, LocaleMixin, Focusable, Calendar) {
 
   get year (): number {
     return this.currentDate.getFullYear()
@@ -101,10 +99,6 @@ export default class DateCalendar extends mixins(BemMixin, LocaleMixin, Focusabl
     }
     return ret
   }
-
-  @Emit() select (value: Date) {}
-
-  @Emit('update:currentDate') currentDateUpdate (date: Date) {}
 
   onCellClick (cell: Date) {
     this.select(cell)

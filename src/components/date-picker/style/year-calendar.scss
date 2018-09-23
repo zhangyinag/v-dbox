@@ -4,7 +4,7 @@
 @import "../../../styles/themes/default";
 @import "./mixin";
 
-@include b(month-calendar) {
+@include b(year-calendar) {
   @include reset-component();
   td {
     border: 0;
@@ -67,6 +67,12 @@
 
   &:hover{
     background: transparent;
+  }
+
+  @include m(not-current-decade) {
+    @include e(cell-value) {
+      color: $--disabled-color;
+    }
   }
 
   &.selected{
