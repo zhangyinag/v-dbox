@@ -77,7 +77,6 @@ import Calendar from './Calendar'
   components: {VInput, Popper},
   })
 export default class DateCalendar extends mixins(BemMixin, LocaleMixin, Focusable, Calendar) {
-
   get year (): number {
     return this.currentDate.getFullYear()
   }

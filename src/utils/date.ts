@@ -60,6 +60,5 @@ export function addDay (date: Date, n: number): Date {
 }
 
 export function addWeek (date: Date, n: number): Date {
-  return addDay(date,n * 7)
+  return addDay(date, n * 7)
 }
-

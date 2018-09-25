@@ -8,7 +8,6 @@ export default class Calendar extends Vue {
 
   @Prop(Date) currentDate: Date
 
-
   @Emit() select (value: Date) {}
 
   @Emit('update:currentDate') currentDateUpdate (date: Date) {}
