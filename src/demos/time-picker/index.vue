@@ -19,7 +19,7 @@ import {Component, Vue} from 'vue-property-decorator'
 @Component({
   components: {},
   })
-export default class DatePickerDemo extends Vue {
+export default class TimePickerDemo extends Vue {
   value1: Date = new Date(2018, 8, 20)
   value2: Date = new Date(2018, 8, 22)
 

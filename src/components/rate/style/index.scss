@@ -1,0 +1,77 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/compatibility";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+$timepicker-item-height: 32px;
+
+@include b(rate) {
+  @include reset-component();
+  display: inline-block;
+  font-size: 20px;
+  outline: none;
+  line-height: unset;
+  color: $--rate-star-color;
+
+  &.readonly{
+    pointer-events: none;
+  }
+}
+
+@include e(star){
+  margin: 0 8px 0 0;
+  padding: 0;
+  display: inline-block;
+  position: relative;
+  transition: all .3s;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+  transform: scale(1);
+
+  &:hover, &:focus{
+    transform: scale(1.1);
+  }
+
+  @include m(half){
+    @include e(star-first) {
+      color: $--rate-star-color;
+    }
+  }
+
+  @include m(full){
+    @include e(star-first star-second) {
+      color: $--rate-star-color;
+    }
+  }
+}
+
+@include e(star-first){
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  user-select: none;
+  transition: all .3s;
+  color: $--rate-star-bg;
+}
+
+@include e(star-second){
+  user-select: none;
+  transition: all .3s;
+  color: $--rate-star-bg;
+}
+
+@include e(text){
+  margin-left: 8px;
+  display: inline-block;
+  font-size: $--font-size-base;
+}
+
+
+
+
+
