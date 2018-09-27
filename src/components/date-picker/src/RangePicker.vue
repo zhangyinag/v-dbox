@@ -70,7 +70,7 @@ export default class RangePicker extends mixins(BemMixin) {
   currentEndDate: Date = new Date()
 
   get model (): string {
-    return this.value && format(this.value, this.format)
+    return ''
   }
 
   set model (value: string) {

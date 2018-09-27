@@ -1,0 +1,90 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/compatibility";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+$timepicker-item-height: 32px;
+
+@include b(time-picker) {
+  @include reset-component();
+  display: inline-block;
+}
+
+@include e(popper) {
+  padding: 0;
+  margin-top: -32px - 2px !important;
+  margin-left: -2px !important;
+}
+
+@include e(input-wrap){
+  height: 34px;
+  padding: 6px $--control-padding-horizontal - 2px;
+  border-bottom: $--border-width-base $--border-style-base $--border-color-split;
+}
+
+@include e(input){
+  border: 0;
+  width: 100%;
+  cursor: auto;
+  outline: 0;
+  height: 22px;
+  color: $--input-color;
+  background: $--input-bg;
+  @include placeholder();
+}
+
+@include e(combobox) {
+  //display: table;
+}
+
+@include e(select){
+  float: left;
+  font-size: $--font-size-base;
+  border-left: $--border-width-base $--border-style-base $--border-color-split;
+  box-sizing: border-box;
+  width: $--time-picker-panel-column-width;
+  overflow: hidden;
+  max-height: $timepicker-item-height * 6;
+
+  &:hover {
+    overflow-y: auto;
+  }
+
+  ul {
+    list-style: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 0 $timepicker-item-height * 5;
+    width: 100%;
+  }
+
+  li {
+    list-style: none;
+    box-sizing: content-box;
+    margin: 0;
+    padding: 0 0 0 $--control-padding-horizontal;
+    width: 100%;
+    height: $timepicker-item-height;
+    line-height: $timepicker-item-height;
+    text-align: left;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s;
+  }
+
+  li:hover {
+    background: $--item-hover-bg;
+  }
+
+  li.selected {
+    background: $--time-picker-selected-bg;
+    font-weight: bold;
+    &:hover {
+      background: $--time-picker-selected-bg;
+    }
+  }
+}
+
+
+

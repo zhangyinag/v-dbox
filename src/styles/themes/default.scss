@@ -284,3 +284,9 @@ $--tag-font-size: $--font-size-sm !default;
 $--checkbox-size          : 16px !default;
 $--checkbox-color         : $--primary-color !default;
 $--checkbox-check-color   : #fff !default;
+
+// TimePicker
+// ---
+$--time-picker-panel-column-width: 56px !default;
+$--time-picker-panel-width: $--time-picker-panel-column-width * 3 !default;
+$--time-picker-selected-bg: $--background-color-base !default;

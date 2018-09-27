@@ -65,7 +65,7 @@ export default class YearCalendar extends mixins(BemMixin, LocaleMixin, Calendar
   }
 
   cellText (cell: Date): string {
-    return cell.getFullYear()
+    return cell.getFullYear() + ''
   }
 
   notCurrentDecadeCls (cell: Date): string {

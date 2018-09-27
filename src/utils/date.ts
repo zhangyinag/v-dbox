@@ -62,3 +62,11 @@ export function addDay (date: Date, n: number): Date {
 export function addWeek (date: Date, n: number): Date {
   return addDay(date, n * 7)
 }
+
+export function trimDate (date: Date) {
+  let newDate = new Date(date)
+  date.setHours(0)
+  date.setMinutes(0)
+  date.setSeconds(0)
+  return newDate
+}
