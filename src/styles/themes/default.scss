@@ -295,3 +295,11 @@ $--time-picker-selected-bg: $--background-color-base !default;
 // ---
 $--rate-star-color: $--yellow-6 !default;
 $--rate-star-bg: $--border-color-split !default;
+
+// Switch
+// ---
+$--switch-height: 22px !default;
+$--switch-sm-height: 16px !default;
+$--switch-sm-checked-margin-left: -($--switch-sm-height - 3px) !default;
+$--switch-disabled-opacity: 0.4 !default;
+$--switch-color: $--primary-color !default;

@@ -1,0 +1,75 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/compatibility";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+$switch-duration: .36s;
+@include b(switch) {
+  @include reset-component();
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  height: $--switch-height;
+  min-width: 44px;
+  line-height: $--switch-height - 2px;
+  vertical-align: middle;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  background-color: $--disabled-color;
+  cursor: pointer;
+  transition: all $switch-duration;
+  user-select: none;
+
+
+  &:focus {
+    box-shadow: 0 0 0 2px rgba($--switch-color, 0.2);
+    outline: 0;
+  }
+
+  @include m(checked) {
+
+    background-color: $--switch-color;
+
+    @include e(text){
+      margin-left: 6px;
+      margin-right: 24px;
+    }
+
+    @include e(dot) {
+      left: 100%;
+      transform: translateX(-100%);
+      margin-left: -1px;
+    }
+  }
+}
+
+@include e(dot){
+  position: absolute;
+  width: $--switch-height - 4px;
+  height: $--switch-height - 4px;
+  left: 1px;
+  top: 1px;
+  border-radius: 18px;
+  background-color: $--component-background;
+  cursor: pointer;
+  transition: all $switch-duration $--ease-in-out-circ;
+
+  &:active{
+    width: 24px;
+  }
+}
+
+@include e(text){
+  color: #fff;
+  font-size: $--font-size-sm;
+  margin-left: 24px;
+  margin-right: 6px;
+  display: block;
+}
+
+
+
+
+
+

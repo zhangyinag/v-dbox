@@ -40,8 +40,6 @@ export default class Rate extends mixins(BemMixin) {
 
   @Prop(Boolean) readonly: boolean
 
-  @Prop(Boolean) clearable: boolean
-
   @Prop({type: String, default: 'star'}) icon: string
 
   stars: number = 5
