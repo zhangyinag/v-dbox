@@ -1,0 +1,15 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/compatibility";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(form) {
+  @include reset-component();
+}
+
+
+
+
+
+

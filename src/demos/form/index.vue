@@ -1,6 +1,6 @@
 <template>
 <div>
-   <h3>工具提示 Tooltip</h3>
+   <h3>表单 Form</h3>
    <br>
    <br>
    <p>基本</p>
@@ -14,7 +14,7 @@ import {Component, Vue} from 'vue-property-decorator'
 @Component({
   components: {},
   })
-export default class TooltipDemo extends Vue {
+export default class FormDemo extends Vue {
   value1: boolean = false
 
   value2: boolean = false
@@ -22,9 +22,4 @@ export default class TooltipDemo extends Vue {
 </script>
 
 <style lang="scss" module>
-.box{
-   width: 160px;
-   height: 100px;
-   background: #1890ff;
-}
 </style>
