@@ -1,0 +1,45 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/compatibility";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+$timepicker-item-height: 32px;
+
+@include b(tooltip) {
+  @include reset-component();
+
+}
+
+@include e(popper){
+  &[x-placement^="top"] .popper__arrow {
+    border-color: $--tooltip-bg transparent transparent transparent;
+  }
+  &[x-placement^="bottom"] .popper__arrow {
+    border-color: transparent transparent $--tooltip-bg transparent;
+  }
+  &[x-placement^="right"] .popper__arrow {
+    border-color: transparent $--tooltip-bg transparent transparent;
+  }
+  &[x-placement^="left"] .popper__arrow {
+    border-color: transparent transparent transparent $--tooltip-bg;
+  }
+}
+
+@include e(inner){
+  padding: 6px 8px;
+  color: $--tooltip-color;
+  text-align: left;
+  text-decoration: none;
+  background-color: $--tooltip-bg;
+  border-radius: $--border-radius-base;
+  box-shadow: $--box-shadow-base;
+  min-height: 32px;
+  word-break: break-all;
+}
+
+
+
+
+
+

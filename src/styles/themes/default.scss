@@ -303,3 +303,12 @@ $--switch-sm-height: 16px !default;
 $--switch-sm-checked-margin-left: -($--switch-sm-height - 3px) !default;
 $--switch-disabled-opacity: 0.4 !default;
 $--switch-color: $--primary-color !default;
+
+// Tooltip
+// ---
+$--tooltip-max-width: 250px;
+$--tooltip-color: #fff;
+$--tooltip-bg: rgba(0, 0, 0, .75);
+$--tooltip-arrow-width: 5px;
+$--tooltip-distance: $--tooltip-arrow-width - 1px + 4px;
+$--tooltip-arrow-color: $--tooltip-bg;
