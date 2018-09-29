@@ -1,6 +1,7 @@
 import {Vue} from 'vue/types/vue'
 import {InstallationOptions} from '@/core'
 import {PluginObject} from 'vue/types/plugin'
+import installDirectives from '../core/directives/index'
 
 const plugins: Array<PluginObject<InstallationOptions>> = []
 
@@ -15,6 +16,7 @@ requireAll(req)
 const plugin: PluginObject<InstallationOptions> = {
   install: function (vue: typeof Vue, opt: InstallationOptions = {}): void {
     plugins.forEach((plugin) => plugin.install(vue, opt))
+    installDirectives(vue)
   }
 }
 
