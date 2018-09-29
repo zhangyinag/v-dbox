@@ -42,6 +42,11 @@ $switch-duration: .36s;
       margin-left: -1px;
     }
   }
+
+  @include m(disabled loading){
+    pointer-events: none;
+    opacity: $--switch-disabled-opacity;
+  }
 }
 
 @include e(dot){
@@ -53,6 +58,8 @@ $switch-duration: .36s;
   border-radius: 18px;
   background-color: $--component-background;
   cursor: pointer;
+  font-size: 10px;
+  text-align: center;
   transition: all $switch-duration $--ease-in-out-circ;
 
   &:active{
