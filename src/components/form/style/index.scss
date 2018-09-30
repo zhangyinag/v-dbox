@@ -4,6 +4,9 @@
 @import "../../../styles/themes/default";
 @import "./mixin";
 
+$form-component-height: $--input-height-base;
+$form-component-max-height: $--input-height-lg;
+
 @include b(form) {
   @include reset-component();
 }
@@ -13,3 +16,70 @@
 
 
 
+
+
+
+
+
+@include b(form-item){
+
+  // layout
+  @include m(layout-horizontal){
+    display: block;
+    @include e(label){
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    @include e(control) {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+
+  @include m(layout-vertical){
+    display: block;
+    @include e(label){
+      display: inline-block;
+    }
+
+    @include e(control) {
+      display: block;
+    }
+  }
+
+  @include m(layout-inline){
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 16px;
+    @include e(label){
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    @include e(control) {
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+@include e(label){
+  text-align: right;
+  vertical-align: middle;
+  line-height: $form-component-max-height - 0.0001px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+
+  label {
+    color: $--label-color;
+    margin: 0 8px 0 2px;
+    position: relative;
+    top: -0.5px;
+  }
+}
+
+@include e(control) {
+
+}
