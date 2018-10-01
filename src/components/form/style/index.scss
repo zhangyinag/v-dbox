@@ -6,6 +6,8 @@
 
 $form-component-height: $--input-height-base;
 $form-component-max-height: $--input-height-lg;
+$form-help-margin-top: ($form-component-height - $form-component-max-height) / 2 + 2px;
+
 
 @include b(form) {
   @include reset-component();
@@ -22,25 +24,28 @@ $form-component-max-height: $--input-height-lg;
 
 
 @include b(form-item){
+  margin-bottom: $--form-item-margin-bottom;
 
   // layout
   @include m(layout-horizontal){
-    display: block;
+    display: table;
     @include e(label){
-      display: inline-block;
-      vertical-align: middle;
+      display: table-cell;
     }
 
     @include e(control) {
-      display: inline-block;
-      vertical-align: middle;
+      display: table-cell;
     }
   }
 
   @include m(layout-vertical){
     display: block;
     @include e(label){
-      display: inline-block;
+      display: block;
+      text-align: left;
+      padding: $--form-vertical-label-padding;
+      margin: $--form-vertical-label-margin;
+      line-height: $--line-height-base;
     }
 
     @include e(control) {
@@ -49,28 +54,41 @@ $form-component-max-height: $--input-height-lg;
   }
 
   @include m(layout-inline){
-    display: inline-block;
-    vertical-align: middle;
+    display: inline-table;
+    vertical-align: top;
     margin-right: 16px;
     @include e(label){
-      display: inline-block;
-      vertical-align: middle;
+      display: table-cell;
     }
 
     @include e(control) {
-      display: inline-block;
-      vertical-align: middle;
+      display: table-cell;
+    }
+  }
+
+  // validate state
+  @include m(validating){
+
+  }
+
+  @include m(success){
+    @include e(explain){
+      color: $--success-color;
+    }
+  }
+
+  @include m(error){
+    @include e(explain){
+      color: $--error-color;
     }
   }
 }
 
 @include e(label){
   text-align: right;
-  vertical-align: middle;
-  line-height: $form-component-max-height - 0.0001px;
-  display: inline-block;
   overflow: hidden;
   white-space: nowrap;
+  vertical-align: middle;
 
   label {
     color: $--label-color;
@@ -81,5 +99,20 @@ $form-component-max-height: $--input-height-lg;
 }
 
 @include e(control) {
+  position: relative;
+  vertical-align: middle;
+  line-height: $form-component-max-height;
 
+}
+
+@include e(children){
+
+}
+
+@include e(explain) {
+  position: absolute;
+  color: $--text-color-secondary;
+  line-height: $--line-height-base;
+  transition: color .3s $--ease-out; // sync input color transition
+  margin-top: $form-help-margin-top;
 }

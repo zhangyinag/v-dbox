@@ -17,7 +17,7 @@
    <br>
    <br>
    <v-form :layout="layout1">
-      <v-form-item label="姓名">
+      <v-form-item label="姓名" :rules="[{required: true}]">
          <v-input v-model="form1.name"></v-input>
       </v-form-item>
 

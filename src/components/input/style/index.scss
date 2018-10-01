@@ -7,6 +7,7 @@
   @include reset-component();
   position: relative;
   display: inline-block;
+  vertical-align: middle; // for form (or inherit better)
 
   @include e(group){
     @include reset-component();
