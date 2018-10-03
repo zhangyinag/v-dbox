@@ -1,6 +1,27 @@
 @import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
 @import "../../../styles/themes/default";
 @import "./mixin";
 
 
+@include b(pagination) {
+  @include reset-component();
+  list-style: none;
+}
 
+@include e(item){
+  cursor: pointer;
+  border-radius: $--border-radius-base;
+  user-select: none;
+  min-width: $--pagination-item-size;
+  height: $--pagination-item-size;
+  line-height: $--pagination-item-size - 2px;
+  text-align: center;
+  display: inline-block;
+  vertical-align: middle;
+  border: $--border-color-base $--border-style-base $--border-width-base;
+  background-color: $--component-background;
+  margin-right: 8px;
+  font-family: $--pagination-font-family;
+  outline: 0;
+}
