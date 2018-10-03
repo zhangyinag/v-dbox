@@ -16,16 +16,21 @@
    </label>
    <br>
    <br>
-   <v-form :layout="layout1">
-      <v-form-item label="姓名" :rules="[{required: true}]">
+   <v-form :layout="layout1" :model="form1" ref="form1">
+      <v-form-item label="姓名" required :rules="[{required: true, trigger: 'blur'}]" prop="name">
          <v-input v-model="form1.name"></v-input>
       </v-form-item>
 
-      <v-form-item label="性别">
+      <v-form-item label="性别" prop="sex">
          <v-radio-group v-model="form1.sex">
             <v-radio label="M">男</v-radio>
             <v-radio label="F">女</v-radio>
          </v-radio-group>
+      </v-form-item>
+
+      <v-form-item label="">
+         <v-button @click="onSubmit">提交</v-button> &nbsp;
+         <v-button @click="onReset">重置</v-button>
       </v-form-item>
    </v-form>
 
@@ -40,10 +45,27 @@ import {Component, Vue} from 'vue-property-decorator'
 export default class FormDemo extends Vue {
   form1: any = {
     name: '',
-    sex: ''
+    sex: 'M'
   }
 
   layout1: string = 'horizontal'
+
+  onSubmit () {
+    let $form1: any = this.$refs.form1
+    $form1.validate()
+      .then(() => {
+        console.log('validate success')
+      })
+      .catch((ret: any) => {
+        console.log('validate fail')
+        console.log(ret)
+      })
+  }
+
+  onReset () {
+    let $form1: any = this.$refs.form1
+    $form1.resetField()
+  }
 }
 </script>
 

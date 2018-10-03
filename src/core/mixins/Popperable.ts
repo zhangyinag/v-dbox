@@ -4,7 +4,7 @@ import {Popper} from '../../components/popper'
 
 @Component({
   components: {Popper}
-})
+  })
 export default class Popperable extends Vue {
   @Prop(Boolean) disabled: boolean
 

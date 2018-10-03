@@ -43,3 +43,9 @@ export function isPrimitive (value: any): boolean {
 export function range (start: number, end: number): number[] {
   return Array(end - start + 1).fill(0).map((v, i) => i + start)
 }
+
+
+export function deepClone<T> (source: T): T {
+  if (!source) return source
+  return JSON.parse(JSON.stringify(source))
+}

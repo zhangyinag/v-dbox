@@ -1,5 +1,5 @@
 <template>
-    <div :class="[b(), prependCls, appendCls, prefixCls, suffixCls, separatorCls]">
+    <div :class="[b(), prependCls, appendCls, prefixCls, suffixCls, separatorCls, mValidateStateCls]">
        <div :class="[e('group')]">
            <span :class="[e('addon'), e('prepend')]" v-if="$slots.prepend"><slot name="prepend"></slot></span>
            <component :is="isTextarea ? 'textarea' : 'input'"
@@ -28,9 +28,10 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Model, Prop} from 'vue-property-decorator'
+import {Component, Emit, Model, Prop, Inject} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import {IconFont} from '../../iconfont/index'
+import {ValidateState} from '../../form/src/type'
 
 @Component({
   components: {IconFont},
@@ -108,9 +109,15 @@ export default class Input extends BaseComponent {
       }
     }
 
+    get mValidateStateCls () {
+      return !this.getValidateState() ? '' : this.m('validate-' + this.getValidateState())
+    }
+
     @Emit() change (value: string | number| boolean) {}
 
     @Emit() input (value: string | number| boolean) {}
+
+    @Inject({default: ''}) getValidateState: () => ValidateState
 
     onInput (e: any) {
       this.input(e.target.value)

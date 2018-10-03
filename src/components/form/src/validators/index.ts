@@ -1,7 +1,5 @@
 import {Rule, ValidatorCallback} from '@/components/form/src/type'
 
-
-
 const required: ValidatorCallback = (rule: Rule, value: string, callback: (err?: Error) => void): void => {
   if (!rule.required) {
     callback()
@@ -26,6 +24,10 @@ export {validators}
 const validate = function (rules: Rule[], value: string, callback: (err?: Error) => void): void {
   let done = false
   let count = 0
+  if (rules.length < 1) {
+    callback()
+    return
+  }
   const cb = (err?: Error): boolean => {
     if (err || (done && count <= 0)) {
       callback(err)
@@ -38,13 +40,13 @@ const validate = function (rules: Rule[], value: string, callback: (err?: Error)
       let rule = rules[i]
       let validator = validators[j]
       count++
+      if (i >= rules.length - 1 && j >= validators.length -1) done = true
       validator(rule, value, (err?: Error) => {
         count--
-        if (cb(err)) return
+        cb(err)
       })
     }
   }
-  done = true
 }
 
 export default validate

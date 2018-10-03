@@ -50,6 +50,18 @@
       border-left: 0;
     }
   }
+
+  @include m(validate-success) {
+    @include e(control) {
+      border-color: $--success-color;
+    }
+  }
+
+  @include m(validate-error) {
+    @include e(control) {
+      border-color: $--error-color;
+    }
+  }
 }
 
 @include b(autocomplete){
