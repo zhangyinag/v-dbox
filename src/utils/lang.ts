@@ -49,3 +49,7 @@ export function deepClone<T> (source: T): T {
   if (!source) return source
   return JSON.parse(JSON.stringify(source))
 }
+
+export function isString (value: any) {
+  return typeof value === 'string'
+}

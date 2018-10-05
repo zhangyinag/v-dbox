@@ -1,5 +1,6 @@
 @import "../../../styles/mixins/bem";
 @import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/iconfont";
 @import "../../../styles/themes/default";
 @import "./mixin";
 
@@ -7,6 +8,14 @@
 @include b(pagination) {
   @include reset-component();
   list-style: none;
+}
+
+
+@include e(item-base){
+  height: $--pagination-item-size;
+  line-height: $--pagination-item-size - 2px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 @include e(item){
@@ -24,4 +33,49 @@
   margin-right: 8px;
   font-family: $--pagination-font-family;
   outline: 0;
+
+  &:focus,
+  &:hover {
+    transition: all .3s;
+    border-color: $--primary-5;
+    color: $--primary-5;
+  }
+
+  @include m(active){
+    border-color: $--primary-color;
+    color: $--primary-color;
+    font-weight: $--pagination-font-weight-active;
+  }
+
+  @include m(disabled){
+    cursor: not-allowed;
+    border-color: $--border-color-base;
+    color: $--disabled-color;
+  }
+
+  @include m(prev next){
+    border-color: transparent;
+    background-color: transparent;
+    &:focus,
+    &:hover{
+      border-color: transparent;
+      background-color: transparent;
+    }
+    & > i {
+      transform: scale(0.83); // 10px
+      @include icon(ellipsis)
+    }
+  }
+
+  @include m(prev) {
+    &:focus > i {
+      @include icon(double-left)
+    }
+  }
+
+  @include m(next) {
+    &:focus > i {
+      @include icon(double-right)
+    }
+  }
 }

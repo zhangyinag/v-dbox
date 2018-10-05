@@ -117,14 +117,14 @@ export default class Input extends BaseComponent {
 
     @Emit() input (value: string | number| boolean) {}
 
-    @Inject({default: ''}) getValidateState: () => ValidateState
+    @Inject({default: () => () => ''}) getValidateState: () => ValidateState
 
     onInput (e: any) {
       this.input(e.target.value)
     }
 
     onChange (e: any) {
-      // this.input(e.target.value)
+      this.change(e.target.value)
     }
 
     onFocus () {
