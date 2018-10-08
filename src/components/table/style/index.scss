@@ -1,0 +1,18 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/mixins/iconfont";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+
+@include b(table) {
+  @include reset-component();
+
+  table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    text-align: left;
+    border-radius: $--border-radius-base $--border-radius-base 0 0;
+  }
+}

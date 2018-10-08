@@ -46,7 +46,7 @@ export default class Pagination extends mixins(BemMixin, Rippleable) {
 
   itemCount: number = 5 // make sure it's odd number
 
-  page: number = null
+  page: number| null = null
 
   @Emit('update:currentPage') currentPageUpdate (currentPage: number) {}
 
