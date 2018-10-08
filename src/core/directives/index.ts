@@ -1,7 +1,7 @@
 import {Vue} from 'vue/types/vue'
-import ripple from './ripple'
+import sticky from './sticky'
 function install (vue: typeof Vue) {
-  vue.directive('ripple', ripple)
+  vue.directive('sticky', sticky)
 }
 
 export default install
