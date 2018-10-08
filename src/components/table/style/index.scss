@@ -14,5 +14,20 @@
     border-spacing: 0;
     text-align: left;
     border-radius: $--border-radius-base $--border-radius-base 0 0;
+
+    th {
+      background: $--table-header-bg;
+      transition: background .3s ease;
+      text-align: left;
+      color: $--heading-color;
+      font-weight: 500;
+      border-bottom: $--border-width-base $--border-style-base $--border-color-split;
+
+    }
+
+    th, td {
+      padding: $--table-padding-vertical $--table-padding-horizontal;
+      word-break: break-word;
+    }
   }
 }

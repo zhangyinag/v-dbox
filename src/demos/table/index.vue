@@ -4,7 +4,9 @@
    <br>
    <br>
    <v-table :data="data1">
-      <v-table-column prop="name" label="姓名"></v-table-column>
+      <v-table-column prop="name" label="姓名">
+         <span>hello-world</span>
+      </v-table-column>
       <v-table-column prop="age" label="年龄"></v-table-column>
       <v-table-column prop="address" label="地址"></v-table-column>
    </v-table>

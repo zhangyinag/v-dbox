@@ -1,6 +1,6 @@
 <template>
     <div :class="[b()]">
-        <slot></slot>
+        <slot> </slot>
     </div>
 </template>
 

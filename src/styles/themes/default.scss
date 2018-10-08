@@ -329,3 +329,14 @@ $--pagination-item-size: 32px !default;
 $--pagination-item-size-sm: 24px !default;
 $--pagination-font-family: Arial !default;
 $--pagination-font-weight-active: 500 !default;
+
+
+// Table
+// --
+$--table-header-bg: $--background-color-light !default;
+$--table-header-sort-bg: $--background-color-base !default;
+$--table-row-hover-bg: $--primary-1 !default;
+$--table-selected-row-bg: #fafafa !default;
+$--table-expanded-row-bg: #fbfbfb !default;
+$--table-padding-vertical: 16px !default;
+$--table-padding-horizontal: 16px !default;

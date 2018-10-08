@@ -1,19 +1,19 @@
 <template>
     <div :class="[b()]">
         <div :class="[e('header')]">
-            <table>
-                <thead>
-                    <tr>
-                        <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i">{{col.label}}</th>
-                    </tr>
-                </thead>
-            </table>
         </div>
         <div :class="[e('body')]">
             <table>
+                <thead>
+                <tr>
+                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i">{{col.label}}</th>
+                </tr>
+                </thead>
                 <tbody>
                     <tr v-for="(row, i) in renderData" :key="i">
-                        <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j">{{row[col.prop]}}</td>
+                        <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j">
+                            <table-cell :row="row" :table-column="col"></table-cell>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -31,9 +31,10 @@ import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
 import TableColumn from './TableColumn.vue'
+import TableCell from './TableCell'
 
 @Component({
-  components: {},
+  components: {TableCell},
   })
 export default class Table extends mixins(BemMixin, Rippleable) {
     @Prop(Array) data: any[]
