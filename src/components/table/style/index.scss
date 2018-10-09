@@ -17,6 +17,8 @@
     border-spacing: 0;
     text-align: left;
     border-radius: $--border-radius-base $--border-radius-base 0 0;
+    table-layout: fixed;
+    background-color: $--component-background;
 
     th {
       background: $--table-header-bg;
@@ -31,6 +33,39 @@
     th, td {
       padding: $--table-padding-vertical $--table-padding-horizontal;
       word-break: break-word;
+    }
+
+    &>tbody>tr{
+      transition: background .3s;
+      td{
+        transition: background .3s;
+      }
+      &:hover{
+        background: $--table-row-hover-bg;
+        td {
+          background: $--table-row-hover-bg;
+        }
+      }
+    }
+  }
+}
+
+@include e(cell) {
+
+  @include m(fixed-right fixed-left) {
+    background-color: $--component-background;
+    transition: box-shadow .3s ease;
+  }
+
+  @include m(fixed-left) {
+    &.scroll{
+      box-shadow: 6px 0 6px -4px $--shadow-color;
+    }
+  }
+
+  @include m(fixed-right) {
+    &.scroll{
+      box-shadow: -6px 0 6px -4px $--shadow-color;
     }
   }
 }

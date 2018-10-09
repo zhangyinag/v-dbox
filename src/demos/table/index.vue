@@ -37,6 +37,25 @@
       </v-table-column>
    </v-table>
 
+   <br>
+   <br>
+   <p>固定列</p>
+   <code style="color: red;">同时固定高度时， 固定列表头会被覆盖 （待修复）</code> <br>
+   <v-table :data="data3" height="400px">
+      <v-table-column prop="index" label="#" fixed="left" width="120px">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名" width="500px" fixed="left">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄" width="500px"></v-table-column>
+      <v-table-column prop="address" label="地址" width="500px"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="180px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
@@ -117,6 +136,8 @@ export default class TableDemo extends Vue {
   ]
 
   data2 = [].concat(this.data1)
+
+  data3 = [].concat(this.data1)
 }
 </script>
 
