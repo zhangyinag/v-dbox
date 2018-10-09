@@ -7,6 +7,20 @@
 
 @include b(table) {
   @include reset-component();
+
+  @include m(bordered) {
+    @include e(body) {
+      table {
+        border: $--border-width-base $--border-style-base $--border-color-split;
+        border-right: 0;
+        border-bottom: 0;
+
+        th,td{
+          border-right: $--border-width-base $--border-style-base $--border-color-split;
+        }
+      }
+    }
+  }
 }
 
 @include e(body) {
@@ -33,13 +47,11 @@
     th, td {
       padding: $--table-padding-vertical $--table-padding-horizontal;
       word-break: break-word;
+      border-bottom: $--border-width-base $--border-style-base $--border-color-split;
+      transition: all .3s;
     }
 
     &>tbody>tr{
-      transition: background .3s;
-      td{
-        transition: background .3s;
-      }
       &:hover{
         background: $--table-row-hover-bg;
         td {

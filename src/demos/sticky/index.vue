@@ -206,10 +206,12 @@ export default class StickyDemo extends Vue {
     let $lasts = $table.getElementsByClassName('column-last')
     $head.style.transform = `translateY(${$src.scrollTop}px)`
     for (let i = 0; i < $firsts.length; i++) {
-      $firsts[i].style.transform = `translateX(${$src.scrollLeft}px)`
+      let $first = $firsts[i] as HTMLElement
+      $first.style.transform = `translateX(${$src.scrollLeft}px)`
     }
     for (let i = 0; i < $lasts.length; i++) {
-      $lasts[i].style.transform = `translateX(${-($src.scrollWidth - $src.scrollLeft - $src.clientWidth)}px)`
+      let $last = $lasts[i] as HTMLElement
+      $last.style.transform = `translateX(${-($src.scrollWidth - $src.scrollLeft - $src.clientWidth)}px)`
     }
   }
 

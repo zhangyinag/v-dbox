@@ -55,6 +55,24 @@
       </v-table-column>
    </v-table>
 
+   <br>
+   <br>
+   <p>边框</p>
+   <v-table :data="data4" height="400px" bordered>
+      <v-table-column prop="index" label="#" fixed="left">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄"></v-table-column>
+      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="180px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
@@ -134,9 +152,11 @@ export default class TableDemo extends Vue {
 
   ]
 
-  data2 = [].concat(this.data1)
+  data2 = [...this.data1]
 
-  data3 = [].concat(this.data1)
+  data3 = [...this.data1]
+
+  data4 = [...this.data1]
 }
 </script>
 

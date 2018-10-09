@@ -1,5 +1,5 @@
 <template>
-    <div :class="[b()]">
+    <div :class="[b(), mBorderedCls]">
         <div :class="[e('header')]">
         </div>
         <div :class="[e('body')]" :style="[heightStyle]" @scroll="onScroll" ref="body">
@@ -45,6 +45,8 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     @Prop(String) height: string
 
+    @Prop(Boolean) bordered: boolean
+
     cols: TableColumn[] = []
 
     get renderCols (): TableColumn [] {
@@ -53,6 +55,10 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     get renderData (): any[] {
       return this.data || []
+    }
+
+    get mBorderedCls () {
+      return !this.bordered ? '' : this.m('bordered')
     }
 
     get heightStyle () {
@@ -86,8 +92,8 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     onScroll () {
       const $wrapper = this.$refs.body as HTMLElement
-      let $head = $wrapper.querySelector('thead')
-      let $table = $wrapper.querySelector('table')
+      let $head = $wrapper.querySelector('thead') as HTMLElement
+      let $table = $wrapper.querySelector('table') as HTMLElement
       let $firsts = $table.getElementsByClassName(this.m(`fixed-left`, 'cell'))
       let $lasts = $table.getElementsByClassName(this.m(`fixed-right`, 'cell'))
       $head.style.transform = `translateY(${$wrapper.scrollTop}px)`
