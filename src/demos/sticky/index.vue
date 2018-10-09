@@ -109,14 +109,7 @@
            <col width="180">
            <col width="180">
         </colgroup>
-         <thead ref="head">
-         <tr>
-            <td class="column-first" style="background-color:#e2e2e2;">姓名</td>
-            <td style="background-color:#e2e2e2;">性别</td>
-            <td style="background-color:#e2e2e2;">年龄</td>
-            <td class="column-last" style="background-color:#e2e2e2;">地址</td>
-         </tr>
-         </thead>
+
          <tbody>
          <tr>
             <td class="column-first">Alison</td>
@@ -185,6 +178,14 @@
             <td class="column-last">Shanghai China</td>
          </tr>
          </tbody>
+         <thead ref="head">
+         <tr>
+            <td class="column-first" style="background-color:#e2e2e2;">姓名</td>
+            <td style="background-color:#e2e2e2;">性别</td>
+            <td style="background-color:#e2e2e2;">年龄</td>
+            <td class="column-last" style="background-color:#e2e2e2;">地址</td>
+         </tr>
+         </thead>
       </table>
    </div>
 

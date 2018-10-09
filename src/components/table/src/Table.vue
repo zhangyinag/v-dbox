@@ -7,11 +7,6 @@
                 <colgroup>
                     <col v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :style="[colStyle(col)]"/>
                 </colgroup>
-                <thead>
-                <tr>
-                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i">{{col.label}}</th>
-                </tr>
-                </thead>
                 <tbody>
                     <tr v-for="(row, i) in renderData" :key="i">
                         <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j" :class="[fixedCls(col)]">
@@ -19,6 +14,11 @@
                         </td>
                     </tr>
                 </tbody>
+                <thead>
+                <tr>
+                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :class="[fixedCls(col)]">{{col.label}}</th>
+                </tr>
+                </thead>
             </table>
         </div>
         <div :class="[e('footer')]"></div>

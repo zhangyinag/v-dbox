@@ -40,7 +40,6 @@
    <br>
    <br>
    <p>固定列</p>
-   <code style="color: red;">同时固定高度时， 固定列表头会被覆盖 （待修复）</code> <br>
    <v-table :data="data3" height="400px">
       <v-table-column prop="index" label="#" fixed="left" width="120px">
          <template slot-scope="{row, $index}">{{$index + 1}}</template>
