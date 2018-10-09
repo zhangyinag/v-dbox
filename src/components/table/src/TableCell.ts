@@ -5,7 +5,7 @@ import {CreateElement} from 'vue/types/vue'
 
 @Component({
   components: {},
-})
+  })
 export default class TableCell extends Vue {
   @Prop(Object) row: any
 
@@ -15,7 +15,7 @@ export default class TableCell extends Vue {
 
   render (h: CreateElement): VNode {
     if (this.tableColumn.$scopedSlots.default) {
-      return h('div',[
+      return h('div', [
         this.tableColumn.$scopedSlots.default({
           row: this.row,
           $index: this.index

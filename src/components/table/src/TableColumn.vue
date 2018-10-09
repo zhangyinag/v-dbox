@@ -18,6 +18,8 @@ export default class TableColumn extends mixins(BemMixin, Rippleable) {
 
     @Prop(String) label: string
 
+    @Prop(String) fixed: string
+
     @Inject() addCol: (col: TableColumn) => void
 
     @Inject() removeCol: (col: TableColumn) => void

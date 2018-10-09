@@ -2,9 +2,9 @@
     <div :class="[b()]">
         <div :class="[e('header')]">
         </div>
-        <div :class="[e('body')]">
+        <div :class="[e('body')]" :style="[heightStyle]">
             <table>
-                <thead>
+                <thead v-sticky>
                 <tr>
                     <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i">{{col.label}}</th>
                 </tr>
@@ -32,12 +32,16 @@ import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
 import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
+import sticky from '../../../core/directives/sticky'
 
 @Component({
   components: {TableCell},
+  directives: {sticky}
   })
 export default class Table extends mixins(BemMixin, Rippleable) {
     @Prop(Array) data: any[]
+
+    @Prop(String) height: string
 
     cols: TableColumn[] = []
 
@@ -47,6 +51,13 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     get renderData (): any[] {
       return this.data || []
+    }
+
+    get heightStyle () {
+      if (!this.height) return {}
+      return {
+        height: this.height
+      }
     }
 
     @Provide() addCol (col: TableColumn) {

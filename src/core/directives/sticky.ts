@@ -16,8 +16,7 @@ function findScrollParentEle (el: HTMLElement): HTMLElement {
 
 const sticky: DirectiveOptions = {
   inserted (el: HTMLElement, binding: VNodeDirective, vnode: VNode, oldVnode: VNode) : void {
-    let parent = findScrollParentEle(el);
-    console.log(parent)
+    let parent = findScrollParentEle(el)
     const __stickyFn = () => {
       scrollHandler(el, parent)
     }
