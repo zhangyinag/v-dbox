@@ -12,7 +12,7 @@
                 <tbody>
                     <tr v-for="(row, i) in renderData" :key="i">
                         <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j">
-                            <table-cell :row="row" :table-column="col"></table-cell>
+                            <table-cell :row="row" :table-column="col" :index="i"></table-cell>
                         </td>
                     </tr>
                 </tbody>

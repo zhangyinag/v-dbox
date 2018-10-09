@@ -11,9 +11,16 @@ export default class TableCell extends Vue {
 
   @Prop() tableColumn: TableColmun
 
+  @Prop(Number) index: number
+
   render (h: CreateElement): VNode {
-    if (this.tableColumn.$slots.default) {
-      return h('div',{}, this.tableColumn.$slots.default as any)
+    if (this.tableColumn.$scopedSlots.default) {
+      return h('div',[
+        this.tableColumn.$scopedSlots.default({
+          row: this.row,
+          $index: this.index
+        })
+      ])
     } else {
       let prop = (this.tableColumn as any).prop
       return h('div', this.row[prop])
