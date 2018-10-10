@@ -52,3 +52,7 @@ export function deepClone<T> (source: T): T {
 export function isString (value: any) {
   return typeof value === 'string'
 }
+
+export function isCssSupports (property: string, value?: any): boolean {
+  return (window as any).CSS.supports(property, value)
+}
