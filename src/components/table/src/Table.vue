@@ -2,7 +2,7 @@
     <div :class="[b(), mBorderedCls]">
         <div :class="[e('header')]">
         </div>
-        <div :class="[e('body')]" :style="[heightStyle]" @scroll="onScroll" ref="body">
+        <div :class="[e('body')]" :style="[heightStyle]" @scroll.passive="onScroll" ref="body">
             <table>
                 <colgroup>
                     <col v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :style="[colStyle(col)]"/>
@@ -114,23 +114,18 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       if (isCssSupports('--a', 0)) {
         this.$el.style.setProperty('--fixed-left-offset', left + 'px')
         this.$el.style.setProperty('--fixed-right-offset', (-right) + 'px')
+      } else {
+        let $firsts = $table.getElementsByClassName(this.m(`fixed-left`, 'cell'))
+        let $lasts = $table.getElementsByClassName(this.m(`fixed-right`, 'cell'))
+        for (let i = 0; i < $firsts.length; i++) {
+          let $first = $firsts[i] as HTMLElement
+          $first.style.transform = `translateX(${left}px)`
+        }
+        for (let i = 0; i < $lasts.length; i++) {
+          let $last = $lasts[i] as HTMLElement
+          $last.style.transform = `translateX(${-right}px)`
+        }
       }
-
-      // let $firsts = $table.getElementsByClassName(this.m(`fixed-left`, 'cell'))
-      // let $lasts = $table.getElementsByClassName(this.m(`fixed-right`, 'cell'))
-      // for (let i = 0; i < $firsts.length; i++) {
-      //   let $first = $firsts[i] as HTMLElement
-      //   $first.style.transform = `translateX(${$wrapper.scrollLeft}px)`
-      //   if ($wrapper.scrollLeft > 1) $first.classList.add('scroll')
-      //   else $first.classList.remove('scroll')
-      // }
-      // for (let i = 0; i < $lasts.length; i++) {
-      //   let $last = $lasts[i] as HTMLElement
-      //   let offset = $wrapper.scrollWidth - $wrapper.scrollLeft - $wrapper.clientWidth
-      //   $last.style.transform = `translateX(${-offset}px)`
-      //   if (offset > 1) $last.classList.add('scroll')
-      //   else $last.classList.remove('scroll')
-      // }
     }
 }
 </script>
