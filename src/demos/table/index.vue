@@ -40,8 +40,8 @@
    <br>
    <br>
    <p>固定列</p>
-    <label><input type="checkbox" v-model="data3Big"> 大数集 </label> <br>
-   <v-table :data="data3" height="400px">
+   大小：<input type="text" v-model.lazy="data3Size"> <br>
+   <v-table :data="data3" >
       <v-table-column prop="index" label="#" fixed="left" width="120px">
          <template slot-scope="{row, $index}">{{$index + 1}}</template>
       </v-table-column>
@@ -155,10 +155,18 @@ export default class TableDemo extends Vue {
 
   data2 = [...this.data1]
 
-  data3Big: boolean = false
+  data3Size: number = 3
 
   get data3 () {
-    return this.data3Big ? [...this.data1, ...this.data1, ...this.data1, ...this.data1, ...this.data1, ...this.data1] : [...this.data1.slice(0, 3)]
+    let ret = []
+    for (let i = 0; i< this.data3Size; i++) {
+      ret.push({
+        name: i,
+        age: 23,
+        address: 'Shanghai'
+      })
+    }
+    return ret
   }
 
   data4 = [...this.data1]

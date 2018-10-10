@@ -9,14 +9,14 @@
                 </colgroup>
                 <tbody>
                     <tr v-for="(row, i) in renderData" :key="i">
-                        <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j" :class="[fixedCls(col)]">
+                        <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j" :class="[fixedCls(col), scrollCls(col)]">
                             <table-cell :row="row" :table-column="col" :index="i"></table-cell>
                         </td>
                     </tr>
                 </tbody>
                 <thead>
                 <tr>
-                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :class="[fixedCls(col)]">{{col.label}}</th>
+                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :class="[fixedCls(col), scrollCls(col)]">{{col.label}}</th>
                 </tr>
                 </thead>
             </table>
@@ -35,6 +35,7 @@ import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
 import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
+import {isCssSupports} from '../../../utils'
 
 @Component({
   components: {TableCell},
@@ -48,6 +49,10 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     @Prop(Boolean) bordered: boolean
 
     cols: TableColumn[] = []
+
+    leftScroll: boolean = false
+
+    rightScroll: boolean = false
 
     get renderCols (): TableColumn [] {
       return this.cols
@@ -73,6 +78,12 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return this.m(`fixed-${col.fixed}`, 'cell')
     }
 
+    scrollCls (col: TableColumn) {
+      if (!col.fixed) return ''
+      if (this.leftScroll && col.fixed === 'left') return 'scroll'
+      if (this.rightScroll && col.fixed === 'right') return 'scroll'
+    }
+
     colStyle (col: TableColumn) {
       let style: any = {}
       if (col.width) {
@@ -94,22 +105,32 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       const $wrapper = this.$refs.body as HTMLElement
       let $head = $wrapper.querySelector('thead') as HTMLElement
       let $table = $wrapper.querySelector('table') as HTMLElement
-      let $firsts = $table.getElementsByClassName(this.m(`fixed-left`, 'cell'))
-      let $lasts = $table.getElementsByClassName(this.m(`fixed-right`, 'cell'))
       $head.style.transform = `translateY(${$wrapper.scrollTop}px)`
-      for (let i = 0; i < $firsts.length; i++) {
-        let $first = $firsts[i] as HTMLElement
-        $first.style.transform = `translateX(${$wrapper.scrollLeft}px)`
-        if ($wrapper.scrollLeft > 1) $first.classList.add('scroll')
-        else $first.classList.remove('scroll')
+
+      let right = $wrapper.scrollWidth - $wrapper.scrollLeft - $wrapper.clientWidth
+      let left = $wrapper.scrollLeft
+      this.rightScroll = right > 1
+      this.leftScroll = left > 1
+      if (isCssSupports('--a', 0)) {
+        this.$el.style.setProperty('--fixed-left-offset', left + 'px')
+        this.$el.style.setProperty('--fixed-right-offset', (-right) + 'px')
       }
-      for (let i = 0; i < $lasts.length; i++) {
-        let $last = $lasts[i] as HTMLElement
-        let offset = $wrapper.scrollWidth - $wrapper.scrollLeft - $wrapper.clientWidth
-        $last.style.transform = `translateX(${-offset}px)`
-        if (offset > 1) $last.classList.add('scroll')
-        else $last.classList.remove('scroll')
-      }
+
+      // let $firsts = $table.getElementsByClassName(this.m(`fixed-left`, 'cell'))
+      // let $lasts = $table.getElementsByClassName(this.m(`fixed-right`, 'cell'))
+      // for (let i = 0; i < $firsts.length; i++) {
+      //   let $first = $firsts[i] as HTMLElement
+      //   $first.style.transform = `translateX(${$wrapper.scrollLeft}px)`
+      //   if ($wrapper.scrollLeft > 1) $first.classList.add('scroll')
+      //   else $first.classList.remove('scroll')
+      // }
+      // for (let i = 0; i < $lasts.length; i++) {
+      //   let $last = $lasts[i] as HTMLElement
+      //   let offset = $wrapper.scrollWidth - $wrapper.scrollLeft - $wrapper.clientWidth
+      //   $last.style.transform = `translateX(${-offset}px)`
+      //   if (offset > 1) $last.classList.add('scroll')
+      //   else $last.classList.remove('scroll')
+      // }
     }
 }
 </script>

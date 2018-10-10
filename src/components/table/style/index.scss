@@ -36,7 +36,7 @@
 
     th {
       background: $--table-header-bg;
-      transition: background .3s ease;
+      //transition: background .3s ease;
       text-align: left;
       color: $--heading-color;
       font-weight: 500;
@@ -48,7 +48,7 @@
       padding: $--table-padding-vertical $--table-padding-horizontal;
       word-break: break-word;
       border-bottom: $--border-width-base $--border-style-base $--border-color-split;
-      transition: all .3s;
+      //transition: all .3s;
     }
 
     &>tbody>tr{
@@ -66,16 +66,22 @@
 
   @include m(fixed-right fixed-left) {
     background-color: $--component-background;
-    transition: box-shadow .3s ease;
+    //transition: box-shadow .3s ease;
   }
 
   @include m(fixed-left) {
+    @supports ( (--a: 0)) {
+      transform: translateX(var(--fixed-left-offset));
+    }
     &.scroll{
       box-shadow: 6px 0 6px -4px $--shadow-color;
     }
   }
 
   @include m(fixed-right) {
+    @supports ( (--a: 0)) {
+      transform: translateX(var(--fixed-right-offset));
+    }
     &.scroll{
       box-shadow: -6px 0 6px -4px $--shadow-color;
     }

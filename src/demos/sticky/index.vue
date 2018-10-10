@@ -108,71 +108,13 @@
            <col width="180">
            <col width="180">
            <col width="180">
+           <col width="180">
         </colgroup>
 
          <tbody>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
-            <td>女</td>
-            <td>23</td>
-            <td class="column-last">Shanghai China</td>
-         </tr>
-         <tr>
-            <td class="column-first">Alison</td>
+         <tr v-for="i in 100" :key="i">
+            <td class="column-first">{{i}}</td>
+            <td>Alison</td>
             <td>女</td>
             <td>23</td>
             <td class="column-last">Shanghai China</td>
@@ -180,7 +122,8 @@
          </tbody>
          <thead ref="head">
          <tr>
-            <td class="column-first" style="background-color:#e2e2e2;">姓名</td>
+            <td class="column-first" style="background-color:#e2e2e2;">#</td>
+            <td style="background-color:#e2e2e2;">姓名</td>
             <td style="background-color:#e2e2e2;">性别</td>
             <td style="background-color:#e2e2e2;">年龄</td>
             <td class="column-last" style="background-color:#e2e2e2;">地址</td>
