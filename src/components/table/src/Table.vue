@@ -9,14 +9,16 @@
                 </colgroup>
                 <tbody>
                     <tr v-for="(row, i) in renderData" :key="i">
-                        <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j" :class="[fixedCls(col), scrollCls(col)]">
+                        <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j"
+                            :style="[]"
+                            :class="['td', fixedCls(col), scrollCls(col)]">
                             <table-cell :row="row" :table-column="col" :index="i"></table-cell>
                         </td>
                     </tr>
                 </tbody>
                 <thead>
                 <tr>
-                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :class="[fixedCls(col), scrollCls(col)]">{{col.label}}</th>
+                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :class="['th', fixedCls(col), scrollCls(col)]">{{col.label}}</th>
                 </tr>
                 </thead>
             </table>
@@ -92,6 +94,11 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return style
     }
 
+    fixedCellStyle (col: TableColumn) {
+      if (!col.fixed) return {}
+      return this.colStyle(col)
+    }
+
     @Provide() addCol (col: TableColumn) {
       if (!this.cols.includes(col)) this.cols.push(col)
     }
@@ -105,27 +112,27 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       const $wrapper = this.$refs.body as HTMLElement
       let $head = $wrapper.querySelector('thead') as HTMLElement
       let $table = $wrapper.querySelector('table') as HTMLElement
-      $head.style.transform = `translateY(${$wrapper.scrollTop}px)`
+      // $head.style.transform = `translateY(${$wrapper.scrollTop}px)`
 
       let right = $wrapper.scrollWidth - $wrapper.scrollLeft - $wrapper.clientWidth
       let left = $wrapper.scrollLeft
       this.rightScroll = right > 1
       this.leftScroll = left > 1
-      if (isCssSupports('--a', 0)) {
-        this.$el.style.setProperty('--fixed-left-offset', left + 'px')
-        this.$el.style.setProperty('--fixed-right-offset', (-right) + 'px')
-      } else {
-        let $firsts = $table.getElementsByClassName(this.m(`fixed-left`, 'cell'))
-        let $lasts = $table.getElementsByClassName(this.m(`fixed-right`, 'cell'))
-        for (let i = 0; i < $firsts.length; i++) {
-          let $first = $firsts[i] as HTMLElement
-          $first.style.transform = `translateX(${left}px)`
-        }
-        for (let i = 0; i < $lasts.length; i++) {
-          let $last = $lasts[i] as HTMLElement
-          $last.style.transform = `translateX(${-right}px)`
-        }
-      }
+      // if (isCssSupports('--a', 0)) {
+      //   this.$el.style.setProperty('--fixed-left-offset', left + 'px')
+      //   this.$el.style.setProperty('--fixed-right-offset', (-right) + 'px')
+      // } else { // not use this
+      //   let $firsts = $table.getElementsByClassName(this.m(`fixed-left`, 'cell'))
+      //   let $lasts = $table.getElementsByClassName(this.m(`fixed-right`, 'cell'))
+      //   for (let i = 0; i < $firsts.length; i++) {
+      //     let $first = $firsts[i] as HTMLElement
+      //     $first.style.transform = `translateX(${left}px)`
+      //   }
+      //   for (let i = 0; i < $lasts.length; i++) {
+      //     let $last = $lasts[i] as HTMLElement
+      //     $last.style.transform = `translateX(${-right}px)`
+      //   }
+      // }
     }
 }
 </script>

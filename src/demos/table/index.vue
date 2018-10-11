@@ -40,12 +40,14 @@
    <br>
    <br>
    <p>固定列</p>
+   <code style="color: #1890ff;">采用 position: sticky 实现固定表头及列， 在最新的Chrome, Safari, Opera 均有效, Firefox 尚不支持
+   (奇怪的是Firefox支持sticky)</code> <br>
    大小：<input type="text" v-model.lazy="data3Size"> <br>
-   <v-table :data="data3" >
+   <v-table :data="data3" height="400px">
       <v-table-column prop="index" label="#" fixed="left" width="120px">
          <template slot-scope="{row, $index}">{{$index + 1}}</template>
       </v-table-column>
-      <v-table-column prop="name" label="姓名" width="500px" fixed="left">
+      <v-table-column prop="name" label="姓名" width="500px">
       </v-table-column>
       <v-table-column prop="age" label="年龄" width="500px"></v-table-column>
       <v-table-column prop="address" label="地址" width="500px"></v-table-column>
