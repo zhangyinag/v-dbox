@@ -14,8 +14,16 @@ export default class TableCell extends Vue {
   @Prop(Number) index: number
 
   render (h: CreateElement): VNode {
+    let data: any = {}
+    // under auto layout, width won't work at td, set width to child of td
+    let width = (this.tableColumn as any).width
+    if (width) {
+      data.style = {
+        width
+      }
+    }
     if (this.tableColumn.$scopedSlots.default) {
-      return h('div', [
+      return h('div', data,[
         this.tableColumn.$scopedSlots.default({
           row: this.row,
           $index: this.index
@@ -23,7 +31,7 @@ export default class TableCell extends Vue {
       ])
     } else {
       let prop = (this.tableColumn as any).prop
-      return h('div', this.row[prop])
+      return h('div', data, this.row[prop])
     }
   }
 }

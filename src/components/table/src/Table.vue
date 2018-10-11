@@ -94,11 +94,6 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return style
     }
 
-    fixedCellStyle (col: TableColumn) {
-      if (!col.fixed) return {}
-      return this.colStyle(col)
-    }
-
     @Provide() addCol (col: TableColumn) {
       if (!this.cols.includes(col)) this.cols.push(col)
     }

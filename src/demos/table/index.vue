@@ -68,7 +68,7 @@
       <v-table-column prop="name" label="姓名">
       </v-table-column>
       <v-table-column prop="age" label="年龄"></v-table-column>
-      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column prop="address" label="地址" width="1200px"></v-table-column>
       <v-table-column label="操作" fixed="right" width="180px">
          <template slot-scope="{row, $index}">
             <a>添加</a> | <a>删除</a>

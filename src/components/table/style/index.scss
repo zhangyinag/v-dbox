@@ -15,9 +15,16 @@
         border: $--border-width-base $--border-style-base $--border-color-split;
         border-right: 0;
         border-bottom: 0;
+        table-layout: fixed; // can't resize at auto mode
 
         th,td{
           border-right: $--border-width-base $--border-style-base $--border-color-split;
+        }
+
+        th{
+          resize: horizontal;
+          overflow: auto;
+          cursor: ew-resize;
         }
       }
     }
@@ -32,7 +39,7 @@
     border-spacing: 0;
     text-align: left;
     border-radius: $--border-radius-base $--border-radius-base 0 0;
-    table-layout: fixed;
+    table-layout: auto; // it's better, it's faster on fixed layout, better provide this option
     background-color: $--component-background;
 
     th {
@@ -45,11 +52,16 @@
       top: 0;
     }
 
+    td{
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
     th, td {
       padding: $--table-padding-vertical $--table-padding-horizontal;
       word-break: break-word;
       border-bottom: $--border-width-base $--border-style-base $--border-color-split;
-      transition: all .3s;
+      //transition: all .3s;
     }
 
     &>tbody>tr{
