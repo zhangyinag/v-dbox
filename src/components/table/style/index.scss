@@ -15,16 +15,17 @@
         border: $--border-width-base $--border-style-base $--border-color-split;
         border-right: 0;
         border-bottom: 0;
-        table-layout: fixed; // can't resize at auto mode
 
         th,td{
           border-right: $--border-width-base $--border-style-base $--border-color-split;
         }
 
         th{
-          resize: horizontal;
-          overflow: auto;
-          cursor: ew-resize;
+          >div{
+            resize: horizontal;
+            overflow: auto;
+            cursor: ew-resize;
+          }
         }
       }
     }
@@ -50,6 +51,11 @@
       border-bottom: $--border-width-base $--border-style-base $--border-color-split;
       position: sticky;
       top: 0;
+
+      >div{
+        margin: -$--table-padding-vertical (-$--table-padding-horizontal);
+        padding: $--table-padding-vertical $--table-padding-horizontal;
+      }
     }
 
     td{

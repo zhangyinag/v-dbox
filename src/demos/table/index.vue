@@ -61,15 +61,16 @@
    <br>
    <br>
    <p>边框</p>
+   <code style="color: #1890ff;">只设置 th > div 的宽度, 不支持 layout: fixed</code> <br>
    <v-table :data="data4" height="400px" bordered>
       <v-table-column prop="index" label="#" fixed="left">
          <template slot-scope="{row, $index}">{{$index + 1}}</template>
       </v-table-column>
-      <v-table-column prop="name" label="姓名">
+      <v-table-column prop="name" label="姓名" width="500px">
       </v-table-column>
-      <v-table-column prop="age" label="年龄"></v-table-column>
-      <v-table-column prop="address" label="地址" width="1200px"></v-table-column>
-      <v-table-column label="操作" fixed="right" width="180px">
+      <v-table-column prop="age" label="年龄" width="500px"></v-table-column>
+      <v-table-column prop="address" label="地址" width="500px"></v-table-column>
+      <v-table-column label="操作" fixed="right" >
          <template slot-scope="{row, $index}">
             <a>添加</a> | <a>删除</a>
          </template>

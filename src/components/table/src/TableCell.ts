@@ -16,12 +16,12 @@ export default class TableCell extends Vue {
   render (h: CreateElement): VNode {
     let data: any = {}
     // under auto layout, width won't work at td, set width to child of td
-    let width = (this.tableColumn as any).width
-    if (width) {
-      data.style = {
-        width
-      }
-    }
+    // let width = (this.tableColumn as any).width
+    // if (width) {
+    //   data.style = {
+    //     width
+    //   }
+    // }
     if (this.tableColumn.$scopedSlots.default) {
       return h('div', data,[
         this.tableColumn.$scopedSlots.default({

@@ -5,7 +5,7 @@
         <div :class="[e('body')]" :style="[heightStyle]" @scroll.passive="onScroll" ref="body">
             <table>
                 <colgroup>
-                    <col v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :style="[colStyle(col)]"/>
+                    <col v-for="(col, i) in renderCols" :key="col.prop || col.label || i"/>
                 </colgroup>
                 <tbody>
                     <tr v-for="(row, i) in renderData" :key="i">
@@ -18,7 +18,12 @@
                 </tbody>
                 <thead>
                 <tr>
-                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i" :class="['th', fixedCls(col), scrollCls(col)]">{{col.label}}</th>
+                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i"
+                        :style="[colStyle(col)]"
+                        @resize="onResize"
+                        :class="['th', fixedCls(col), scrollCls(col)]">
+                        <div :style="[colStyle(col)]">{{col.label}}</div>
+                    </th>
                 </tr>
                 </thead>
             </table>
@@ -129,5 +134,10 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       //   }
       // }
     }
+
+  onResize (e: any) {
+      console.log('----')
+      console.log(e)
+  }
 }
 </script>
