@@ -1,5 +1,5 @@
 <template>
-    <div :class="[b(), mBorderedCls]">
+    <div :class="[b(), mBorderedCls]" v-loading="loading">
         <div :class="[e('header')]">
         </div>
         <div :class="[e('body')]" :style="[heightStyle]" @scroll.passive="onScroll" ref="body">
@@ -17,18 +17,22 @@
                     </tr>
                 </tbody>
                 <thead>
-                <tr>
-                    <th v-for="(col, i) in renderCols" :key="col.prop || col.label || i"
-                        :style="[colStyle(col)]"
-                        @resize="onResize"
-                        :class="['th', fixedCls(col), scrollCls(col)]">
-                        <div :style="[colStyle(col)]">{{col.label}}</div>
+                <tr v-for="(row, i) in renderHeaderCols" :key="i">
+                    <th v-for="(col, j) in row" :key="col.prop || col.label || j"
+                        v-fixed-position=""
+                        :colspan="col.col"
+                        :rowspan="col.row"
+                        :style="[colStyle(col.column)]"
+                        :class="['th', fixedCls(col.column), scrollCls(col.column)]">
+                        <div :style="[colStyle(col.column)]">{{col.column.label}}</div>
                     </th>
                 </tr>
                 </thead>
             </table>
         </div>
-        <div :class="[e('footer')]"></div>
+        <div :class="[e('footer')]">
+            <pagination v-if="!!pagination" :total="totalNum" :current-page.sync="currentPage" :page-size.sync="pageSize"></pagination>
+        </div>
         <div hidden>
             <slot></slot>
         </div>
@@ -36,17 +40,24 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Provide} from 'vue-property-decorator'
+import {Component, Prop, Provide, Emit} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
 import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
 import {isCssSupports} from '../../../utils'
+import TableColumnGroup from './TableColumnGroup.vue'
+import {HeaderCol, RemoteParam, RemoteResult} from './type'
+import fixedPosition from '../../../core/directives/fixed-position'
+import {Pagination} from '../../pagination/index'
+import {LoadingDirective} from '../../loading/index'
+
+const loading = new LoadingDirective()
 
 @Component({
-  components: {TableCell},
-  directives: {}
+  components: {TableCell, Pagination},
+  directives: {fixedPosition, loading}
   })
 export default class Table extends mixins(BemMixin, Rippleable) {
     @Prop(Array) data: any[]
@@ -55,18 +66,108 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     @Prop(Boolean) bordered: boolean
 
-    cols: TableColumn[] = []
+    @Prop([Boolean, Object]) pagination: boolean| any
+
+    @Prop(Object) remoteResult: RemoteResult
+
+    @Prop(Boolean) loading: boolean
+
+    cols: TableColumn[]| TableColumnGroup[] = []
 
     leftScroll: boolean = false
 
     rightScroll: boolean = false
 
+    current: number = 1
+
+    size: number = 10
+
+    get totalNum () {
+      if (this.remoteResult) { // remote
+        return this.remoteResult.total
+      }
+      return (this.data && this.data.length) || 0
+    }
+
+    get currentPage () {
+      if (this.remoteResult) return this.remoteResult.currentPage
+      return this.current
+    }
+
+    get pageSize () {
+      if (this.remoteResult) return this.remoteResult.pageSize
+      return this.size
+    }
+
+    set currentPage (currentPage: number) {
+      if (this.remoteResult) {
+        this.remoteChange(new RemoteParam(currentPage, this.remoteResult.pageSize))
+        return
+      }
+      this.current = currentPage
+    }
+
+    set pageSize (pageSize: number) {
+      if (this.remoteResult) {
+        this.remoteChange(new RemoteParam(this.remoteResult.currentPage, pageSize))
+        return
+      }
+      this.size = pageSize
+    }
+
     get renderCols (): TableColumn [] {
-      return this.cols
+      let ret: TableColumn [] = []
+      traverse(this.cols)
+      return ret
+      function traverse (cols) {
+        if (!Array.isArray(cols) || cols.length < 1) return
+        cols.forEach(col => {
+          if (col.constructor.name === 'TableColumn') ret.push(col)
+          else traverse(col.cols)
+        })
+      }
+    }
+
+    get renderHeaderCols (): HeaderCol[][] {
+      let headerCols: HeaderCol[] = []
+      let ret: HeaderCol[][] = []
+      let maxLevel = 0
+      traverse(this.cols, 0)
+      headerCols.forEach(col => {
+        if (col.column.constructor.name === 'TableColumn') {
+          col.row = maxLevel + 1 - col.level
+        }
+        (ret[col.level] || (ret[col.level] = [])).push(col)
+      })
+      return ret
+      function traverse (cols, level): number {
+        if (level > maxLevel) maxLevel = level
+        let colCount = 0
+        if (!Array.isArray(cols) || cols.length < 1) return colCount
+        cols.forEach(col => {
+          if (col.constructor.name === 'TableColumn') {
+            headerCols.push(new HeaderCol(col, level, 1, 1))
+            colCount++
+          } else {
+            let headerCol = new HeaderCol(col, level, 1, 1)
+            headerCols.push(headerCol)
+            let currColCount = traverse(col.cols, level + 1)
+            colCount += currColCount
+            headerCol.col = currColCount
+          }
+        })
+        return colCount
+      }
     }
 
     get renderData (): any[] {
-      return this.data || []
+      if (this.remoteResult) {
+        return this.remoteResult.data
+      }
+      if (!this.data) return []
+      let start = (this.currentPage - 1) * this.pageSize
+      if (this.pagination) return this.data.slice(start, start + this.pageSize)
+      return this.data.slice(0)
     }
 
     get mBorderedCls () {
@@ -94,19 +195,40 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     colStyle (col: TableColumn) {
       let style: any = {}
       if (col.width) {
-        Object.assign(style, {width: col.width})
+        Object.assign(style, {width: col.width}, {top: 'inherit'})
       }
       return style
     }
 
-    @Provide() addCol (col: TableColumn) {
+    // headRowStyle (col: HeaderCol) {
+    //   const $body = this.$refs.body
+    //   if (!$body) return {}
+    //   console.log(JSON.stringify(this.$refs))
+    //   let top = (this.$refs.headRows || [])
+    //     .filter((v, i) => i < col.level)
+    //     .map(v => v.offsetHeight)
+    //     .reduce((acc, cur) => {
+    //       return acc + cur
+    //     }, 0)
+    //   return { top: top + 'px' }
+    //
+    //   function toArray (nodeList: NodeList) {
+    //     let array = []
+    //     nodeList.forEach(v => array.push(v))
+    //     return array
+    //   }
+    // }
+
+    @Provide() addCol (col: TableColumn| TableColumnGroup) {
       if (!this.cols.includes(col)) this.cols.push(col)
     }
 
-    @Provide() removeCol (col: TableColumn) {
+    @Provide() removeCol (col: TableColumn| TableColumnGroup) {
       let idx = this.cols.indexOf(col)
       if (idx !== -1) this.cols.splice(idx, 1)
     }
+
+    @Emit() remoteChange (param: RemoteParam) {}
 
     onScroll () {
       const $wrapper = this.$refs.body as HTMLElement
@@ -134,10 +256,5 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       //   }
       // }
     }
-
-  onResize (e: any) {
-      console.log('----')
-      console.log(e)
-  }
 }
 </script>

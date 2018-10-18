@@ -26,7 +26,7 @@ export default class TableColumn extends mixins(BemMixin, Rippleable) {
 
     @Inject() removeCol: (col: TableColumn) => void
 
-    mounted () {
+    beforeMount () {
       this.addCol(this)
     }
 
