@@ -12,7 +12,11 @@
                         <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j"
                             :style="[]"
                             :class="['td', fixedCls(col), scrollCls(col)]">
-                            <table-cell :row="row" :table-column="col" :index="i"></table-cell>
+                            <table-cell :row="row"
+                                        :table-column="col"
+                                        :index="i"
+                                        :selected="hasSelected(row)"
+                                        @select="val => onRowSelected(row, val)"></table-cell>
                         </td>
                     </tr>
                 </tbody>
@@ -24,7 +28,21 @@
                         :rowspan="col.row"
                         :style="[colStyle(col.column)]"
                         :class="['th', fixedCls(col.column), scrollCls(col.column)]">
-                        <div :style="[colStyle(col.column)]">{{col.column.label}}</div>
+                        <div :style="[colStyle(col.column)]">
+                            <template v-if="col.column.type === 'selection'">
+                                <checkbox v-bind="allCheckedProp" @input="onAllCheckedChange"></checkbox>
+                                <dropdown :class="[e('check-dropdown')]" v-if="Array.isArray(col.column.selections) && col.column.selections.length > 0">
+                                    <i class="anticon anticon-down"></i>
+                                    <dropdown-menu slot="dropdown">
+                                        <dropdown-item v-for="sel in col.column.selections" :key="sel.key"
+                                        @click.native="sel.onSelect(selectedKeySet)">{{sel.label}}</dropdown-item>
+                                    </dropdown-menu>
+                                </dropdown>
+                            </template>
+                            <template v-else>
+                                {{col.column.label}}
+                            </template>
+                        </div>
                     </th>
                 </tr>
                 </thead>
@@ -46,17 +64,20 @@ import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
 import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
-import {isCssSupports} from '../../../utils'
+import {isCssSupports, isFunction, ReactiveSet} from '../../../utils'
 import TableColumnGroup from './TableColumnGroup.vue'
-import {HeaderCol, RemoteParam, RemoteResult} from './type'
+import {HeaderCol, RemoteParam, RemoteResult, TableColumnType} from './type'
 import fixedPosition from '../../../core/directives/fixed-position'
 import {Pagination} from '../../pagination/index'
+import {Checkbox} from '../../checkbox/index'
+import {Dropdown, DropdownMenu, DropdownItem} from '../../dropdown/index'
 import {LoadingDirective} from '../../loading/index'
+import {Primitive} from '../../../core/type'
 
 const loading = new LoadingDirective()
 
 @Component({
-  components: {TableCell, Pagination},
+  components: {TableCell, Pagination, Checkbox, Dropdown, DropdownMenu, DropdownItem},
   directives: {fixedPosition, loading}
   })
 export default class Table extends mixins(BemMixin, Rippleable) {
@@ -72,6 +93,8 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     @Prop(Boolean) loading: boolean
 
+    @Prop([String, Function]) dataIndex: string| Function
+
     cols: TableColumn[]| TableColumnGroup[] = []
 
     leftScroll: boolean = false
@@ -81,6 +104,14 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     current: number = 1
 
     size: number = 10
+
+    selectedKeySet: ReactiveSet<any> = new ReactiveSet()
+
+    get allCheckedProp (): {value: boolean, indeterminate: boolean} {
+      let value = !this.renderData.some(v => !this.selectedKeySet.has(this.resolveRowKey(v)))
+      let indeterminate = !value && this.renderData.some(v => this.selectedKeySet.has(this.resolveRowKey(v)))
+      return {value, indeterminate}
+    }
 
     get totalNum () {
       if (this.remoteResult) { // remote
@@ -229,6 +260,28 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     }
 
     @Emit() remoteChange (param: RemoteParam) {}
+
+    resolveRowKey (val: any) {
+      if (!this.dataIndex) return val
+      if (isFunction(this.dataIndex)) return (this.dataIndex as Function)(val)
+      return val[this.dataIndex]
+    }
+
+    hasSelected (row: any) {
+      return this.selectedKeySet.has(this.resolveRowKey(row))
+    }
+
+    onRowSelected (row, selected) {
+      if (selected) this.selectedKeySet.add(this.resolveRowKey(row))
+      else this.selectedKeySet.delete(this.resolveRowKey(row))
+    }
+
+    onAllCheckedChange (checked) {
+      this.renderData.forEach(v => {
+        if (checked) this.selectedKeySet.add(this.resolveRowKey(v))
+        else this.selectedKeySet.delete(this.resolveRowKey(v))
+      })
+    }
 
     onScroll () {
       const $wrapper = this.$refs.body as HTMLElement

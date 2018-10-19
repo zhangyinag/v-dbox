@@ -53,6 +53,10 @@ export function isString (value: any) {
   return typeof value === 'string'
 }
 
+export function isFunction (value: any) {
+  return typeof value === 'function'
+}
+
 export function isCssSupports (property: string, value?: any): boolean {
   return (window as any).CSS.supports(property, value)
 }

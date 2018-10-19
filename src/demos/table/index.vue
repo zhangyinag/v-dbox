@@ -135,13 +135,62 @@
       </v-table-column>
    </v-table>
 
+   <br>
+   <br>
+   <p>多选</p>
+   <code style="color: red;">
+      如果设置了 dataIndex, 确保其唯一性， 如果没有设置， 将使用对象本身作为 key
+   </code> <br>
+   <v-table :data="data7" height="400px" pagination>
+      <v-table-column type="selection" :selections="selections">
+
+      </v-table-column>
+      <v-table-column prop="index" label="#">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄"></v-table-column>
+      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="120px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
+   <br>
+   <br>
+   <p>多选 (远程分页)</p>
+   <code style="color: red;">
+     指定 dataIndex 可以实现远程跨页多选
+   </code> <br>
+   <label><input type="checkbox" v-model="enableDataIndex"> 指定 dataIndex</label>
+   <v-table :remote-result="remoteResult" :data-index="enableDataIndex && 'name'" @remote-change="onRemoteChange" :loading="loading6" height="400px" pagination>
+      <v-table-column type="selection" :selections="selections" width="120px">
+
+      </v-table-column>
+      <v-table-column prop="index" label="#">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄"></v-table-column>
+      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="120px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
-import {RemoteParam, RemoteResult} from '../../components/table/src/type'
+import {RemoteParam, RemoteResult, TableColumnSelection} from '../../components/table/src/type'
 @Component({
   components: {},
   })
@@ -270,10 +319,34 @@ export default class TableDemo extends Vue {
     pageSize: 10
   }
 
+  data7 = [...this.data1]
+
+  selections: TableColumnSelection[] = [
+    {
+      label: '全部',
+      key: 'all',
+      onSelect: (selectedKeySet) => {
+        this.data7.forEach(v => selectedKeySet.add(v))
+      }
+    },
+    {
+      label: '奇数行',
+      key: 'odd',
+      onSelect: (selectedKeySet) => {
+        this.data7.forEach((v, i) => {
+          if (i % 2 === 0) selectedKeySet.add(v)
+          else selectedKeySet.delete(v)
+        })
+      }
+    }
+  ]
+
+  enableDataIndex: boolean = false
+
   onRemoteChange (param: RemoteParam) {
     this.loading6 = true
     setTimeout(() => {
-      const all = [...this.data1, ...this.data1, ...this.data1, ...this.data1, ...this.data1]
+      const all = [...JSON.parse(JSON.stringify(this.data1))]
       let start = (param.currentPage - 1) * param.pageSize
       Object.assign(this.remoteResult, {
         data: all.slice(start, start + param.pageSize),

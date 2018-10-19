@@ -1,10 +1,11 @@
-import {Component, Prop, Vue} from 'vue-property-decorator'
+import {Component, Prop, Emit, Vue} from 'vue-property-decorator'
 import TableColmun from './TableColumn.vue'
 import {VNode} from 'vue/types/vnode'
 import {CreateElement} from 'vue/types/vue'
+import {Checkbox} from '../../checkbox'
 
 @Component({
-  components: {},
+  components: {Checkbox},
   })
 export default class TableCell extends Vue {
   @Prop(Object) row: any
@@ -12,6 +13,10 @@ export default class TableCell extends Vue {
   @Prop() tableColumn: TableColmun
 
   @Prop(Number) index: number
+
+  @Prop(Boolean) selected: boolean
+
+  @Emit() select (selected: boolean) {}
 
   render (h: CreateElement): VNode {
     let data: any = {}
@@ -22,6 +27,16 @@ export default class TableCell extends Vue {
     //     width
     //   }
     // }
+    if ((this.tableColumn as any).type === 'selection') {
+      return h('checkbox', {
+        props: {
+          value: this.selected
+        },
+        on: {
+          input: this.select
+        }
+      })
+    }
     if (this.tableColumn.$scopedSlots.default) {
       return h('div', data, [
         this.tableColumn.$scopedSlots.default({

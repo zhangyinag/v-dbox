@@ -112,3 +112,7 @@
   padding: $--table-padding-vertical 0;
   text-align: right;
 }
+
+@include e(check-dropdown){
+  margin-left: -16px;
+}
