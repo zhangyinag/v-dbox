@@ -23,7 +23,7 @@ export default class TableCell extends Vue {
     //   }
     // }
     if (this.tableColumn.$scopedSlots.default) {
-      return h('div', data,[
+      return h('div', data, [
         this.tableColumn.$scopedSlots.default({
           row: this.row,
           $index: this.index

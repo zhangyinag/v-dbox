@@ -2,7 +2,7 @@ import TableColumn from './TableColumn.vue'
 import TableColumnGroup from './TableColumnGroup.vue'
 
 export class HeaderCol {
-  constructor(public column: TableColumn | TableColumnGroup, public level: number, public row: number, public col: number) {}
+  constructor (public column: TableColumn | TableColumnGroup, public level: number, public row: number, public col: number) {}
 }
 
 export class RemoteResult {
