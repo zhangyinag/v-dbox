@@ -19,6 +19,8 @@ $icon-map: (
   double-right: "\e617",
   double-left: "\e618",
   down: "\e606",
+  caret-up: "\e607",
+  caret-down: "\e606",
 );
 
 @mixin icon ($name) {

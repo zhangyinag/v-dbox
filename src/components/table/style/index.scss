@@ -116,3 +116,50 @@
 @include e(check-dropdown){
   margin-left: -16px;
 }
+
+@include e(header-cell) {
+  @include m(has-sorter){
+    cursor: pointer;
+    &:hover {
+      background: #f5f5f5;
+    }
+  }
+}
+
+@include e(header-cell-append) {
+  position: relative;
+  display: inline-block;
+  float: right;
+  margin: (-$--table-padding-vertical) 0;
+  padding: $--table-padding-vertical 0;
+}
+
+@include e(sorter) {
+  vertical-align: middle;
+  margin-left: 8px;
+  color: $--text-color-secondary;
+
+  > i {
+    display: block;
+    font-size: 12px;
+    transform: scale(0.66); // 8px
+    height: 8px;
+    cursor: pointer;
+    transition: color .3s;
+
+    &:hover{
+      color: $--primary-4;
+    }
+
+    &.down{
+      margin-top: -1px;
+    }
+    &.up{
+      margin-bottom: -1px;
+    }
+
+    &.on {
+      color: $--primary-color;
+    }
+  }
+}

@@ -28,7 +28,7 @@
                         :rowspan="col.row"
                         :style="[colStyle(col.column)]"
                         :class="['th', fixedCls(col.column), scrollCls(col.column)]">
-                        <div :style="[colStyle(col.column)]">
+                        <div :style="[colStyle(col.column)]" :class="[e('header-cell'), hasSorterCls(col.column)]" @click="onToggleSort(col.column)">
                             <template v-if="col.column.type === 'selection'">
                                 <checkbox v-bind="allCheckedProp" @input="onAllCheckedChange"></checkbox>
                                 <dropdown :class="[e('check-dropdown')]" v-if="Array.isArray(col.column.selections) && col.column.selections.length > 0">
@@ -40,7 +40,13 @@
                                 </dropdown>
                             </template>
                             <template v-else>
-                                {{col.column.label}}
+                                <span>{{col.column.label}}</span>
+                                <div :class="[e('header-cell-append')]">
+                                    <div v-if="sortableCol(col.column)" :class="[e('sorter')]">
+                                        <i class="anticon anticon-caret-up up" :class="[sortOnCls(col.column, true)]" @click="onSort(col.column.prop, 'asc')"></i>
+                                        <i class="anticon anticon-caret-down down" :class="[sortOnCls(col.column, false)]" @click="onSort(col.column.prop, 'desc')"></i>
+                                    </div>
+                                </div>
                             </template>
                         </div>
                     </th>
@@ -58,21 +64,20 @@
 </template>
 
 <script lang="ts">
-import {Component, Prop, Provide, Emit} from 'vue-property-decorator'
+import {Component, Emit, Prop, Provide} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
 import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
-import {isCssSupports, isFunction, ReactiveSet} from '../../../utils'
+import {isFunction, ReactiveSet} from '../../../utils'
 import TableColumnGroup from './TableColumnGroup.vue'
-import {HeaderCol, RemoteParam, RemoteResult, TableColumnType} from './type'
+import {HeaderCol, RemoteParam, RemoteResult, TableSorter} from './type'
 import fixedPosition from '../../../core/directives/fixed-position'
 import {Pagination} from '../../pagination/index'
 import {Checkbox} from '../../checkbox/index'
-import {Dropdown, DropdownMenu, DropdownItem} from '../../dropdown/index'
+import {Dropdown, DropdownItem, DropdownMenu} from '../../dropdown/index'
 import {LoadingDirective} from '../../loading/index'
-import {Primitive} from '../../../core/type'
 
 const loading = new LoadingDirective()
 
@@ -106,6 +111,8 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     size: number = 10
 
     selectedKeySet: ReactiveSet<any> = new ReactiveSet()
+
+    sorter: TableSorter| null = null
 
     get allCheckedProp (): {value: boolean, indeterminate: boolean} {
       let value = !this.renderData.some(v => !this.selectedKeySet.has(this.resolveRowKey(v)))
@@ -150,7 +157,7 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       let ret: TableColumn [] = []
       traverse(this.cols)
       return ret
-      function traverse (cols) {
+      function traverse (cols: TableColumn[] | TableColumnGroup[]) {
         if (!Array.isArray(cols) || cols.length < 1) return
         cols.forEach(col => {
           if (col.constructor.name === 'TableColumn') ret.push(col)
@@ -171,7 +178,7 @@ export default class Table extends mixins(BemMixin, Rippleable) {
         (ret[col.level] || (ret[col.level] = [])).push(col)
       })
       return ret
-      function traverse (cols, level): number {
+      function traverse (cols: TableColumnGroup[] | TableColumn[], level: number): number {
         if (level > maxLevel) maxLevel = level
         let colCount = 0
         if (!Array.isArray(cols) || cols.length < 1) return colCount
@@ -191,14 +198,23 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       }
     }
 
+    get localData () { // get for data
+      if (!this.sorter) return this.data
+      let localData: any[] = (this.data || []).slice(0)
+      localData.sort((a, b) => {
+        return (a[this.sorter.prop] - b[this.sorter.prop]) * (this.sorter.order === 'desc' ? -1 : 1)
+      })
+      return localData
+    }
+
     get renderData (): any[] {
       if (this.remoteResult) {
         return this.remoteResult.data
       }
-      if (!this.data) return []
+      if (!this.localData) return []
       let start = (this.currentPage - 1) * this.pageSize
-      if (this.pagination) return this.data.slice(start, start + this.pageSize)
-      return this.data.slice(0)
+      if (this.pagination) return this.localData.slice(start, start + this.pageSize)
+      return this.localData.slice(0)
     }
 
     get mBorderedCls () {
@@ -231,6 +247,11 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return style
     }
 
+    sortOnCls (cell: TableColumn, asc: boolean): string {
+      let on = this.sorter && this.sorter.prop === cell.prop && this.sorter.order === (asc ? 'asc' : 'desc')
+      return on? 'on' : ''
+    }
+
     // headRowStyle (col: HeaderCol) {
     //   const $body = this.$refs.body
     //   if (!$body) return {}
@@ -249,6 +270,10 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     //     return array
     //   }
     // }
+
+    hasSorterCls (col: TableColumn) {
+      return this.sortableCol(col) ? this.m('has-sorter', 'header-cell'): ''
+    }
 
     @Provide() addCol (col: TableColumn| TableColumnGroup) {
       if (!this.cols.includes(col)) this.cols.push(col)
@@ -271,6 +296,10 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return this.selectedKeySet.has(this.resolveRowKey(row))
     }
 
+    sortableCol (col: TableColumn) {
+      return col.sortable && col.prop
+    }
+
     onRowSelected (row, selected) {
       if (selected) this.selectedKeySet.add(this.resolveRowKey(row))
       else this.selectedKeySet.delete(this.resolveRowKey(row))
@@ -281,6 +310,35 @@ export default class Table extends mixins(BemMixin, Rippleable) {
         if (checked) this.selectedKeySet.add(this.resolveRowKey(v))
         else this.selectedKeySet.delete(this.resolveRowKey(v))
       })
+    }
+
+    onSort (prop: string, order: 'asc' | 'desc') {
+      if (!order || !prop) {
+        this.sorter = null
+        return
+      }
+      this.sorter = {
+        prop, order
+      }
+    }
+
+    onToggleSort (col: TableColumn) {
+      if (!this.sortableCol(col)) return
+      let prop = col.prop
+      if (this.sorter && this.sorter.prop === prop) {
+        if (this.sorter.order === 'desc') this.sorter = null
+        else {
+          this.sorter = {
+            prop,
+            order: 'desc'
+          }
+        }
+      } else {
+        this.sorter = {
+          prop,
+          order: 'asc'
+        }
+      }
     }
 
     onScroll () {

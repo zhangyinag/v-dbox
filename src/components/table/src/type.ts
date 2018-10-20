@@ -25,3 +25,8 @@ export interface TableColumnSelection {
   label: string,
   onSelect: (selectedKeySet: ReactiveSet<any>) => any
 }
+
+export interface TableSorter {
+  prop: string,
+  order: 'desc' | 'asc'
+}

@@ -27,6 +27,8 @@ export default class TableColumn extends mixins(BemMixin, Rippleable) {
 
     @Prop(Array) selections!: TableColumnSelection[]
 
+    @Prop([Boolean]) sortable!: boolean
+
     @Inject() addCol: (col: TableColumn) => void
 
     @Inject() removeCol: (col: TableColumn) => void

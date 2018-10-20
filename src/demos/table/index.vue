@@ -184,6 +184,24 @@
       </v-table-column>
    </v-table>
 
+   <br>
+   <br>
+   <p>排序</p>
+   <v-table :data="data8" height="400px" pagination>
+      <v-table-column prop="index" label="#">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄" sortable></v-table-column>
+      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="120px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
@@ -320,6 +338,8 @@ export default class TableDemo extends Vue {
   }
 
   data7 = [...this.data1]
+
+  data8 = [...this.data1]
 
   selections: TableColumnSelection[] = [
     {
