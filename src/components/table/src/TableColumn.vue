@@ -9,7 +9,7 @@ import {Component, Prop, Inject} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
-import {TableColumnSelection, TableColumnType} from './type'
+import {TableColumnFilter, TableColumnSelection, TableColumnType} from './type'
 
 @Component({
   components: {},
@@ -28,6 +28,8 @@ export default class TableColumn extends mixins(BemMixin, Rippleable) {
     @Prop(Array) selections!: TableColumnSelection[]
 
     @Prop([Boolean]) sortable!: boolean
+
+    @Prop(Array) filters!: TableColumnFilter[]
 
     @Inject() addCol: (col: TableColumn) => void
 

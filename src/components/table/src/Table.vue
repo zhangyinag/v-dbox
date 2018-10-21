@@ -46,6 +46,28 @@
                                         <i class="anticon anticon-caret-up up" :class="[sortOnCls(col.column, true)]" @click.stop="onSort(col.column.prop, 'asc')"></i>
                                         <i class="anticon anticon-caret-down down" :class="[sortOnCls(col.column, false)]" @click.stop="onSort(col.column.prop, 'desc')"></i>
                                     </div>
+                                    <div v-if="filterableCol(col.column)" :class="[e('filter')]">
+                                        <dropdown trigger="click" @visible-change="val => {onFilterVisibleChange(val, col.column.prop)}">
+                                            <i class="anticon anticon-filter" :class="[e('filter-icon')]"></i>
+                                            <dropdown-menu slot="dropdown">
+                                                <dropdown-item v-for="filter in col.column.filters" :key="filter.value"
+                                                               >
+                                                    <div @click.stop="()=>{}">
+                                                        <checkbox :value="getFilterValues(col.column.prop)"
+                                                                  :label="filter.value"
+                                                                  @input="val => {setFilterValues(col.column.prop, val)}">{{filter.text}}</checkbox>
+                                                    </div>
+                                                </dropdown-item>
+                                                <v-dropdown-item divider></v-dropdown-item>
+                                                <v-dropdown-item>
+                                                    <div style="text-align: right;">
+                                                        <a @click="doFilter">确定&nbsp;</a>
+                                                        <a @click="resetFilter">重置&nbsp;</a>
+                                                    </div>
+                                                </v-dropdown-item>
+                                            </dropdown-menu>
+                                        </dropdown>
+                                    </div>
                                 </div>
                             </template>
                         </div>
@@ -72,7 +94,7 @@ import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
 import {isFunction, ReactiveSet} from '../../../utils'
 import TableColumnGroup from './TableColumnGroup.vue'
-import {HeaderCol, RemoteParam, RemoteResult, TablePagination, TableSorter} from './type'
+import {HeaderCol, RemoteParam, RemoteResult, TableFilter, TablePagination, TableSorter} from './type'
 import fixedPosition from '../../../core/directives/fixed-position'
 import {Pagination} from '../../pagination/index'
 import {Checkbox} from '../../checkbox/index'
@@ -113,6 +135,10 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     selectedKeySet: ReactiveSet<any> = new ReactiveSet()
 
     sorter: TableSorter| null = null
+
+    filters: TableFilter [] = []
+
+    currentFilter: TableFilter = null
 
     get allCheckedProp (): {value: boolean, indeterminate: boolean} {
       let value = !this.renderData.some(v => !this.selectedKeySet.has(this.resolveRowKey(v)))
@@ -199,11 +225,20 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     }
 
     get localData () { // get for data
-      if (!this.sorter) return this.data
       let localData: any[] = (this.data || []).slice(0)
-      localData.sort((a, b) => {
-        return (a[this.sorter.prop] - b[this.sorter.prop]) * (this.sorter.order === 'desc' ? -1 : 1)
-      })
+      if (this.filters && this.filters.length > 0) {
+        localData = localData.filter(v => {
+          return this.filters.every(filter => {
+            if (!filter.values || filter.values.length < 1) return true
+            return filter.values.includes(v[filter.prop])
+          })
+        })
+      }
+      if (this.sorter) {
+        localData.sort((a, b) => {
+          return (a[this.sorter.prop] - b[this.sorter.prop]) * (this.sorter.order === 'desc' ? -1 : 1)
+        })
+      }
       return localData
     }
 
@@ -297,8 +332,36 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return this.selectedKeySet.has(this.resolveRowKey(row))
     }
 
+    getFilterValues (prop: string) {
+      let filter = this.currentFilter
+      if (!filter || !Array.isArray(filter.values) || filter.values.length < 1) return []
+      return filter.values
+    }
+
+    setFilterValues (prop: string, values: any[]) {
+      let filter: TableFilter = this.currentFilter
+      if (!filter || !Array.isArray(filter.values) || filter.values.length < 1) {
+        this.currentFilter = {prop: prop, values: values}
+      } else filter.values = values
+    }
+
+    doFilter () {
+      let idx = this.filters.findIndex(v => v.prop === this.currentFilter.prop)
+      if (!idx) this.filters.push(this.currentFilter)
+      else this.filters.splice(idx, 1, this.currentFilter)
+    }
+
+    resetFilter () {
+      this.currentFilter.values = []
+      this.doFilter()
+    }
+
     sortableCol (col: TableColumn) {
       return col.sortable && col.prop
+    }
+
+    filterableCol (col: TableColumn) {
+      return Array.isArray(col.filters) && col.filters.length > 0
     }
 
     generateRemoteParam (pagination?: TablePagination, sorter?: TableSorter) : RemoteParam {
@@ -359,6 +422,18 @@ export default class Table extends mixins(BemMixin, Rippleable) {
         this.remoteChange(this.generateRemoteParam(undefined, sorter))
       } else {
         this.sorter = sorter
+      }
+    }
+
+    onFilterVisibleChange (visible: boolean, prop: string) {
+      if (visible) {
+        this.currentFilter = this.filters.find(v => v.prop === prop)
+        if (!this.currentFilter) {
+          this.currentFilter = {
+            prop,
+            values: []
+          }
+        }
       }
     }
 

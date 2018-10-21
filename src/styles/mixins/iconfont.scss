@@ -21,6 +21,7 @@ $icon-map: (
   down: "\e606",
   caret-up: "\e607",
   caret-down: "\e606",
+  filter: "\e663",
 );
 
 @mixin icon ($name) {

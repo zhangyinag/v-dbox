@@ -37,3 +37,13 @@ export interface TablePagination {
   pageSize: number
   total?: number
 }
+
+export interface TableFilter {
+  prop: string
+  values: any[]
+}
+
+export interface TableColumnFilter {
+  text?: string
+  value: any
+}

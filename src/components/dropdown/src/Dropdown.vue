@@ -7,6 +7,8 @@
             :delay-on-mouse-out="200"
             :disabled="disabled"
             ref="popper"
+            @show="visibleChange(true)"
+            @hide="visibleChange(false)"
             :options="options">
        <span class="popper"><slot name="dropdown"></slot></span>
 
@@ -14,7 +16,7 @@
     </popper>
 </template>
 <script lang="ts">
-import {Component, Inject, Prop, Provide} from 'vue-property-decorator'
+import {Component, Inject, Prop, Provide, Emit} from 'vue-property-decorator'
 import BaseComponent from '../../../core/BaseComponent'
 import {Popper} from '../../popper/index'
 
@@ -74,6 +76,8 @@ export default class Dropdown extends BaseComponent {
   get isSubCls () {
     return this.isSub ? this.m('is-sub') : ''
   }
+
+  @Emit() visibleChange (visible: boolean) {}
 
   @Provide() close () {
     const $popper = this.$refs.popper as any
