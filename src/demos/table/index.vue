@@ -202,6 +202,25 @@
       </v-table-column>
    </v-table>
 
+
+   <br>
+   <br>
+   <p>排序 (远程)</p>
+   <v-table :remote-result="remoteResult9" height="400px" :loading="loading9" @remote-change="onRemoteChange9" pagination>
+      <v-table-column prop="index" label="#">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄" sortable></v-table-column>
+      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="120px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
@@ -341,6 +360,15 @@ export default class TableDemo extends Vue {
 
   data8 = [...this.data1]
 
+  remoteResult9: RemoteResult = {
+    data: [],
+    total: 0,
+    currentPage: 1,
+    pageSize: 10
+  }
+
+  loading9: boolean = false
+
   selections: TableColumnSelection[] = [
     {
       label: '全部',
@@ -367,19 +395,48 @@ export default class TableDemo extends Vue {
     this.loading6 = true
     setTimeout(() => {
       const all = [...JSON.parse(JSON.stringify(this.data1))]
-      let start = (param.currentPage - 1) * param.pageSize
+      let maxPage = Math.ceil(all.length / param.pageSize)
+      let currentPage = maxPage < param.currentPage ? maxPage : param.currentPage
+      let start = (currentPage - 1) * param.pageSize
+      let end = start + param.pageSize
       Object.assign(this.remoteResult, {
-        data: all.slice(start, start + param.pageSize),
+        data: all.slice(start, end),
         total: all.length,
-        currentPage: param.currentPage,
-        pageSize: param.pageSize
+        currentPage: currentPage,
+        pageSize: param.pageSize,
+        sort: null
       })
       this.loading6 = false
     }, 2000)
   }
 
+  onRemoteChange9 (param: RemoteParam) {
+    this.loading9 = true
+    setTimeout(() => {
+      const all = [...JSON.parse(JSON.stringify(this.data1))]
+      let maxPage = Math.ceil(all.length / param.pageSize)
+      let currentPage = maxPage < param.currentPage ? maxPage : param.currentPage
+      let start = (currentPage - 1) * param.pageSize
+      let end = start + param.pageSize
+      if (param.sorter) {
+        all.sort((a, b) => {
+          return (a[param.sorter.prop] - b[param.sorter.prop]) * (param.sorter.order === 'desc' ? -1 : 1)
+        })
+      }
+      Object.assign(this.remoteResult9, {
+        data: all.slice(start, end),
+        total: all.length,
+        currentPage: currentPage,
+        pageSize: param.pageSize,
+        sorter: param.sorter
+      })
+      this.loading9 = false
+    }, 2000)
+  }
+
   created () {
     this.onRemoteChange({currentPage: 1, pageSize: 10})
+    this.onRemoteChange9({currentPage: 1, pageSize: 10})
   }
 }
 </script>

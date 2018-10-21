@@ -43,8 +43,8 @@
                                 <span>{{col.column.label}}</span>
                                 <div :class="[e('header-cell-append')]">
                                     <div v-if="sortableCol(col.column)" :class="[e('sorter')]">
-                                        <i class="anticon anticon-caret-up up" :class="[sortOnCls(col.column, true)]" @click="onSort(col.column.prop, 'asc')"></i>
-                                        <i class="anticon anticon-caret-down down" :class="[sortOnCls(col.column, false)]" @click="onSort(col.column.prop, 'desc')"></i>
+                                        <i class="anticon anticon-caret-up up" :class="[sortOnCls(col.column, true)]" @click.stop="onSort(col.column.prop, 'asc')"></i>
+                                        <i class="anticon anticon-caret-down down" :class="[sortOnCls(col.column, false)]" @click.stop="onSort(col.column.prop, 'desc')"></i>
                                     </div>
                                 </div>
                             </template>
@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts">
-import {Component, Emit, Prop, Provide} from 'vue-property-decorator'
+import {Component, Emit, Prop, Provide, Watch} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
@@ -72,7 +72,7 @@ import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
 import {isFunction, ReactiveSet} from '../../../utils'
 import TableColumnGroup from './TableColumnGroup.vue'
-import {HeaderCol, RemoteParam, RemoteResult, TableSorter} from './type'
+import {HeaderCol, RemoteParam, RemoteResult, TablePagination, TableSorter} from './type'
 import fixedPosition from '../../../core/directives/fixed-position'
 import {Pagination} from '../../pagination/index'
 import {Checkbox} from '../../checkbox/index'
@@ -139,7 +139,7 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     set currentPage (currentPage: number) {
       if (this.remoteResult) {
-        this.remoteChange(new RemoteParam(currentPage, this.remoteResult.pageSize))
+        this.remoteChange(this.generateRemoteParam({currentPage, pageSize: this.remoteResult.pageSize}, undefined))
         return
       }
       this.current = currentPage
@@ -147,7 +147,7 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     set pageSize (pageSize: number) {
       if (this.remoteResult) {
-        this.remoteChange(new RemoteParam(this.remoteResult.currentPage, pageSize))
+        this.remoteChange(this.generateRemoteParam({currentPage: this.remoteResult.currentPage, pageSize}, undefined))
         return
       }
       this.size = pageSize
@@ -248,8 +248,9 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     }
 
     sortOnCls (cell: TableColumn, asc: boolean): string {
-      let on = this.sorter && this.sorter.prop === cell.prop && this.sorter.order === (asc ? 'asc' : 'desc')
-      return on? 'on' : ''
+      let sorter = this.remoteResult ? this.remoteResult.sorter : this.sorter
+      let on = sorter && sorter.prop === cell.prop && sorter.order === (asc ? 'asc' : 'desc')
+      return on ? 'on' : ''
     }
 
     // headRowStyle (col: HeaderCol) {
@@ -300,6 +301,15 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return col.sortable && col.prop
     }
 
+    generateRemoteParam (pagination?: TablePagination, sorter?: TableSorter) : RemoteParam {
+      let p = pagination || {currentPage: this.remoteResult.currentPage, pageSize: this.remoteResult.pageSize}
+      let s = sorter === undefined ? (this.remoteResult.sorter && this.remoteResult.sorter) : sorter
+      return {
+        ...p,
+        sorter: s
+      }
+    }
+
     onRowSelected (row, selected) {
       if (selected) this.selectedKeySet.add(this.resolveRowKey(row))
       else this.selectedKeySet.delete(this.resolveRowKey(row))
@@ -313,31 +323,42 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     }
 
     onSort (prop: string, order: 'asc' | 'desc') {
-      if (!order || !prop) {
-        this.sorter = null
-        return
+      let sorter: TableSorter = null
+      if (order && prop) {
+        sorter = {
+          prop, order
+        }
       }
-      this.sorter = {
-        prop, order
+
+      if (this.remoteResult) {
+        this.remoteChange(this.generateRemoteParam(undefined, sorter))
+      } else {
+        this.sorter = sorter
       }
     }
 
     onToggleSort (col: TableColumn) {
       if (!this.sortableCol(col)) return
       let prop = col.prop
-      if (this.sorter && this.sorter.prop === prop) {
-        if (this.sorter.order === 'desc') this.sorter = null
+      let sorter = this.remoteResult ? this.remoteResult.sorter : this.sorter
+      if (sorter && sorter.prop === prop) {
+        if (sorter.order === 'desc') sorter = null
         else {
-          this.sorter = {
+          sorter = {
             prop,
             order: 'desc'
           }
         }
       } else {
-        this.sorter = {
+        sorter = {
           prop,
           order: 'asc'
         }
+      }
+      if (this.remoteResult) {
+        this.remoteChange(this.generateRemoteParam(undefined, sorter))
+      } else {
+        this.sorter = sorter
       }
     }
 

@@ -12,10 +12,11 @@ export class RemoteResult {
   total: number
   currentPage: number
   pageSize: number
+  sorter?: TableSorter
 }
 
 export class RemoteParam {
-  constructor (public currentPage: number, public pageSize: number) {}
+  constructor (public currentPage: number, public pageSize: number, public sorter?: TableSorter) {}
 }
 
 export type TableColumnType = 'selection'
@@ -29,4 +30,10 @@ export interface TableColumnSelection {
 export interface TableSorter {
   prop: string,
   order: 'desc' | 'asc'
+}
+
+export interface TablePagination {
+  currentPage: number
+  pageSize: number
+  total?: number
 }
