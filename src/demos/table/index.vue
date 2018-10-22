@@ -238,6 +238,24 @@
       </v-table-column>
    </v-table>
 
+   <br>
+   <br>
+   <p>过滤 (远程)</p>
+   <v-table :remote-result="remoteResult11" :loading="loading11" @remote-change="onRemoteChange11"  pagination>
+      <v-table-column prop="index" label="#">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名" :filters="nameFilters10">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄" sortable :filters="ageFilters10"></v-table-column>
+      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="120px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
@@ -384,20 +402,19 @@ export default class TableDemo extends Vue {
     pageSize: 10
   }
 
+  remoteResult11: RemoteResult = {
+    data: [],
+    total: 0,
+    currentPage: 1,
+    pageSize: 10,
+    filters: []
+  }
+
   loading9: boolean = false
 
-  data10 = [...this.data1]
+  loading11: boolean = false
 
-  nameFilters10: TableColumnFilter[] = [
-    {
-      text: 'Alison',
-      value: 'Alison'
-    },
-    {
-      text: 'Bob',
-      value: 'Bob'
-    }
-  ]
+  data10 = [...this.data1]
 
   ageFilters10: TableColumnFilter[] = [
     {
@@ -435,6 +452,19 @@ export default class TableDemo extends Vue {
   ]
 
   enableDataIndex: boolean = false
+
+  get nameFilters10 (): TableColumnFilter[] {
+    let set = new Set<any>()
+    this.data10.forEach(v => {
+      set.add(v.name)
+    })
+    return [...set].map(v => {
+      return {
+        value: v,
+        text: v
+      }
+    })
+  }
 
   onRemoteChange (param: RemoteParam) {
     this.loading6 = true
@@ -479,9 +509,43 @@ export default class TableDemo extends Vue {
     }, 2000)
   }
 
+  onRemoteChange11 (param: RemoteParam) {
+    this.loading11 = true
+    setTimeout(() => {
+      let all = [...JSON.parse(JSON.stringify(this.data1))]
+      if (param.sorter) {
+        all.sort((a, b) => {
+          return (a[param.sorter.prop] - b[param.sorter.prop]) * (param.sorter.order === 'desc' ? -1 : 1)
+        })
+      }
+      if (param.filters && param.filters.length > 0) {
+        all = all.filter(v => {
+          return param.filters.every(filter => {
+            if (!filter.values || filter.values.length < 1) return true
+            return filter.values.includes(v[filter.prop])
+          })
+        })
+      }
+      let maxPage = Math.ceil(all.length / param.pageSize)
+      let currentPage = maxPage < param.currentPage ? maxPage : param.currentPage
+      let start = (currentPage - 1) * param.pageSize
+      let end = start + param.pageSize
+      Object.assign(this.remoteResult11, {
+        data: all.slice(start, end),
+        total: all.length,
+        currentPage: currentPage,
+        pageSize: param.pageSize,
+        sorter: param.sorter,
+        filters: param.filters
+      })
+      this.loading11 = false
+    }, 2000)
+  }
+
   created () {
     this.onRemoteChange({currentPage: 1, pageSize: 10})
     this.onRemoteChange9({currentPage: 1, pageSize: 10})
+    this.onRemoteChange11({currentPage: 1, pageSize: 10})
   }
 }
 </script>

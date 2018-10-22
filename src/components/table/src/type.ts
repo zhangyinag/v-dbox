@@ -13,10 +13,11 @@ export class RemoteResult {
   currentPage: number
   pageSize: number
   sorter?: TableSorter
+  filters?: TableFilter[]
 }
 
 export class RemoteParam {
-  constructor (public currentPage: number, public pageSize: number, public sorter?: TableSorter) {}
+  constructor (public currentPage: number, public pageSize: number, public sorter?: TableSorter, public filters?: TableFilter[]) {}
 }
 
 export type TableColumnType = 'selection'

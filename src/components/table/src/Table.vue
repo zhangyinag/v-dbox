@@ -289,7 +289,8 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     }
 
     filterOnCls (prop: string): string {
-      let filters: TableFilter[] = this.filters
+      let filters: TableFilter[] = this.remoteResult ? this.remoteResult.filters : this.filters
+      if (!Array.isArray(filters)) return ''
       let on = filters.some(v => {
         return v.prop === prop && (Array.isArray(v.values) && v.values.length > 0)
       })
@@ -354,9 +355,16 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     }
 
     doFilter () {
-      let idx = this.filters.findIndex(v => v.prop === this.currentFilter.prop)
-      if (idx === -1) this.filters.push(this.currentFilter)
-      else this.filters.splice(idx, 1, this.currentFilter)
+      let filters: TableFilter[] = this.remoteResult ? [...(this.remoteResult.filters || [])] : this.filters
+      let idx = filters.findIndex(v => v.prop === this.currentFilter.prop)
+      if (idx === -1) {
+        filters.push(this.currentFilter)
+      } else {
+        filters.splice(idx, 1, this.currentFilter)
+      }
+      if (this.remoteResult) {
+        this.remoteChange(this.generateRemoteParam(undefined, undefined, filters))
+      }
     }
 
     resetFilter () {
@@ -372,12 +380,14 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return Array.isArray(col.filters) && col.filters.length > 0
     }
 
-    generateRemoteParam (pagination?: TablePagination, sorter?: TableSorter) : RemoteParam {
+    generateRemoteParam (pagination?: TablePagination, sorter?: TableSorter, filters?: TableFilter[]) : RemoteParam {
       let p = pagination || {currentPage: this.remoteResult.currentPage, pageSize: this.remoteResult.pageSize}
-      let s = sorter === undefined ? (this.remoteResult.sorter && this.remoteResult.sorter) : sorter
+      let s = sorter === undefined ? (this.remoteResult && this.remoteResult.sorter) : sorter
+      let f = filters === undefined ? (this.remoteResult && this.remoteResult.filters) : filters
       return {
         ...p,
-        sorter: s
+        sorter: s,
+        filters: f
       }
     }
 
@@ -435,7 +445,8 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     onFilterVisibleChange (visible: boolean, prop: string) {
       if (visible) {
-        this.currentFilter = this.filters.find(v => v.prop === prop)
+        let filters: TableFilter[] = this.remoteResult ? [...(this.remoteResult.filters || [])] : this.filters
+        this.currentFilter = filters.find(v => v.prop === prop)
         if (!this.currentFilter) {
           this.currentFilter = {
             prop,
