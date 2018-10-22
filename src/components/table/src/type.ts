@@ -20,7 +20,7 @@ export class RemoteParam {
   constructor (public currentPage: number, public pageSize: number, public sorter?: TableSorter, public filters?: TableFilter[]) {}
 }
 
-export type TableColumnType = 'selection'
+export type TableColumnType = 'selection' | 'expand'
 
 export interface TableColumnSelection {
   key: Primitive,

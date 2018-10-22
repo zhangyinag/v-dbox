@@ -274,6 +274,30 @@
       </v-table-column>
    </v-table>
 
+   <br>
+   <br>
+   <p>展开行</p>
+   <v-table :data="data13" pagination>
+      <v-table-column type="expand" width="60px">
+         <template slot-scope="{row, $index}">
+            <v-table :data="row && row.items">
+               <v-table-column prop="name" label="名称"></v-table-column>
+               <v-table-column prop="num" label="数量"></v-table-column>
+               <v-table-column prop="price" label="价格"></v-table-column>
+            </v-table>
+         </template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄"></v-table-column>
+      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="120px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
@@ -435,6 +459,27 @@ export default class TableDemo extends Vue {
   data10 = [...this.data1]
 
   data12 = [...this.data1]
+
+  data13 = [...this.data1].map(v => {
+    let items = [
+      {
+        name: '鸡蛋',
+        num: '45',
+        price: '23'
+      },
+      {
+        name: '酸奶',
+        num: '23',
+        price: '12'
+      },
+      {
+        name: '薯片',
+        num: '45',
+        price: '14'
+      }
+    ]
+    return Object.assign({}, {items}, v)
+  })
 
   spanFn12 = (row: any, prop: string, rowIndex: number, colIndex: number) => {
     if (rowIndex === 1 && colIndex === 1) {

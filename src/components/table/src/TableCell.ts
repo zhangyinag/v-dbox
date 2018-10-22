@@ -1,13 +1,16 @@
 import {Component, Prop, Emit, Vue} from 'vue-property-decorator'
+import {mixins} from 'vue-class-component'
+
 import TableColmun from './TableColumn.vue'
 import {VNode} from 'vue/types/vnode'
 import {CreateElement} from 'vue/types/vue'
 import {Checkbox} from '../../checkbox'
+import BemMixin from '@/core/mixins/BemMixin'
 
 @Component({
   components: {Checkbox},
   })
-export default class TableCell extends Vue {
+export default class TableCell extends mixins(BemMixin) {
   @Prop(Object) row: any
 
   @Prop() tableColumn: TableColmun
@@ -16,7 +19,19 @@ export default class TableCell extends Vue {
 
   @Prop(Boolean) selected: boolean
 
+  @Prop(Boolean) expanded: boolean
+
   @Emit() select (selected: boolean) {}
+
+  @Emit() expandChange (row: any, expanded: boolean) {}
+
+  get expandedCls () {
+    return this.expanded ? 'expanded' : ''
+  }
+
+  onToggleExpandRow () {
+    this.expandChange(this.row, !this.expanded)
+  }
 
   render (h: CreateElement): VNode {
     let data: any = {}
@@ -34,6 +49,14 @@ export default class TableCell extends Vue {
         },
         on: {
           input: this.select
+        }
+      })
+    }
+    if ((this.tableColumn as any).type === 'expand') {
+      return h('span', {
+        'class': [this.e('row-expand-icon', 'table'), this.expandedCls],
+        on: {
+          click: this.onToggleExpandRow
         }
       })
     }

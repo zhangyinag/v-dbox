@@ -73,7 +73,7 @@
     &>tbody>tr{
       &:hover{
         background: $--table-row-hover-bg;
-        td {
+        >td {
           background: $--table-row-hover-bg;
         }
       }
@@ -192,4 +192,32 @@
  i {
    color: $--text-color-secondary;
  }
+}
+
+@include e(expanded-row) {
+  &, &:hover {
+    >td{
+      background: $--table-expanded-row-bg !important;
+    }
+  }
+}
+
+@include e(row-expand-icon) {
+  cursor: pointer;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  text-align: center;
+  line-height: 14px;
+  border: $--border-width-base $--border-style-base $--border-color-split;
+  user-select: none;
+  background: $--component-background;
+
+  &:after{
+    content: '+';
+  }
+
+  &.expanded:after{
+    content: '-';
+  }
 }

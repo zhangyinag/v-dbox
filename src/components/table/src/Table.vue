@@ -8,7 +8,8 @@
                     <col v-for="(col, i) in renderCols" :key="col.prop || col.label || i"/>
                 </colgroup>
                 <tbody>
-                    <tr v-for="(row, i) in renderData" :key="i">
+                    <template v-for="(row, i) in renderData">
+                    <tr :key="i">
                         <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j"
                             :style="[]"
                             v-bind="resolveSpanFn(row, col.prop, i+1, j+1)"
@@ -17,10 +18,19 @@
                             <table-cell :row="row"
                                         :table-column="col"
                                         :index="i"
+                                        :expanded="isExpanded(row)"
                                         :selected="hasSelected(row)"
+                                        @expand-change="onExpandChange"
                                         @select="val => onRowSelected(row, val)"></table-cell>
                         </td>
                     </tr>
+                    <tr :key="'expand' + i" v-if="hasExpandRow && isExpanded(row)" :class="[e('expanded-row')]">
+                        <td></td>
+                        <td :colspan="renderCols.length">
+                            <table-expand-row :row="row" :table-column="expandCol" :index="i"></table-expand-row>
+                        </td>
+                    </tr>
+                   </template>
                 </tbody>
                 <thead>
                 <tr v-for="(row, i) in renderHeaderCols" :key="i">
@@ -40,6 +50,9 @@
                                         @click.native="sel.onSelect(selectedKeySet)">{{sel.label}}</dropdown-item>
                                     </dropdown-menu>
                                 </dropdown>
+                            </template>
+                            <template v-if="col.column.type === 'expand'">
+                                <span>+</span>
                             </template>
                             <template v-else>
                                 <span>{{col.column.label}}</span>
@@ -94,6 +107,7 @@ import BemMixin from '../../../core/mixins/BemMixin'
 import Rippleable from '../../../core/mixins/Rippleable'
 import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
+import TableExpandRow from './TableExpandRow'
 import {isFunction, ReactiveSet} from '../../../utils'
 import TableColumnGroup from './TableColumnGroup.vue'
 import {HeaderCol, RemoteParam, RemoteResult, TableSpanFn, TableFilter, TablePagination, TableSorter} from './type'
@@ -106,7 +120,7 @@ import {LoadingDirective} from '../../loading/index'
 const loading = new LoadingDirective()
 
 @Component({
-  components: {TableCell, Pagination, Checkbox, Dropdown, DropdownMenu, DropdownItem},
+  components: {TableCell, TableExpandRow, Pagination, Checkbox, Dropdown, DropdownMenu, DropdownItem},
   directives: {fixedPosition, loading}
   })
 export default class Table extends mixins(BemMixin, Rippleable) {
@@ -143,6 +157,8 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     filters: TableFilter [] = []
 
     currentFilter: TableFilter = null
+
+    expandedRowSet: ReactiveSet<any> = new ReactiveSet()
 
     get allCheckedProp (): {value: boolean, indeterminate: boolean} {
       let value = !this.renderData.some(v => !this.selectedKeySet.has(this.resolveRowKey(v)))
@@ -267,6 +283,14 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       }
     }
 
+    get hasExpandRow (): boolean {
+      return this.renderCols.some(v => v.type === 'expand')
+    }
+
+    get expandCol (): TableColumn {
+      return this.renderCols.find(v => v.type === 'expand')
+    }
+
     fixedCls (col: TableColumn) {
       if (!col.fixed) return ''
       return this.m(`fixed-${col.fixed}`, 'cell')
@@ -347,7 +371,11 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     hasCell (row: any, prop: string, rowIndex: number, colIndex: number): boolean {
       let ret = this.resolveSpanFn(row, prop, rowIndex, colIndex)
-      return ret.rowspan && ret.colspan
+      return !!ret.rowspan && !!ret.colspan
+    }
+
+    isExpanded (row: any) {
+      return this.expandedRowSet.has(this.resolveRowKey(row))
     }
 
     getFilterValues (prop: string) {
@@ -471,6 +499,14 @@ export default class Table extends mixins(BemMixin, Rippleable) {
             values: []
           }
         }
+      }
+    }
+
+    onExpandChange (row: any, expand: boolean) {
+      if (expand) {
+        this.expandedRowSet.add(this.resolveRowKey(row))
+      } else {
+        this.expandedRowSet.delete(this.resolveRowKey(row))
       }
     }
 
