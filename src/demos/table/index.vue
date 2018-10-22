@@ -508,25 +508,25 @@ export default class TableDemo extends Vue {
     if (rowIndex === 1 && colIndex === 1) {
       return {
         rowspan: 2,
-        colspan: 2,
+        colspan: 2
       }
     }
     if (rowIndex === 1 && colIndex === 2) {
       return {
         rowspan: 0,
-        colspan: 0,
+        colspan: 0
       }
     }
     if (rowIndex === 2 && colIndex === 1) {
       return {
         rowspan: 0,
-        colspan: 0,
+        colspan: 0
       }
     }
     if (rowIndex === 2 && colIndex === 2) {
       return {
         rowspan: 0,
-        colspan: 0,
+        colspan: 0
       }
     }
   }

@@ -77,10 +77,9 @@ export default class TableCell extends mixins(BemMixin) {
       return renderNormalContent()
     }
 
-
     function renderNormalContent (isContent?: boolean): VNode {
       let d = Object.assign({ref: 'content'}, data)
-      if (isContent) d = Object.assign({}, data, {slot: 'content', class: [vm.e('cell-content', 'table'), vm.m('tooltip','cell-content', 'table')]})
+      if (isContent) d = Object.assign({}, data, {slot: 'content', class: [vm.e('cell-content', 'table'), vm.m('tooltip', 'cell-content', 'table')]})
       if (vm.tableColumn.$scopedSlots.default) {
         return h('div', d, [
           vm.tableColumn.$scopedSlots.default({
@@ -102,7 +101,6 @@ export default class TableCell extends mixins(BemMixin) {
       else this.toolTipEnable = false
     }
   }
-
 
   updated () {
     this.$nextTick().then(() => {

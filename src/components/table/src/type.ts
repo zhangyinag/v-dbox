@@ -49,7 +49,6 @@ export interface TableColumnFilter {
   value: any
 }
 
-
 export interface TableSpanFn {
   (row: any, prop: string, rowIndex: number, colIndex: number): {rowspan: number, colspan: number}
 }
