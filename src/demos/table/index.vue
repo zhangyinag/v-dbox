@@ -70,7 +70,7 @@
       </v-table-column>
       <v-table-column prop="age" label="年龄" width="500px"></v-table-column>
       <v-table-column prop="address" label="地址" width="500px"></v-table-column>
-      <v-table-column label="操作" fixed="right" >
+      <v-table-column label="操作" fixed="right" width="120px">
          <template slot-scope="{row, $index}">
             <a>添加</a> | <a>删除</a>
          </template>
@@ -92,7 +92,7 @@
          </v-table-column-group>
       </v-table-column-group>
 
-      <v-table-column label="操作" fixed="right" >
+      <v-table-column label="操作" fixed="right" width="120px">
          <template slot-scope="{row, $index}">
             <a>添加</a> | <a>删除</a>
          </template>
@@ -298,6 +298,25 @@
       </v-table-column>
    </v-table>
 
+   <br>
+   <br>
+   <p>单行模式</p>
+   <v-table :data="data14" pagination>
+      <v-table-column prop="index" label="#" width="80px">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄"></v-table-column>
+      <v-table-column prop="address" label="地址" width="80px" single-line></v-table-column>
+      <v-table-column prop="detail" label="详情" width="100px"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="120px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
@@ -479,6 +498,10 @@ export default class TableDemo extends Vue {
       }
     ]
     return Object.assign({}, {items}, v)
+  })
+
+  data14 = [...this.data1].map(v => {
+    return Object.assign({}, {detail: v.name + ',' + v.address}, v)
   })
 
   spanFn12 = (row: any, prop: string, rowIndex: number, colIndex: number) => {

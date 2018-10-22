@@ -11,7 +11,7 @@
             ref="popper"
             :options="options">
             <span class="popper" :class="[e('popper')]">
-                <span :class="[e('inner')]">{{content}}</span>
+                <span :class="[e('inner')]"><slot name="content">{{content}}</slot></span>
             </span>
 
         <span slot="reference"><slot></slot></span>

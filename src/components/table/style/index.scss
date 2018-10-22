@@ -58,10 +58,11 @@
       }
     }
 
-    td{
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
+    //td{
+    //  white-space: nowrap;
+    //  text-overflow: ellipsis;
+    //  overflow: hidden;
+    //}
 
     th, td {
       padding: $--table-padding-vertical $--table-padding-horizontal;
@@ -221,3 +222,18 @@
     content: '-';
   }
 }
+
+@include e(cell-content) {
+  @include m(single-line) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  @include m(tooltip) {
+    white-space: nowrap;
+    max-width: 320px;
+    width: auto !important;
+  }
+}
+
