@@ -256,6 +256,24 @@
       </v-table-column>
    </v-table>
 
+   <br>
+   <br>
+   <p>合并行列</p>
+   <v-table :data="data12" pagination :span-fn="spanFn12">
+      <v-table-column prop="index" label="#">
+         <template slot-scope="{row, $index}">{{$index + 1}}</template>
+      </v-table-column>
+      <v-table-column prop="name" label="姓名">
+      </v-table-column>
+      <v-table-column prop="age" label="年龄"></v-table-column>
+      <v-table-column prop="address" label="地址"></v-table-column>
+      <v-table-column label="操作" fixed="right" width="120px">
+         <template slot-scope="{row, $index}">
+            <a>添加</a> | <a>删除</a>
+         </template>
+      </v-table-column>
+   </v-table>
+
    <div style="height: 240px;"></div>
 </div>
 </template>
@@ -415,6 +433,35 @@ export default class TableDemo extends Vue {
   loading11: boolean = false
 
   data10 = [...this.data1]
+
+  data12 = [...this.data1]
+
+  spanFn12 = (row: any, prop: string, rowIndex: number, colIndex: number) => {
+    if (rowIndex === 1 && colIndex === 1) {
+      return {
+        rowspan: 2,
+        colspan: 2,
+      }
+    }
+    if (rowIndex === 1 && colIndex === 2) {
+      return {
+        rowspan: 0,
+        colspan: 0,
+      }
+    }
+    if (rowIndex === 2 && colIndex === 1) {
+      return {
+        rowspan: 0,
+        colspan: 0,
+      }
+    }
+    if (rowIndex === 2 && colIndex === 2) {
+      return {
+        rowspan: 0,
+        colspan: 0,
+      }
+    }
+  }
 
   ageFilters10: TableColumnFilter[] = [
     {

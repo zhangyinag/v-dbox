@@ -11,6 +11,8 @@
                     <tr v-for="(row, i) in renderData" :key="i">
                         <td v-for="(col, j) in renderCols" :key="col.prop || col.label || j"
                             :style="[]"
+                            v-bind="resolveSpanFn(row, col.prop, i+1, j+1)"
+                            v-if="hasCell(row, col.prop, i+1, j+1)"
                             :class="['td', fixedCls(col), scrollCls(col)]">
                             <table-cell :row="row"
                                         :table-column="col"
@@ -94,7 +96,7 @@ import TableColumn from './TableColumn.vue'
 import TableCell from './TableCell'
 import {isFunction, ReactiveSet} from '../../../utils'
 import TableColumnGroup from './TableColumnGroup.vue'
-import {HeaderCol, RemoteParam, RemoteResult, TableFilter, TablePagination, TableSorter} from './type'
+import {HeaderCol, RemoteParam, RemoteResult, TableSpanFn, TableFilter, TablePagination, TableSorter} from './type'
 import fixedPosition from '../../../core/directives/fixed-position'
 import {Pagination} from '../../pagination/index'
 import {Checkbox} from '../../checkbox/index'
@@ -121,6 +123,8 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     @Prop(Boolean) loading: boolean
 
     @Prop([String, Function]) dataIndex: string| Function
+
+    @Prop([Function]) spanFn: TableSpanFn
 
     cols: TableColumn[]| TableColumnGroup[] = []
 
@@ -341,6 +345,11 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return this.selectedKeySet.has(this.resolveRowKey(row))
     }
 
+    hasCell (row: any, prop: string, rowIndex: number, colIndex: number): boolean {
+      let ret = this.resolveSpanFn(row, prop, rowIndex, colIndex)
+      return ret.rowspan && ret.colspan
+    }
+
     getFilterValues (prop: string) {
       let filter = this.currentFilter
       if (!filter || !Array.isArray(filter.values) || filter.values.length < 1) return []
@@ -389,6 +398,15 @@ export default class Table extends mixins(BemMixin, Rippleable) {
         sorter: s,
         filters: f
       }
+    }
+
+    resolveSpanFn (row: any, prop: string, rowIndex: number, colIndex: number): {rowspan: number, colspan: number} {
+      let rowspan = 1
+      let colspan = 1
+      if (!this.spanFn) return {rowspan, colspan}
+      let ret = this.spanFn(row, prop, rowIndex, colIndex)
+      if (!ret) return {rowspan, colspan}
+      return ret
     }
 
     onRowSelected (row, selected) {
