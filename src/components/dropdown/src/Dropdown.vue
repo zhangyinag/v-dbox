@@ -7,6 +7,7 @@
             :delay-on-mouse-out="200"
             :disabled="disabled"
             ref="popper"
+            append-to-body
             @show="visibleChange(true)"
             @hide="visibleChange(false)"
             :options="options">

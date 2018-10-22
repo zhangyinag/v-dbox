@@ -46,7 +46,7 @@
                                         <i class="anticon anticon-caret-up up" :class="[sortOnCls(col.column, true)]" @click.stop="onSort(col.column.prop, 'asc')"></i>
                                         <i class="anticon anticon-caret-down down" :class="[sortOnCls(col.column, false)]" @click.stop="onSort(col.column.prop, 'desc')"></i>
                                     </div>
-                                    <div v-if="filterableCol(col.column)" :class="[e('filter')]">
+                                    <div v-if="filterableCol(col.column)" :class="[e('filter'), filterOnCls(col.column.prop)]" @click.stop="()=>{}">
                                         <dropdown trigger="click" @visible-change="val => {onFilterVisibleChange(val, col.column.prop)}">
                                             <i class="anticon anticon-filter" :class="[e('filter-icon')]"></i>
                                             <dropdown-menu slot="dropdown">
@@ -288,6 +288,14 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       return on ? 'on' : ''
     }
 
+    filterOnCls (prop: string): string {
+      let filters: TableFilter[] = this.filters
+      let on = filters.some(v => {
+        return v.prop === prop && (Array.isArray(v.values) && v.values.length > 0)
+      })
+      return on ? 'on' : ''
+    }
+
     // headRowStyle (col: HeaderCol) {
     //   const $body = this.$refs.body
     //   if (!$body) return {}
@@ -347,7 +355,7 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     doFilter () {
       let idx = this.filters.findIndex(v => v.prop === this.currentFilter.prop)
-      if (!idx) this.filters.push(this.currentFilter)
+      if (idx === -1) this.filters.push(this.currentFilter)
       else this.filters.splice(idx, 1, this.currentFilter)
     }
 
