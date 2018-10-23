@@ -301,13 +301,14 @@
    <br>
    <br>
    <p>单行模式</p>
-   <v-table :data="data14" pagination>
+   <code style="color: red;">bordered功能需要重写，表格使用自动布局，th, td中都需要一个相重合的div来实现宽度控制</code><br>
+   <v-table :data="data14" pagination bordered>
       <v-table-column prop="index" label="#" width="80px">
          <template slot-scope="{row, $index}">{{$index + 1}}</template>
       </v-table-column>
-      <v-table-column prop="name" label="姓名">
+      <v-table-column prop="name" label="姓名" min-width="80px">
       </v-table-column>
-      <v-table-column prop="age" label="年龄"></v-table-column>
+      <v-table-column prop="age" label="年龄" width="120px"></v-table-column>
       <v-table-column prop="address" label="地址" width="80px" single-line></v-table-column>
       <v-table-column prop="detail" label="详情" width="100px"></v-table-column>
       <v-table-column label="操作" fixed="right" width="120px">
