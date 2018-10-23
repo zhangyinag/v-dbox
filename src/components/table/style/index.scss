@@ -225,6 +225,7 @@
 
 @include e(cell-content) {
   @include m(single-line) {
+    width: 100%;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -235,5 +236,10 @@
     max-width: 320px;
     width: auto !important;
   }
+}
+
+@include e(cell-wrapper) {
+  margin: (-$--table-padding-vertical) (-$--table-padding-horizontal);
+  padding: $--table-padding-vertical $--table-padding-horizontal;
 }
 

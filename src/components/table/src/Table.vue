@@ -15,13 +15,15 @@
                             v-bind="resolveSpanFn(row, col.prop, i+1, j+1)"
                             v-if="hasCell(row, col.prop, i+1, j+1)"
                             :class="['td', fixedCls(col), scrollCls(col)]">
-                            <table-cell :row="row"
-                                        :table-column="col"
-                                        :index="i"
-                                        :expanded="isExpanded(row)"
-                                        :selected="hasSelected(row)"
-                                        @expand-change="onExpandChange"
-                                        @select="val => onRowSelected(row, val)"></table-cell>
+                            <div :style="[colStyle(col)]" :class="[e('cell-wrapper')]">
+                                <table-cell :row="row"
+                                            :table-column="col"
+                                            :index="i"
+                                            :expanded="isExpanded(row)"
+                                            :selected="hasSelected(row)"
+                                            @expand-change="onExpandChange"
+                                            @select="val => onRowSelected(row, val)"></table-cell>
+                            </div>
                         </td>
                     </tr>
                     <tr :key="'expand' + i" v-if="hasExpandRow && isExpanded(row)" :class="[e('expanded-row')]">

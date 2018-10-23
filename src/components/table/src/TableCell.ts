@@ -46,12 +46,12 @@ export default class TableCell extends mixins(BemMixin) {
       class: [this.e('cell-content', 'table'), this.singleLineCls(this.tableColumn)]
     }
     // under auto layout, width won't work at td, set width to child of td
-    let width = (this.tableColumn as any).width
-    if (width) {
-      data.style = {
-        width
-      }
-    }
+    // let width = (this.tableColumn as any).width
+    // if (width) {
+    //   data.style = {
+    //     width
+    //   }
+    // }
     if ((this.tableColumn as any).type === 'selection') {
       return h('checkbox', {
         props: {
