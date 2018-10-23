@@ -5,7 +5,7 @@
         <div :class="[e('body')]" :style="[heightStyle]" @scroll.passive="onScroll" ref="body">
             <table>
                 <colgroup>
-                    <col v-for="(col, i) in renderCols" :key="col.prop || col.label || i"/>
+                    <col :style="[colStyle(col)]" v-for="(col, i) in renderCols" :key="col.prop || col.label || i"/>
                 </colgroup>
                 <tbody>
                     <template v-for="(row, i) in renderData">
@@ -15,34 +15,34 @@
                             v-bind="resolveSpanFn(row, col.prop, i+1, j+1)"
                             v-if="hasCell(row, col.prop, i+1, j+1)"
                             :class="['td', fixedCls(col), scrollCls(col)]">
-                            <div :style="[colStyle(col)]" :class="[e('cell-wrapper')]">
-                                <table-cell :row="row"
-                                            :table-column="col"
-                                            :index="i"
-                                            :expanded="isExpanded(row)"
-                                            :selected="hasSelected(row)"
-                                            @expand-change="onExpandChange"
-                                            @select="val => onRowSelected(row, val)"></table-cell>
-                            </div>
+                            <table-cell :row="row"
+                                        :table-column="col"
+                                        :index="i"
+                                        :expanded="isExpanded(row)"
+                                        :selected="hasSelected(row)"
+                                        @expand-change="onExpandChange"
+                                        @select="val => onRowSelected(row, val)"></table-cell>
                         </td>
                     </tr>
                     <tr :key="'expand' + i" v-if="hasExpandRow && isExpanded(row)" :class="[e('expanded-row')]">
                         <td></td>
-                        <td :colspan="renderCols.length">
+                        <td :colspan="renderCols.length - 1">
                             <table-expand-row :row="row" :table-column="expandCol" :index="i"></table-expand-row>
                         </td>
                     </tr>
                    </template>
                 </tbody>
-                <thead>
+                <thead @mousemove="onHeaderMouseMove" @mouseup="onHeaderMouseUp">
                 <tr v-for="(row, i) in renderHeaderCols" :key="i">
                     <th v-for="(col, j) in row" :key="col.prop || col.label || j"
                         v-fixed-position=""
                         :colspan="col.col"
                         :rowspan="col.row"
                         :style="[colStyle(col.column)]"
-                        :class="['th', fixedCls(col.column), scrollCls(col.column)]">
-                        <div :style="[colStyle(col.column)]" :class="[e('header-cell'), hasSorterCls(col.column)]" @click="onToggleSort(col.column)">
+                        :class="['th', fixedCls(col.column), scrollCls(col.column)]"
+                        @mousedown="e => onHeaderCellMouseDown(e, col, j)"
+                        @mousemove="e => onHeaderCellMouseMove(e, col, j)">
+                        <div :class="[e('header-cell'), hasSorterCls(col.column)]" @click="onToggleSort(col.column)">
                             <template v-if="col.column.type === 'selection'">
                                 <checkbox v-bind="allCheckedProp" @input="onAllCheckedChange"></checkbox>
                                 <dropdown :class="[e('check-dropdown')]" v-if="Array.isArray(col.column.selections) && col.column.selections.length > 0">
@@ -96,6 +96,7 @@
         <div :class="[e('footer')]">
             <pagination v-if="!!pagination" :total="totalNum" :current-page.sync="currentPage" :page-size.sync="pageSize"></pagination>
         </div>
+        <div :class="[e('resize-proxy')]" :style="[proxyResizeStyle]" v-show="draggingColIndex !== -1"></div>
         <div hidden>
             <slot></slot>
         </div>
@@ -161,6 +162,10 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     currentFilter: TableFilter = null
 
     expandedRowSet: ReactiveSet<any> = new ReactiveSet()
+
+    draggingColIndex: number = -1
+
+    proxyResizeStyle: any = {width: 0}
 
     get allCheckedProp (): {value: boolean, indeterminate: boolean} {
       let value = !this.renderData.some(v => !this.selectedKeySet.has(this.resolveRowKey(v)))
@@ -307,7 +312,13 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     colStyle (col: TableColumn) {
       let style: any = {}
       if (col.width) {
-        Object.assign(style, {width: col.width}, {top: 'inherit'})
+        Object.assign(style, {width: col.width})
+      }
+      if (col.minWidth) {
+        if (!style.width) {
+          Object.assign(style, {width: col.minWidth})
+        }
+        Object.assign(style, {minWidth: col.minWidth})
       }
       return style
     }
@@ -437,6 +448,37 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       let ret = this.spanFn(row, prop, rowIndex, colIndex)
       if (!ret) return {rowspan, colspan}
       return ret
+    }
+
+    onHeaderCellMouseDown (e: MouseEvent, col: TableColumn, index: number) {
+      if (!this.bordered) return
+      if (e.srcElement.offsetWidth - e.offsetX < 10) {
+        this.draggingColIndex = index
+      }
+    }
+
+    onHeaderCellMouseMove (e: MouseEvent, col: TableColumn, index: number) {
+      if (!this.bordered) return
+      if (!e.srcElement) return
+      if (e.srcElement.offsetWidth - e.offsetX < 10) {
+        e.srcElement.classList.add('resize')
+      } else {
+        e.srcElement.classList.remove('resize')
+      }
+    }
+
+    onHeaderMouseMove (e: MouseEvent) {
+      if (!this.bordered) return
+      if (this.draggingColIndex !== -1) {
+        console.log(e)
+        console.log(e.clientX, this.$el.offsetLeft)
+        this.proxyResizeStyle.width = (e.clientX - this.$el.offsetLeft) + 'px'
+      }
+    }
+
+    onHeaderMouseUp (e: MouseEvent) {
+      if (!this.bordered) return
+      this.draggingColIndex = -1
     }
 
     onRowSelected (row, selected) {

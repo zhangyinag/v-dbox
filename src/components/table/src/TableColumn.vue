@@ -23,6 +23,8 @@ export default class TableColumn extends mixins(BemMixin, Rippleable) {
 
     @Prop(String) width: string
 
+    @Prop([String]) minWidth: string
+
     @Prop(String) type!: TableColumnType
 
     @Prop(Array) selections!: TableColumnSelection[]

@@ -20,12 +20,8 @@
           border-right: $--border-width-base $--border-style-base $--border-color-split;
         }
 
-        th{
-          >div{
-            resize: horizontal;
-            overflow: auto;
-            cursor: ew-resize;
-          }
+        th.resize{
+          cursor: col-resize;
         }
       }
     }
@@ -40,7 +36,7 @@
     border-spacing: 0;
     text-align: left;
     border-radius: $--border-radius-base $--border-radius-base 0 0;
-    table-layout: auto; // it's better, it's faster on fixed layout, better provide this option
+    table-layout: fixed; // it's better, it's faster on fixed layout, better provide this option
     background-color: $--component-background;
 
     th {
@@ -119,6 +115,7 @@
 }
 
 @include e(header-cell) {
+  top: inherit;
   @include m(has-sorter){
     cursor: pointer;
     &:hover {
@@ -241,5 +238,20 @@
 @include e(cell-wrapper) {
   margin: (-$--table-padding-vertical) (-$--table-padding-horizontal);
   padding: $--table-padding-vertical $--table-padding-horizontal;
+}
+
+@include e(resize-proxy){
+  width: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-right: 1px solid #ebeef5;
+  z-index: 10;
+}
+
+// for now
+
+.resize{
+  cursor: col-resize;
 }
 

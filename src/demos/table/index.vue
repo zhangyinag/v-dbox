@@ -63,7 +63,7 @@
    <p>边框</p>
    <code style="color: #1890ff;">只设置 th > div 的宽度, 不支持 layout: fixed</code> <br>
    <v-table :data="data4" height="400px" bordered>
-      <v-table-column prop="index" label="#" fixed="left">
+      <v-table-column prop="index" label="#" fixed="left" min-width="80px">
          <template slot-scope="{row, $index}">{{$index + 1}}</template>
       </v-table-column>
       <v-table-column prop="name" label="姓名" width="500px">
@@ -81,7 +81,7 @@
    <br>
    <p>多级表头</p>
    <v-table :data="data4" height="400px" bordered>
-      <v-table-column prop="index" label="#" fixed="left">
+      <v-table-column prop="index" label="#" fixed="left"  min-width="80px">
          <template slot-scope="{row, $index}">{{$index + 1}}</template>
       </v-table-column>
       <v-table-column-group label="配送信息">
