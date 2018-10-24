@@ -4,7 +4,7 @@
         </div>
         <div :class="[e('body')]" :style="[heightStyle]" @scroll.passive="onScroll" ref="body">
             <table>
-                <colgroup>
+                <colgroup ref="colgroup">
                     <col :style="[colStyle(col)]" v-for="(col, i) in renderCols" :key="col.prop || col.label || i"/>
                 </colgroup>
                 <tbody>
@@ -20,6 +20,7 @@
                                         :index="i"
                                         :expanded="isExpanded(row)"
                                         :selected="hasSelected(row)"
+                                        :col-resized-tracker="colResizedTracker"
                                         @expand-change="onExpandChange"
                                         @select="val => onRowSelected(row, val)"></table-cell>
                         </td>
@@ -32,7 +33,7 @@
                     </tr>
                    </template>
                 </tbody>
-                <thead @mousemove="onHeaderMouseMove" @mouseup="onHeaderMouseUp">
+                <thead @mousemove="onHeaderMouseMove" @mousedown="onHeaderMouseDown">
                 <tr v-for="(row, i) in renderHeaderCols" :key="i">
                     <th v-for="(col, j) in row" :key="col.prop || col.label || j"
                         v-fixed-position=""
@@ -165,7 +166,13 @@ export default class Table extends mixins(BemMixin, Rippleable) {
 
     draggingColIndex: number = -1
 
-    proxyResizeStyle: any = {width: 0}
+    draggable: boolean = false
+
+    initialProxyResizeOffset: number = 0
+
+    proxyResizeStyle: any = {left: 0}
+
+    colResizedTracker: number = 1
 
     get allCheckedProp (): {value: boolean, indeterminate: boolean} {
       let value = !this.renderData.some(v => !this.selectedKeySet.has(this.resolveRowKey(v)))
@@ -460,24 +467,43 @@ export default class Table extends mixins(BemMixin, Rippleable) {
     onHeaderCellMouseMove (e: MouseEvent, col: TableColumn, index: number) {
       if (!this.bordered) return
       if (!e.srcElement) return
-      if (e.srcElement.offsetWidth - e.offsetX < 10) {
-        e.srcElement.classList.add('resize')
+      if (e.srcElement.offsetWidth - e.offsetX < 5) {
+        this.draggable = true
       } else {
-        e.srcElement.classList.remove('resize')
+        this.draggable = false
+      }
+    }
+
+    onHeaderMouseDown (e: MouseEvent, col: TableColumn, index: number) {
+      if (!this.bordered) return
+      if (this.draggingColIndex !== -1) {
+        this.initialProxyResizeOffset = e.clientX - this.$el.offsetLeft
+        this.proxyResizeStyle.left = this.initialProxyResizeOffset + 'px'
       }
     }
 
     onHeaderMouseMove (e: MouseEvent) {
       if (!this.bordered) return
       if (this.draggingColIndex !== -1) {
-        console.log(e)
-        console.log(e.clientX, this.$el.offsetLeft)
-        this.proxyResizeStyle.width = (e.clientX - this.$el.offsetLeft) + 'px'
+        this.proxyResizeStyle.left = (e.clientX - this.$el.offsetLeft) + 'px'
+        // console.log(e.srcElement)
+      }
+      if (e.srcElement) {
+        if (this.draggingColIndex !== -1 || this.draggable) e.srcElement.classList.add('resize')
+        else e.srcElement.classList.remove('resize')
       }
     }
 
-    onHeaderMouseUp (e: MouseEvent) {
+    onMouseUp (e: MouseEvent) {
       if (!this.bordered) return
+      let $colgroup = this.$refs.colgroup as HTMLElement
+      if ($colgroup && this.draggingColIndex !== -1) {
+        let $col = $colgroup.querySelectorAll('col').item(this.draggingColIndex)
+        if ($col) {
+          $col.style.width = `calc(${$col.style.width} + ${e.clientX - this.$el.offsetLeft - this.initialProxyResizeOffset}px)`
+          this.colResizedTracker++
+        }
+      }
       this.draggingColIndex = -1
     }
 
@@ -579,6 +605,13 @@ export default class Table extends mixins(BemMixin, Rippleable) {
       //     $last.style.transform = `translateX(${-right}px)`
       //   }
       // }
+    }
+
+    mounted () {
+      document.addEventListener('mouseup', this.onMouseUp)
+      this.$once('hook:beforeDestroy', () => {
+        document.removeEventListener('mouseup', this.onMouseUp)
+      })
     }
 }
 </script>

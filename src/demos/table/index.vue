@@ -301,7 +301,6 @@
    <br>
    <br>
    <p>单行模式</p>
-   <code style="color: red;">bordered功能需要重写，表格使用自动布局，th, td中都需要一个相重合的div来实现宽度控制</code><br>
    <v-table :data="data14" pagination bordered>
       <v-table-column prop="index" label="#" width="80px">
          <template slot-scope="{row, $index}">{{$index + 1}}</template>

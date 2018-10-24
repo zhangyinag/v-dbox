@@ -1,4 +1,4 @@
-import {Component, Prop, Emit, Vue} from 'vue-property-decorator'
+import {Component, Prop, Emit, Watch, Vue} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 
 import TableColumn from './TableColumn.vue'
@@ -21,6 +21,8 @@ export default class TableCell extends mixins(BemMixin) {
   @Prop(Boolean) selected: boolean
 
   @Prop(Boolean) expanded: boolean
+
+  @Prop(Number) colResizedTracker: number
 
   toolTipEnable: boolean = false
 
@@ -94,7 +96,7 @@ export default class TableCell extends mixins(BemMixin) {
     }
   }
 
-  mounted () {
+  refreshTooltip () {
     const $content : HTMLElement = this.$refs.content as HTMLElement
     if ($content) {
       if ($content.offsetWidth < $content.scrollWidth) this.toolTipEnable = true
@@ -102,13 +104,17 @@ export default class TableCell extends mixins(BemMixin) {
     }
   }
 
+  @Watch('colResizedTracker') colResizedTrackerChange () {
+    this.refreshTooltip()
+  }
+
+  mounted () {
+    this.refreshTooltip()
+  }
+
   updated () {
     this.$nextTick().then(() => {
-      const $content : HTMLElement = this.$refs.content as HTMLElement
-      if ($content) {
-        if ($content.offsetWidth < $content.scrollWidth) this.toolTipEnable = true
-        else this.toolTipEnable = false
-      }
+      this.refreshTooltip()
     })
   }
 }
