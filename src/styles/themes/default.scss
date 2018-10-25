@@ -217,6 +217,18 @@ $--layout-sider-background        : $--layout-header-background !default;
 //$--layout-trigger-background-light: #fff !default;
 //$--layout-trigger-color-light     : $--text-color !default;
 
+// z-index list
+//@zindex-affix           : 10;
+//@zindex-back-top        : 10;
+//@zindex-modal-mask      : 1000;
+$--zindex-modal           : 1000 !default;
+//@zindex-notification    : 1010;
+//@zindex-message         : 1010;
+//@zindex-popover         : 1030;
+//@zindex-picker          : 1050;
+//@zindex-dropdown        : 1050;
+//@zindex-tooltip         : 1060;
+
 
 // Menu
 // ---
@@ -340,3 +352,7 @@ $--table-selected-row-bg: #fafafa !default;
 $--table-expanded-row-bg: #fbfbfb !default;
 $--table-padding-vertical: 16px !default;
 $--table-padding-horizontal: 16px !default;
+
+// Modal
+// --
+$--modal-mask-bg: rgba(0, 0, 0, 0.65) !default;;
