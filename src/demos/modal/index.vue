@@ -41,7 +41,7 @@
    <v-modal :visible.sync="visible4" title="外层模态框">
       <div>
          <v-button type="danger" @click="visible5 = true">打开内层模态框</v-button>
-         <v-modal :visible.sync="visible5" title="内层模态框" style="z-index: 2000;">
+         <v-modal :visible.sync="visible5" title="内层模态框">
             <p>this is a inner modal</p>
             <div slot="footer" style="text-align: right;">
                <v-button type="primary">确认</v-button>

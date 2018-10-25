@@ -5,6 +5,8 @@ import BemMixin from '@/core/mixins/BemMixin'
 import {VNode} from 'vue'
 import {BeforeCloseCallBack} from '@/components/modal/src/type'
 
+const zIndexStack: number[] = []
+
 @Component({
   components: {},
   })
@@ -43,6 +45,11 @@ export default class Modal extends mixins(BemMixin) {
     return !this.mask ? '' : this.m('mask', 'wrapper')
   }
 
+  zIndex (): number {
+    let zIndex = window.getComputedStyle(this.$el).zIndex
+    return +(zIndex || 0)
+  }
+
   private onWrapperClick () {
     if (!this.closeOnClickMask) return
     this.onClose()
@@ -76,6 +83,12 @@ export default class Modal extends mixins(BemMixin) {
         }
         this.$refs.tab.focus()
       })
+      let index: number = this.zIndex()
+      if (zIndexStack.length > 0) index = zIndexStack[zIndexStack.length - 1] + 1
+      zIndexStack.push(index)
+      this.$el.style.zIndex = index + ''
+    } else {
+      zIndexStack.pop()
     }
   }
 
