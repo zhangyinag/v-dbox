@@ -5,8 +5,6 @@ import BemMixin from '@/core/mixins/BemMixin'
 import {AvatarShape} from '@/components/avatar/src/type'
 import {IconFont} from '@/components/iconfont/index'
 
-const zIndexStack: number[] = []
-
 @Component({
   components: {IconFont},
   })
@@ -42,8 +40,6 @@ export default class Avatar extends mixins(BemMixin) {
       if (scale < 1) {
         this.$refs.text.style.transform = `scale(${parentWidth/width}) translateX(-3px)`
       }
-
-      console.log(width, parentWidth)
     }
   }
 

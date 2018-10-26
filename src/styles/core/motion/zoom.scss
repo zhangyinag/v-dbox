@@ -17,6 +17,7 @@
 @include zoom-motion(zoom-down, antZoomDown);
 @include zoom-motion(zoom-left, antZoomLeft);
 @include zoom-motion(zoom-right, antZoomRight);
+@include zoom-motion(zoom-badge, antZoomBadge);
 
 @keyframes antZoomIn {
   0% {
@@ -151,5 +152,25 @@
     opacity: 0;
     transform-origin: 100% 100%;
     transform: scale(.8);
+  }
+}
+
+@keyframes antZoomBadgeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0) translateX(-50%);
+  }
+  100% {
+    transform: scale(1) translateX(-50%);
+  }
+}
+
+@keyframes antZoomBadgeOut {
+  0% {
+    transform: scale(1) translateX(-50%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) translateX(-50%);
   }
 }
