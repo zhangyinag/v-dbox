@@ -2,7 +2,7 @@
     <transition name="fade">
         <div :class="[e('wrapper'), maskCls]" v-show="visible" @click.self="onWrapperClick" @keyup.esc="onWrapperEsc">
             <transition name="zoom">
-                <div :class="[b()]" :style="[widthStyle, transformOriginStyle]" v-show="visible" ref="modal">
+                <div :class="[b()]" :style="[widthStyle, topStyle, transformOriginStyle]" v-show="visible" ref="modal">
                     <div tabindex="0" :class="[e('tab')]" ref="tab">tab 0</div>
                     <div :class="[e('content')]">
                         <div :class="[e('close')]" v-if="showClose" @click="onClose">

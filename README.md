@@ -24,3 +24,8 @@ npm run lint
 ```
 npm run test:unit
 ```
+
+
+### Note
+
+1. width 等属性的响应式

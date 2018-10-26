@@ -29,6 +29,8 @@ export default class Modal extends mixins(BemMixin) {
 
   @Prop({type: Boolean, default: true}) appendToBody: boolean
 
+  @Prop({type: String, default: '15vh'}) top: string
+
   @Emit('update:visible') visibleUpdate (visible: boolean) {}
 
   private mousePosition: {x: number, y: number} | null = null
@@ -40,6 +42,11 @@ export default class Modal extends mixins(BemMixin) {
       width: this.width
     }
   }
+
+  get topStyle () {
+    return !this.top ? {} : {top: this.top}
+  }
+
 
   get maskCls () {
     return !this.mask ? '' : this.m('mask', 'wrapper')
@@ -66,7 +73,7 @@ export default class Modal extends mixins(BemMixin) {
     }
     const cancel = () => {
     }
-    if (this.beforeClose){
+    if (this.beforeClose) {
       this.beforeClose(done, cancel)
     } else {
       this.visibleUpdate(false)
@@ -112,7 +119,7 @@ export default class Modal extends mixins(BemMixin) {
 
   $refs: any = {
     modal: HTMLElement,
-    tab: HTMLElement,
+    tab: HTMLElement
   }
 
   $slots: {

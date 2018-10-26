@@ -38,7 +38,7 @@
    <br>
    <p>嵌套</p>
    <v-button type="primary" @click="visible4 = true">打开</v-button>
-   <v-modal :visible.sync="visible4" title="外层模态框">
+   <v-modal :visible.sync="visible4" title="外层模态框" width="40vw">
       <div>
          <v-button type="danger" @click="visible5 = true">打开内层模态框</v-button>
          <v-modal :visible.sync="visible5" title="内层模态框">
@@ -52,6 +52,7 @@
          <v-button type="primary">确认</v-button>
       </div>
    </v-modal>
+
 </div>
 </template>
 
@@ -73,6 +74,8 @@ export default class ModalDemo extends Vue {
   visible4: boolean = false
 
   visible5: boolean = false
+
+  visible6: boolean = false
 }
 </script>
 
