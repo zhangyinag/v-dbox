@@ -1,0 +1,45 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(avatar){
+  @include reset-component();
+  display: inline-block;
+  text-align: center;
+  background: $--avatar-bg;
+  color: $--avatar-color;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+
+  @include avatar-size($--avatar-size-base, $--avatar-font-size-base);
+
+  @include m(lg) {
+    @include avatar-size($--avatar-size-lg, $--avatar-font-size-lg)
+  }
+
+  @include m(sm) {
+    @include avatar-size($--avatar-size-sm, $--avatar-font-size-sm)
+  }
+
+  @include m(square) {
+    border-radius: $--avatar-border-radius;
+  }
+
+  @include m(image) {
+    background-color: transparent;
+  }
+}
+
+
+@include e(image) {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+@include e(text){
+  display: inline-block;
+}

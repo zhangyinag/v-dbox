@@ -1,0 +1,21 @@
+@import "../../../styles/themes/default";
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/colorPalette";
+@import "../../../styles/mixins/size";
+
+@mixin avatar-size($size, $font-size) {
+  width: $size;
+  height: $size;
+  line-height: $size;
+  border-radius: 50%;
+
+  & > * {
+    line-height: $size;
+  }
+
+  @include e(icon) {
+    font-size: $font-size;
+  }
+}
+
+

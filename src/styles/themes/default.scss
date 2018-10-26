@@ -355,4 +355,17 @@ $--table-padding-horizontal: 16px !default;
 
 // Modal
 // --
-$--modal-mask-bg: rgba(0, 0, 0, 0.65) !default;;
+$--modal-mask-bg: rgba(0, 0, 0, 0.65) !default;
+
+
+// Avatar
+// ---
+$--avatar-size-base: 32px !default;
+$--avatar-size-lg: 40px !default;
+$--avatar-size-sm: 24px !default;
+$--avatar-font-size-base: 18px !default;
+$--avatar-font-size-lg: 24px !default;
+$--avatar-font-size-sm: 14px !default;
+$--avatar-bg: #ccc !default;
+$--avatar-color: #fff !default;
+$--avatar-border-radius: $--border-radius-base !default;
