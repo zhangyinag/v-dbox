@@ -1,0 +1,52 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(progress){
+  @include reset-component();
+  display: inline-block;
+
+  @include m(line){
+    width: 100%;
+    font-size: $--font-size-base;
+    position: relative;
+
+    @include e(bg){
+      border-radius: 100px;
+    }
+  }
+}
+
+@include e(outer){
+  display: inline-block;
+  width: 100%;
+}
+
+@include e(inner){
+  display: inline-block;
+  width: 100%;
+  background-color: $--progress-remaining-color;
+  border-radius: 100px;
+  vertical-align: middle;
+  position: relative;
+}
+
+@include e(bg){
+  background-color: $--progress-default-color;
+  transition: all .4s $--ease-out-circ 0s;
+  position: relative;
+}
+
+
+@include e(text){
+  word-break: normal;
+  width: 2em;
+  text-align: left;
+  font-size: 1em;
+  margin-left: 8px;
+  vertical-align: middle;
+  display: inline-block;
+  color: $--text-color-secondary;
+  line-height: 1;
+}
