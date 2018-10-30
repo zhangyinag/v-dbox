@@ -1,13 +1,6 @@
 <template>
 <div>
-   <h3>进度条 Progress</h3>
-   <br>
-   <br>
-   <p>标准</p>
-   <div style="width: 480px">
-      <v-progress :percent="percent1"></v-progress>
-      <input type="number" step="1" v-model="percent1">
-   </div>
+   <component-view :title="title" :examples="examples"></component-view>
 </div>
 </template>
 
@@ -18,7 +11,16 @@ import {RemoteParam, RemoteResult, TableColumnFilter, TableColumnSelection} from
   components: {},
   })
 export default class ProgressDemo extends Vue {
-  percent1: number = 10
+   title: string = 'Progress 进度条'
+
+  examples: any[] = [
+    {
+      file: 'progress/examples/Basic.vue'
+    },
+    {
+      file: 'progress/examples/Test.vue'
+    },
+  ]
 }
 </script>
 
