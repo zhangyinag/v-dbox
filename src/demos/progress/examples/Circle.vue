@@ -1,6 +1,6 @@
 <template>
 <div>
-   <v-progress :precent="30"></v-progress>
+   <v-progress :percent="30" type="circle"></v-progress>
 </div>
 </template>
 
@@ -8,13 +8,13 @@
 import {Component, Vue} from 'vue-property-decorator'
 
 /**
- * @title 测试 ComponentView组件
- * @desc ...
+ * @title 进度圈
+ * @desc 圆形的进度
  */
 @Component({
   components: {},
   })
-export default class Test extends Vue {
+export default class Circle extends Vue {
 
 }
 </script>

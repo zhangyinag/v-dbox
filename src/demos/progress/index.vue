@@ -18,7 +18,7 @@ export default class ProgressDemo extends Vue {
       file: 'progress/examples/Basic.vue'
     },
     {
-      file: 'progress/examples/Test.vue'
+      file: 'progress/examples/Circle.vue'
     },
   ]
 }

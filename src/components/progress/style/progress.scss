@@ -16,6 +16,48 @@
       border-radius: 100px;
     }
   }
+
+  @include m(show-text){
+    @include e(outer){
+      padding-right: calc(2em + 8px);
+      margin-right: calc(-2em - 8px);
+    }
+  }
+
+  @include m(status-active){
+    @include e(bg){
+      &:before{
+        content: "";
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $--component-background;
+        border-radius: 10px;
+        animation: v-progress-active 2.4s $--ease-out-quint infinite;
+      }
+    }
+  }
+
+  @include m(status-success){
+    @include e(bg){
+      background-color: $--success-color;
+    }
+    @include e(text) {
+      color: $--success-color;
+    }
+  }
+
+  @include m(status-exception){
+    @include e(bg){
+      background-color: $--error-color;
+    }
+    @include e(text) {
+      color: $--error-color;
+    }
+  }
 }
 
 @include e(outer){
@@ -49,4 +91,20 @@
   display: inline-block;
   color: $--text-color-secondary;
   line-height: 1;
+}
+
+
+@keyframes v-progress-active {
+  0% {
+    opacity: 0.1;
+    width: 0;
+  }
+  20% {
+    opacity: 0.5;
+    width: 0;
+  }
+  100% {
+    opacity: 0;
+    width: 100%;
+  }
 }

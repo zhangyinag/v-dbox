@@ -13,7 +13,9 @@ export default class Progress extends mixins(BemMixin) {
 
   @Prop({type: Number, default: 0}) percent: number
 
-  @Prop({type: Number, default: 0}) status: 'success' | 'exception' | 'active'
+  @Prop({type: String}) status: 'success' | 'exception' | 'active'
+
+  @Prop({type: Boolean, default: true}) showText: boolean
 
   get strokeWidthStyle () {
     return {
@@ -31,7 +33,13 @@ export default class Progress extends mixins(BemMixin) {
     }
   }
 
-  get statusIcon () {
-    if (this.status === 'success') return
+  get showTextCls () {
+    if (!this.showText) return ''
+    return this.m('show-text')
+  }
+
+  get statusCls () {
+    if (!this.status) return ''
+    return this.m(`status-${this.status}`)
   }
 }
