@@ -16,8 +16,7 @@ export default class Badge extends mixins(BemMixin) {
 
   @Prop(Boolean) dot: boolean
 
-
-  get text() {
+  get text () {
     if (!this.value) return ''
     if (typeof this.value === 'number') {
       if (!this.max) return this.value

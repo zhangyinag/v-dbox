@@ -17,6 +17,35 @@
     }
   }
 
+  @include m(circle){
+    @include e(inner){
+      color: $--progress-default-color;
+    }
+    @include e(text){
+      display: block;
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      line-height: 1;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      margin: 0;
+      color: $--text-color;
+    }
+  }
+
+  @include combo-m(circle status-success) {
+    @include e(inner){
+      color: $--success-color;
+    }
+  }
+  @include combo-m(circle status-exception) {
+    @include e(inner){
+      color: $--error-color;
+    }
+  }
+
   @include m(show-text){
     @include e(outer){
       padding-right: calc(2em + 8px);

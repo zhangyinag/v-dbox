@@ -1,0 +1,19 @@
+@import "../../../styles/mixins/bem";
+@import "../../../styles/mixins/reset";
+@import "../../../styles/themes/default";
+@import "./mixin";
+
+@include b(progress-circle) {
+
+}
+
+@include e(trail){
+  stroke: $--progress-remaining-color;
+  fill: $--component-background;
+}
+
+@include e(path){
+  fill-opacity: 0;
+  stroke: currentColor;
+  transition: stroke-dasharray 0.3s ease 0s;
+}

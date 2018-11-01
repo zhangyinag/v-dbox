@@ -23,7 +23,9 @@ $icon-map: (
   caret-down: "\e606",
   filter: "\e663",
   close-circle: "\e62e",
+  close: "\e633",
   check-circle: "\e630",
+  check: "\e632",
 );
 
 @mixin icon ($name) {

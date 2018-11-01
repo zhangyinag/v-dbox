@@ -15,11 +15,11 @@ export default class ProgressDemo extends Vue {
 
   examples: any[] = [
     {
-      file: 'progress/examples/Basic.vue'
+      file: 'progress/examples/BasicExample.vue'
     },
     {
-      file: 'progress/examples/Circle.vue'
-    },
+      file: 'progress/examples/CircleExample.vue'
+    }
   ]
 }
 </script>

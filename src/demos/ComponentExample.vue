@@ -85,6 +85,6 @@ export default class ComponentExample extends Vue {
 
    .boxBody{
       padding: 16px;
-      background-color: #eee;
+      background-color: #fff;
    }
 </style>

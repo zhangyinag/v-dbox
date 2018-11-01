@@ -47,7 +47,6 @@ export default class Modal extends mixins(BemMixin) {
     return !this.top ? {} : {top: this.top}
   }
 
-
   get maskCls () {
     return !this.mask ? '' : this.m('mask', 'wrapper')
   }

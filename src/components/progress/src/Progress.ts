@@ -2,12 +2,13 @@ import {Component, Prop} from 'vue-property-decorator'
 import {mixins} from 'vue-class-component'
 
 import BemMixin from '@/core/mixins/BemMixin'
+import ProgressCircle from './ProgressCircle.vue'
 
 @Component({
-  components: {},
+  components: {ProgressCircle},
   })
 export default class Progress extends mixins(BemMixin) {
-  @Prop({type: String, default: '8px'}) strokeWidth: string
+  @Prop({type: Number, default: 8}) strokeWidth: number
 
   @Prop({type: String, default: 'line'}) type: 'line' | 'circle'
 
@@ -17,9 +18,11 @@ export default class Progress extends mixins(BemMixin) {
 
   @Prop({type: Boolean, default: true}) showText: boolean
 
+  @Prop({type: Number, default: 120}) width: number
+
   get strokeWidthStyle () {
     return {
-      height: this.strokeWidth
+      height: this.strokeWidth + 'px'
     }
   }
 
@@ -41,5 +44,13 @@ export default class Progress extends mixins(BemMixin) {
   get statusCls () {
     if (!this.status) return ''
     return this.m(`status-${this.status}`)
+  }
+
+  get circleInnerStyle () {
+    return {
+      width: this.width + 'px',
+      height: this.width + 'px',
+      fontSize: (this.width * 0.15 + 6) + 'px'
+    }
   }
 }
