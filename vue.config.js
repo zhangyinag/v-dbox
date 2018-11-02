@@ -7,22 +7,18 @@ module.exports = {
   //     }
   //   })
   // },
-  // chainWebpack: config => {
-  //   config.module
-  //     .rule('ts')
-  //     .use('ts-loader')
-  //     .loader('ts-loader')
-  //     .tap(options => {
-  //       Object.assign(options || {}, {transpileOnly: false, happyPackMode: false})
-  //       return options
-  //     })
-  //   config.module
-  //     .rule('tsx')
-  //     .use('ts-loader')
-  //     .loader('ts-loader')
-  //     .tap(options => {
-  //       Object.assign(options || {}, {transpileOnly: false, happyPackMode: false})
-  //       return options
-  //     })
-  // }
+  chainWebpack: config => {
+    config.module
+      .rule('md')
+      .test(/\.md$/)
+      .use('html-loader')
+      .loader('html-loader')
+      .end()
+    config.module
+      .rule('md')
+      .test(/\.md$/)
+      .use('markdown-loader')
+      .loader('markdown-loader')
+      .end()
+  }
 }

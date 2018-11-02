@@ -1,6 +1,6 @@
 <template>
 <div :class="[$style.box]">
-   <h3>{{titleText}}</h3>
+   <anchored-heading :level="3">{{titleText}}</anchored-heading>
    <p v-html="descText"></p>
    <div :class="[$style.exampleBox]">
       <div :class="[$style.boxHeader]"><a title="显示源码" @click="showSource=!showSource"> &lt; &gt; </a></div>
@@ -24,15 +24,13 @@ import hljs from 'highlight.js/lib'
 export default class ComponentExample extends Vue {
   @Prop(String) title: string
 
-  @Prop(String) file: string
+  @Prop(Object) component: Vue
+
+  @Prop(String) source: string
 
   @Prop(String) desc: string
 
   showSource: boolean = false
-
-  component: Vue = null
-
-  source: string = ''
 
   get titleText (): string {
     if (this.title) return this.title
@@ -46,20 +44,8 @@ export default class ComponentExample extends Vue {
     return (this.source.match(/@desc.*/)[0] || '').substr(6)
   }
 
-  created () {
-    import(
-      `./${this.file}`
-    ).then(comp => {
-      this.component = comp.default
-    })
-    import(
-      `!raw-loader!./${this.file}`
-    ).then(res => {
-      this.source = res.default
-      this.$nextTick().then(() => {
-        hljs.highlightBlock(this.$refs.source)
-      })
-    })
+  mounted () {
+    hljs.highlightBlock(this.$refs.source)
   }
 }
 </script>

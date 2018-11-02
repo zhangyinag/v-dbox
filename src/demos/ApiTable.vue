@@ -1,6 +1,5 @@
 <template>
 <div>
-   <h3>API</h3>
    <div :class="[$style.header]">
       <ul :class="$style.listGroup">
          <li :class="[$style.listGroupItem, activeCls('props')]" @click="changePanel('props')">PROPS</li>

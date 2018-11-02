@@ -8,6 +8,8 @@ import dbox from '@/components/index'
 import ComponentExample from './ComponentExample.vue'
 import ComponentView from './ComponentView.vue'
 import ApiTable from './ApiTable.vue'
+import AnchoredHeading from './AnchoredHeading.vue'
+import ComponentCatalog from './ComponentCatalog.vue'
 
 Vue.config.productionTip = false
 
@@ -16,6 +18,8 @@ Vue.use(dbox, {})
 Vue.component('component-example', ComponentExample)
 Vue.component('component-view', ComponentView)
 Vue.component('api-table', ApiTable)
+Vue.component('anchored-heading', AnchoredHeading)
+Vue.component('component-catalog', ComponentCatalog)
 
 new Vue({
   render: h => h(App)

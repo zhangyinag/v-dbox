@@ -29,6 +29,8 @@
     "@vue/test-utils": "^1.0.0-beta.20",
     "chai": "^4.1.2",
     "highlight.js": "^9.13.1",
+    "html-loader": "^0.5.5",
+    "markdown-loader": "^4.0.0",
     "node-sass": "^4.9.0",
     "raw-loader": "^0.5.1",
     "sass-loader": "^7.0.1",

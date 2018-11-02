@@ -1,26 +1,50 @@
 <template>
 <div>
-   <component-view :title="title" :examples="examples" :api="api"></component-view>
+   <component-view :title="title" :examples="examples" :api="api">
+      <anchored-heading :level="2">简介</anchored-heading>
+      <div v-html="intro"></div>
+   </component-view>
 </div>
 </template>
 
 <script lang="ts">
 import {Component, Vue} from 'vue-property-decorator'
-import {RemoteParam, RemoteResult, TableColumnFilter, TableColumnSelection} from '../../components/table/src/type'
+import intro from './intro.md'
+
+const base = 'progress/examples'
+const examples: any[] = []
+
+function importComponentAll (r) {
+  r.keys().forEach(key => {
+    examples.push({
+      file: base + key.substr(1),
+      component: r(key).default
+    })
+  })
+}
+
+function importSourceAll (r) {
+  r.keys().forEach(key => {
+    let file = base + key.substr(1)
+    let example = examples.find(v => v.file === file)
+    if (example) {
+      example.source = r(key)
+    }
+  })
+}
+
+importComponentAll(require.context(`./examples/`, true, /\.vue$/))
+importSourceAll(require.context('!raw-loader!./examples/', true, /\.vue$/))
+
 @Component({
   components: {},
   })
 export default class ProgressDemo extends Vue {
    title: string = 'Progress 进度条'
 
-  examples: any[] = [
-    {
-      file: 'progress/examples/BasicExample.vue'
-    },
-    {
-      file: 'progress/examples/CircleExample.vue'
-    }
-  ]
+   examples: any[] = examples
+
+   intro: string = intro
 
    api: any = {
      props: [
